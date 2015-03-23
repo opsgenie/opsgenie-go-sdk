@@ -1,1 +1,1 @@
-# opsgenie-go-sdk
+# opsgenie-go-sdk beta
