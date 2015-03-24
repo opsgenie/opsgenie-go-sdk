@@ -1,0 +1,10 @@
+alert:
+    apiKey: YOUR_API_KEY_HERE
+    user: YOUR_USERNAME_HERE
+    team: YOUR_TEAM
+    actions:
+        - ping
+        - pong
+
+heartbeat:
+    apiKey: YOUR_HEARTBEAT_API_KEY_HERE
