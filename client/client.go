@@ -78,3 +78,24 @@ func (cli *OpsGenieClient) Heartbeat() (*OpsGenieHeartbeatClient, error) {
 	heartbeatClient.apiKey = cli.apiKey
 	return heartbeatClient, nil
 }
+// Instanciates a new OpsGenieIntegrationClient
+// and sets the api key to be used alongside the execution.
+func (cli *OpsGenieClient) Integration() (*OpsGenieIntegrationClient, error) {
+	if cli.apiKey == "" {
+		return nil, errors.New("API Key should be set first")
+	}
+	integrationClient := new (OpsGenieIntegrationClient)
+	integrationClient.apiKey = cli.apiKey
+	return integrationClient, nil
+}
+
+// Instanciates a new OpsGeniePolicyClient
+// and sets the api key to be used alongside the execution.
+func (cli *OpsGenieClient) Policy() (*OpsGeniePolicyClient, error) {
+	if cli.apiKey == "" {
+		return nil, errors.New("API Key should be set first")
+	}
+	policyClient := new (OpsGeniePolicyClient)
+	policyClient.apiKey = cli.apiKey
+	return policyClient, nil
+}
