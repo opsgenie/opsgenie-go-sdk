@@ -13,8 +13,23 @@ const (
 )
 
 type OpsGenieIntegrationClient struct {
-	apiKey string
+	apiKey 	string
+	proxy 	string
 }
+
+func (cli *OpsGenieIntegrationClient) buildRequest(method string, uri string, body interface{}) goreq.Request {
+	req := goreq.Request{}
+	req.Method = method
+	req.Uri = uri
+	if body != nil {
+		req.Body = body		
+	}
+	if cli.proxy != "" {
+		req.Proxy = cli.proxy
+	}
+	return req
+}
+
 
 func (cli *OpsGenieIntegrationClient) Enable(req integration.EnableIntegrationRequest) (*integration.EnableIntegrationResponse, error){
 	req.ApiKey = cli.apiKey
@@ -26,7 +41,8 @@ func (cli *OpsGenieIntegrationClient) Enable(req integration.EnableIntegrationRe
 		return nil, errors.New("Either Api Key or Id should be provided, not both")	
 	}
 	// send the request
-	resp, err := goreq.Request{ Method: "POST", Uri: ENABLE_INTEGRATION_URL, Body: req, }.Do()	
+	resp, err := cli.buildRequest("POST", ENABLE_INTEGRATION_URL, req).Do()
+	// resp, err := goreq.Request{ Method: "POST", Uri: ENABLE_INTEGRATION_URL, Body: req, }.Do()	
 	if err != nil {
 		return nil, errors.New("Can not enable the integration, unable to send the request")
 	}
@@ -57,7 +73,8 @@ func (cli *OpsGenieIntegrationClient) Disable(req integration.DisableIntegration
 		return nil, errors.New("Either Api Key or Id should be provided, not both")	
 	}
 	// send the request
-	resp, err := goreq.Request{ Method: "POST", Uri: DISABLE_INTEGRATION_URL, Body: req, }.Do()	
+	resp, err := cli.buildRequest("POST", DISABLE_INTEGRATION_URL, req).Do()
+	// resp, err := goreq.Request{ Method: "POST", Uri: DISABLE_INTEGRATION_URL, Body: req, }.Do()	
 	if err != nil {
 		return nil, errors.New("Can not disable the integration, unable to send the request")
 	}

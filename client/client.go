@@ -58,6 +58,7 @@ func (cli *OpsGenieClient) SetApiKey(key string) error {
 	cli.apiKey = key
 	return nil
 }
+
 // Instanciates a new OpsGenieAlertClient
 // and sets the api key to be used alongside the execution.
 func (cli *OpsGenieClient) Alert() (*OpsGenieAlertClient, error) {
@@ -66,6 +67,9 @@ func (cli *OpsGenieClient) Alert() (*OpsGenieAlertClient, error) {
 	}
 	alertClient := new (OpsGenieAlertClient)
 	alertClient.apiKey = cli.apiKey
+	if cli.proxy != nil {
+		alertClient.proxy = cli.proxy.ToString()	
+	}
 	return alertClient, nil
 }
 // Instanciates a new OpsGenieHeartbeatClient
@@ -76,6 +80,9 @@ func (cli *OpsGenieClient) Heartbeat() (*OpsGenieHeartbeatClient, error) {
 	}
 	heartbeatClient := new (OpsGenieHeartbeatClient)
 	heartbeatClient.apiKey = cli.apiKey
+	if cli.proxy != nil {
+		heartbeatClient.proxy = cli.proxy.ToString()	
+	}
 	return heartbeatClient, nil
 }
 // Instanciates a new OpsGenieIntegrationClient
@@ -86,6 +93,9 @@ func (cli *OpsGenieClient) Integration() (*OpsGenieIntegrationClient, error) {
 	}
 	integrationClient := new (OpsGenieIntegrationClient)
 	integrationClient.apiKey = cli.apiKey
+	if cli.proxy != nil {
+		integrationClient.proxy = cli.proxy.ToString()	
+	}
 	return integrationClient, nil
 }
 
@@ -97,5 +107,8 @@ func (cli *OpsGenieClient) Policy() (*OpsGeniePolicyClient, error) {
 	}
 	policyClient := new (OpsGeniePolicyClient)
 	policyClient.apiKey = cli.apiKey
+	if cli.proxy != nil {
+		policyClient.proxy = cli.proxy.ToString()	
+	}
 	return policyClient, nil
 }

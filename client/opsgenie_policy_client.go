@@ -13,7 +13,21 @@ const (
 )
 
 type OpsGeniePolicyClient struct {
-	apiKey string
+	apiKey 	string
+	proxy 	string
+}
+
+func (cli *OpsGeniePolicyClient) buildRequest(method string, uri string, body interface{}) goreq.Request {
+	req := goreq.Request{}
+	req.Method = method
+	req.Uri = uri
+	if body != nil {
+		req.Body = body		
+	}
+	if cli.proxy != "" {
+		req.Proxy = cli.proxy
+	}
+	return req
 }
 
 func (cli *OpsGeniePolicyClient) Enable(req policy.EnablePolicyRequest) (*policy.EnablePolicyResponse, error){
@@ -26,7 +40,8 @@ func (cli *OpsGeniePolicyClient) Enable(req policy.EnablePolicyRequest) (*policy
 		return nil, errors.New("Either Api Key or Id should be provided, not both")	
 	}
 	// send the request
-	resp, err := goreq.Request{ Method: "POST", Uri: ENABLE_POLICY_URL, Body: req, }.Do()	
+	resp, err := cli.buildRequest("POST", ENABLE_POLICY_URL, req).Do()
+	// resp, err := goreq.Request{ Method: "POST", Uri: ENABLE_POLICY_URL, Body: req, }.Do()	
 	if err != nil {
 		return nil, errors.New("Can not enable the policy, unable to send the request")
 	}
@@ -57,7 +72,8 @@ func (cli *OpsGeniePolicyClient) Disable(req policy.DisablePolicyRequest) (*poli
 		return nil, errors.New("Either Api Key or Id should be provided, not both")	
 	}
 	// send the request
-	resp, err := goreq.Request{ Method: "POST", Uri: DISABLE_POLICY_URL, Body: req, }.Do()	
+	resp, err := cli.buildRequest("POST", DISABLE_POLICY_URL, req).Do()
+	// resp, err := goreq.Request{ Method: "POST", Uri: DISABLE_POLICY_URL, Body: req, }.Do()	
 	if err != nil {
 		return nil, errors.New("Can not disable the policy, unable to send the request")
 	}

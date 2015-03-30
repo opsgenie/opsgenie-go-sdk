@@ -21,7 +21,21 @@ const (
 
 
 type OpsGenieHeartbeatClient struct {
-	apiKey string
+	apiKey 	string
+	proxy	string
+}
+
+func (cli *OpsGenieHeartbeatClient) buildRequest(method string, uri string, body interface{}) goreq.Request {
+	req := goreq.Request{}
+	req.Method = method
+	req.Uri = uri
+	if body != nil {
+		req.Body = body		
+	}
+	if cli.proxy != "" {
+		req.Proxy = cli.proxy
+	}
+	return req
 }
 
 func (cli *OpsGenieHeartbeatClient) Add(req heartbeat.AddHeartbeatRequest) (*heartbeat.AddHeartbeatResponse, error){
@@ -34,7 +48,8 @@ func (cli *OpsGenieHeartbeatClient) Add(req heartbeat.AddHeartbeatRequest) (*hea
 		return nil, errors.New("Heart beat name is a mandatory field and can not be empty")
 	}
 	// send the request
-	resp, err := goreq.Request{ Method: "POST", Uri: ADD_HEARTBEAT_URL, Body: req, }.Do()	
+	resp, err := cli.buildRequest("POST", ADD_HEARTBEAT_URL, req).Do()
+	// resp, err := goreq.Request{ Method: "POST", Uri: ADD_HEARTBEAT_URL, Body: req, }.Do()	
 	if err != nil {
 		return nil, errors.New("Can not add a new heart beat, unable to send the request")
 	}
@@ -75,7 +90,8 @@ func (cli *OpsGenieHeartbeatClient) Update(req heartbeat.UpdateHeartbeatRequest)
 		return nil, errors.New("Id is a mandatory field and can not be empty")
 	}
 	// send the request
-	resp, err := goreq.Request{ Method: "POST", Uri: UPDATE_HEARTBEAT_URL, Body: req, }.Do()
+	resp, err := cli.buildRequest("POST", UPDATE_HEARTBEAT_URL, req).Do()
+	// resp, err := goreq.Request{ Method: "POST", Uri: UPDATE_HEARTBEAT_URL, Body: req, }.Do()
 	if err != nil {
 		return nil, errors.New("Can not update the heartbeat, unable to send the request")
 	}
@@ -110,7 +126,8 @@ func (cli *OpsGenieHeartbeatClient) Enable(req heartbeat.EnableHeartbeatRequest)
 	}
 	// send the request in a query string
 	v, _ := goquery.Values(req)
-	resp, err := goreq.Request{ Method: "POST", Uri: ENABLE_HEARTBEAT_URL + "?" + v.Encode(), }.Do()
+	resp, err := cli.buildRequest("POST", ENABLE_HEARTBEAT_URL + "?" + v.Encode(), nil ).Do()
+	// resp, err := goreq.Request{ Method: "POST", Uri: ENABLE_HEARTBEAT_URL + "?" + v.Encode(), }.Do()
 	if err != nil {
 		return nil, errors.New("Can not enable the heart beat, unable to send the request")
 	}
@@ -145,7 +162,8 @@ func (cli *OpsGenieHeartbeatClient) Disable(req heartbeat.DisableHeartbeatReques
 	}
 	// send the request in a query string
 	v, _ := goquery.Values(req)
-	resp, err := goreq.Request{ Method: "POST", Uri: DISABLE_HEARTBEAT_URL + "?" + v.Encode(), }.Do()
+	resp, err := cli.buildRequest("POST", DISABLE_HEARTBEAT_URL + "?" + v.Encode(), nil ).Do()
+	// resp, err := goreq.Request{ Method: "POST", Uri: DISABLE_HEARTBEAT_URL + "?" + v.Encode(), }.Do()
 	if err != nil {
 		return nil, errors.New("Can not disable the heart beat, unable to send the request")
 	}
@@ -180,7 +198,8 @@ func (cli *OpsGenieHeartbeatClient) Delete(req heartbeat.DeleteHeartbeatRequest)
 	}
 	// send the request in a query string
 	v, _ := goquery.Values(req)
-	resp, err := goreq.Request{ Method: "DELETE", Uri: DELETE_HEARTBEAT_URL + "?" + v.Encode(), }.Do()
+	resp, err := cli.buildRequest("DELETE", DELETE_HEARTBEAT_URL + "?" + v.Encode(), nil ).Do()
+	// resp, err := goreq.Request{ Method: "DELETE", Uri: DELETE_HEARTBEAT_URL + "?" + v.Encode(), }.Do()
 	if err != nil {
 		return nil, errors.New("Can not delete the heart beat, unable to send the request")
 	}
@@ -215,7 +234,8 @@ func (cli *OpsGenieHeartbeatClient) Get(req heartbeat.GetHeartbeatRequest) (*hea
 	}
 	// send the request in a query string
 	v, _ := goquery.Values(req)
-	resp, err := goreq.Request{ Method: "GET", Uri: GET_HEARTBEAT_URL + "?" + v.Encode(), }.Do()
+	resp, err := cli.buildRequest("GET", GET_HEARTBEAT_URL + "?" + v.Encode(), nil).Do()
+	// resp, err := goreq.Request{ Method: "GET", Uri: GET_HEARTBEAT_URL + "?" + v.Encode(), }.Do()
 	if err != nil {
 		return nil, errors.New("Can not retrieve the heart beat, unable to send the request")
 	}
@@ -244,7 +264,8 @@ func (cli *OpsGenieHeartbeatClient) List(req heartbeat.ListHeartbeatsRequest) (*
 	}
 	// send the request in a query string
 	v, _ := goquery.Values(req)
-	resp, err := goreq.Request{ Method: "GET", Uri: LIST_HEARTBEAT_URL + "?" + v.Encode(), }.Do()
+	resp, err := cli.buildRequest("GET", LIST_HEARTBEAT_URL + "?" + v.Encode(), nil).Do()
+	// resp, err := goreq.Request{ Method: "GET", Uri: LIST_HEARTBEAT_URL + "?" + v.Encode(), }.Do()
 	if err != nil {
 		return nil, errors.New("Can not retrieve the list of heart beats, unable to send the request")
 	}
@@ -272,7 +293,8 @@ func (cli *OpsGenieHeartbeatClient) Send(req heartbeat.SendHeartbeatRequest) (*h
 		return nil, errors.New("Api Key is a mandatory field and can not be empty")
 	}
 	// send the payload in a POST request
-	resp, err := goreq.Request{ Method: "POST", Uri: SEND_HEARTBEAT_URL, Body: req, }.Do()	
+	resp, err := cli.buildRequest("POST", SEND_HEARTBEAT_URL, req).Do()
+	// resp, err := goreq.Request{ Method: "POST", Uri: SEND_HEARTBEAT_URL, Body: req, }.Do()	
 	if err != nil {
 		return nil, errors.New("Can not send the heart beat, unable to send the request")
 	}
