@@ -5,6 +5,7 @@ import (
 	goreq "github.com/franela/goreq"
 	"errors"
 	"fmt"
+	"time"
 )
 
 const (
@@ -15,6 +16,7 @@ const (
 type OpsGeniePolicyClient struct {
 	apiKey 	string
 	proxy 	string
+	retries int
 }
 
 func (cli *OpsGeniePolicyClient) buildRequest(method string, uri string, body interface{}) goreq.Request {
@@ -29,6 +31,15 @@ func (cli *OpsGeniePolicyClient) buildRequest(method string, uri string, body in
 	}
 	return req
 }
+
+func (cli *OpsGeniePolicyClient) SetConnectionTimeout(timeoutInSeconds time.Duration) {
+	goreq.SetConnectTimeout( timeoutInSeconds * time.Second )
+}
+
+func (cli *OpsGeniePolicyClient) SetMaxRetryAttempts(retries int) {
+	cli.retries = retries
+}
+
 
 func (cli *OpsGeniePolicyClient) Enable(req policy.EnablePolicyRequest) (*policy.EnablePolicyResponse, error){
 	req.ApiKey = cli.apiKey

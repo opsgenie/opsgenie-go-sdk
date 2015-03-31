@@ -15,6 +15,7 @@ import (
     "bytes"
     "errors"
     "net/url"
+    "time"
 )
 
 const(
@@ -38,8 +39,9 @@ const(
 )
 
 type OpsGenieAlertClient struct {
-	apiKey 	string
-	proxy 	string
+	apiKey 		string
+	proxy 		string
+	retries 	int
 }
 
 func (cli *OpsGenieAlertClient) buildRequest(method string, uri string, body interface{}) goreq.Request {
@@ -55,6 +57,15 @@ func (cli *OpsGenieAlertClient) buildRequest(method string, uri string, body int
 	return req
 }
 
+func (cli *OpsGenieAlertClient) SetConnectionTimeout(timeoutInSeconds time.Duration) {
+	goreq.SetConnectTimeout( timeoutInSeconds * time.Second )
+}
+
+func (cli *OpsGenieAlertClient) SetMaxRetryAttempts(retries int) {
+	cli.retries = retries
+}
+
+
 func (cli *OpsGenieAlertClient) Create(req alerts.CreateAlertRequest) (*alerts.CreateAlertResponse, error) {
 	req.ApiKey = cli.apiKey
 	// validate the mandatory parameters: apiKey, message
@@ -64,8 +75,8 @@ func (cli *OpsGenieAlertClient) Create(req alerts.CreateAlertRequest) (*alerts.C
 	if req.Message == "" {
 		return nil, errors.New("Message is a mandatory field and can not be empty.")	
 	}
-	resp, err := cli.buildRequest("POST", CREATE_ALERT_URL, req).Do()
-	// resp, err := goreq.Request{ Method: "POST", Uri: CREATE_ALERT_URL, Body: req, }.Do()		
+	// send the request
+	resp, err := cli.buildRequest("POST", CREATE_ALERT_URL, req).Do()		
 	if err != nil {
 		return nil, errors.New("Could not create the alert: a problem occured while sending the request.")
 	}

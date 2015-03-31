@@ -6,6 +6,7 @@ import (
 	goquery "github.com/google/go-querystring/query"
 	"errors"
 	"fmt"
+	"time"
 )
 
 const (
@@ -23,6 +24,7 @@ const (
 type OpsGenieHeartbeatClient struct {
 	apiKey 	string
 	proxy	string
+	retries int
 }
 
 func (cli *OpsGenieHeartbeatClient) buildRequest(method string, uri string, body interface{}) goreq.Request {
@@ -36,6 +38,14 @@ func (cli *OpsGenieHeartbeatClient) buildRequest(method string, uri string, body
 		req.Proxy = cli.proxy
 	}
 	return req
+}
+
+func (cli *OpsGenieHeartbeatClient) SetConnectionTimeout(timeoutInSeconds time.Duration) {
+	goreq.SetConnectTimeout( timeoutInSeconds * time.Second )
+}
+
+func (cli *OpsGenieHeartbeatClient) SetMaxRetryAttempts(retries int) {
+	cli.retries = retries
 }
 
 func (cli *OpsGenieHeartbeatClient) Add(req heartbeat.AddHeartbeatRequest) (*heartbeat.AddHeartbeatResponse, error){

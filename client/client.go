@@ -25,11 +25,18 @@ calls (except the file attachment).
 */
 package client
 
-import "errors"
+import (
+	"errors"
+	"time"
+)
 
 // OpsGenie Go SDK performs HTTP calls to the Web API.
 // The Web API is designated by a URL so called an endpoint
 const ENDPOINT_URL string = "https://api.opsgenie.com" 
+
+const DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS time.Duration = 1
+const DEFAULT_MAX_RETRY_ATTEMPTS int = 1
+
 // OpsGenieClient is a general data type used for:
 // 	- authenticating callers through their api keys and 
 // 	- instanciating "alert" and "heartbeat" clients
@@ -70,6 +77,17 @@ func (cli *OpsGenieClient) Alert() (*OpsGenieAlertClient, error) {
 	if cli.proxy != nil {
 		alertClient.proxy = cli.proxy.ToString()	
 	}
+	alertClient.SetConnectionTimeout( DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS * time.Second )
+	alertClient.SetMaxRetryAttempts( DEFAULT_MAX_RETRY_ATTEMPTS )
+
+	if cli.httpTransportSettings != nil {
+		if cli.httpTransportSettings.ConnectionTimeout > 0 {
+			alertClient.SetConnectionTimeout( cli.httpTransportSettings.ConnectionTimeout )			
+		}
+		if cli.httpTransportSettings.MaxRetryAttempts > 0 {
+			alertClient.SetMaxRetryAttempts(cli.httpTransportSettings.MaxRetryAttempts)
+		}
+	}
 	return alertClient, nil
 }
 // Instanciates a new OpsGenieHeartbeatClient
@@ -83,6 +101,14 @@ func (cli *OpsGenieClient) Heartbeat() (*OpsGenieHeartbeatClient, error) {
 	if cli.proxy != nil {
 		heartbeatClient.proxy = cli.proxy.ToString()	
 	}
+	heartbeatClient.SetConnectionTimeout(DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS * time.Second)
+	heartbeatClient.SetMaxRetryAttempts(DEFAULT_MAX_RETRY_ATTEMPTS)
+	if cli.httpTransportSettings != nil {
+		if cli.httpTransportSettings.ConnectionTimeout > 0 {
+			heartbeatClient.SetConnectionTimeout(cli.httpTransportSettings.ConnectionTimeout)			
+		}
+	}
+
 	return heartbeatClient, nil
 }
 // Instanciates a new OpsGenieIntegrationClient
@@ -96,6 +122,13 @@ func (cli *OpsGenieClient) Integration() (*OpsGenieIntegrationClient, error) {
 	if cli.proxy != nil {
 		integrationClient.proxy = cli.proxy.ToString()	
 	}
+	integrationClient.SetConnectionTimeout(DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS * time.Second)
+	integrationClient.SetMaxRetryAttempts(DEFAULT_MAX_RETRY_ATTEMPTS)	
+	if cli.httpTransportSettings != nil {
+		if cli.httpTransportSettings.ConnectionTimeout > 0 {
+			integrationClient.SetConnectionTimeout(cli.httpTransportSettings.ConnectionTimeout)			
+		}
+	}	
 	return integrationClient, nil
 }
 
@@ -110,5 +143,12 @@ func (cli *OpsGenieClient) Policy() (*OpsGeniePolicyClient, error) {
 	if cli.proxy != nil {
 		policyClient.proxy = cli.proxy.ToString()	
 	}
+	policyClient.SetConnectionTimeout(DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS * time.Second)
+	policyClient.SetMaxRetryAttempts(DEFAULT_MAX_RETRY_ATTEMPTS)	
+	if cli.httpTransportSettings != nil {
+		if cli.httpTransportSettings.ConnectionTimeout > 0 {
+			policyClient.SetConnectionTimeout(cli.httpTransportSettings.ConnectionTimeout)	
+		}
+	}	
 	return policyClient, nil
 }

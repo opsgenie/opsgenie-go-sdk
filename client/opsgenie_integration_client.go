@@ -5,6 +5,7 @@ import (
 	goreq "github.com/franela/goreq"
 	"errors"
 	"fmt"
+	"time"
 )
 
 const (
@@ -15,6 +16,7 @@ const (
 type OpsGenieIntegrationClient struct {
 	apiKey 	string
 	proxy 	string
+	retries int
 }
 
 func (cli *OpsGenieIntegrationClient) buildRequest(method string, uri string, body interface{}) goreq.Request {
@@ -30,6 +32,13 @@ func (cli *OpsGenieIntegrationClient) buildRequest(method string, uri string, bo
 	return req
 }
 
+func (cli *OpsGenieIntegrationClient) SetConnectionTimeout(timeoutInSeconds time.Duration) {
+	goreq.SetConnectTimeout( timeoutInSeconds * time.Second )
+}
+
+func (cli *OpsGenieIntegrationClient) SetMaxRetryAttempts(retries int) {
+	cli.retries = retries
+}
 
 func (cli *OpsGenieIntegrationClient) Enable(req integration.EnableIntegrationRequest) (*integration.EnableIntegrationResponse, error){
 	req.ApiKey = cli.apiKey

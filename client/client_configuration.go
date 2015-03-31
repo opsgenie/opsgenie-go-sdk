@@ -1,6 +1,9 @@
 package client
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 type ClientProxyConfiguration struct {
 	Host		string
@@ -12,10 +15,8 @@ type ClientProxyConfiguration struct {
 }
 
 type HttpTransportSettings struct {
-	SocketTimeOut		int
-	ConnectionTimeOut	int
+	ConnectionTimeout	time.Duration
 	MaxRetryAttempts	int
-	MaxOpenConnections 	int
 }
 
 func (proxy *ClientProxyConfiguration) ToString() string {
