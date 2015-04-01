@@ -76,7 +76,16 @@ func (cli *OpsGenieAlertClient) Create(req alerts.CreateAlertRequest) (*alerts.C
 		return nil, errors.New("Message is a mandatory field and can not be empty.")	
 	}
 	// send the request
-	resp, err := cli.buildRequest("POST", CREATE_ALERT_URL, req).Do()		
+	var resp *goreq.Response
+	var err error
+	for i := 0; i < cli.retries; i++ {
+		resp, err = cli.buildRequest("POST", CREATE_ALERT_URL, req).Do()			
+		if err == nil {
+			break
+		}
+		// sleep for a second
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
+	}
 	if err != nil {
 		return nil, errors.New("Could not create the alert: a problem occured while sending the request.")
 	}
@@ -108,7 +117,15 @@ func (cli *OpsGenieAlertClient) Close(req alerts.CloseAlertRequest) (*alerts.Clo
 	if req.AlertId != "" && req.Alias != "" {
 		return nil, errors.New("Either Alert Id or Alias should be set in the request not both.")	
 	}
-	resp, err := cli.buildRequest("POST", CLOSE_ALERT_URL, req).Do()
+	var resp *goreq.Response
+	var err error
+	for i := 0; i < cli.retries; i++ {
+		resp, err = cli.buildRequest("POST", CLOSE_ALERT_URL, req).Do()	
+		if err == nil {
+			break
+		}
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
+	}
 	// resp, err := goreq.Request{ Method: "POST", Uri: CLOSE_ALERT_URL, Body: req, }.Do()	
 	if err != nil {
 		return nil, errors.New("Could not close the alert: a problem occured while sending the request.")
@@ -142,8 +159,15 @@ func (cli *OpsGenieAlertClient) Delete(req alerts.DeleteAlertRequest) (*alerts.D
 		return nil, errors.New("Either Alert Id or Alias should be set in the request not both.")	
 	}	
 	v, _ := goquery.Values(req)
-	resp, err := cli.buildRequest("DELETE", DELETE_ALERT_URL + "?" + v.Encode(), nil).Do()
-	//resp, err := goreq.Request{ Method: "DELETE", Uri: DELETE_ALERT_URL + "?" + v.Encode(), }.Do()	
+	var resp *goreq.Response
+	var err error
+	for i := 0; i < cli.retries; i++ {
+		resp, err = cli.buildRequest("DELETE", DELETE_ALERT_URL + "?" + v.Encode(), nil).Do()
+		if err == nil {
+			break
+		}
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
+	}
 	if err != nil {
 		return nil, errors.New("Could not delete the alert: a problem occured while sending the request.")
 	}
@@ -176,8 +200,15 @@ func (cli *OpsGenieAlertClient) Get(req alerts.GetAlertRequest) (*alerts.GetAler
 		return nil, errors.New("Only one of the parameters of id, alias and tiny id should be set.")
 	}	
 	v, _ := goquery.Values(req)
-	resp, err := cli.buildRequest("GET", GET_ALERT_URL + "?" + v.Encode(), nil).Do()
-	// resp, err := goreq.Request{ Method: "GET", Uri: GET_ALERT_URL + "?" + v.Encode(), }.Do()	
+	var resp *goreq.Response
+	var err error
+	for i := 0; i < cli.retries; i++ {
+		resp, err = cli.buildRequest("GET", GET_ALERT_URL + "?" + v.Encode(), nil).Do()	
+		if err == nil {
+			break
+		}
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
+	}
 	if err != nil {
 		return nil, errors.New("Could not retrieve the alert: a problem occured while sending the request")
 	}
@@ -204,8 +235,15 @@ func (cli *OpsGenieAlertClient) List(req alerts.ListAlertsRequest) (*alerts.List
 		return nil, errors.New("ApiKey is a mandatory field and can not be empty.")	
 	}
 	v, _ := goquery.Values(req)
-	resp, err := cli.buildRequest("GET", LIST_ALERTS_URL + "?" + v.Encode(), nil).Do()
-	// resp, err := goreq.Request{ Method: "GET", Uri: LIST_ALERTS_URL + "?" + v.Encode(), }.Do()	
+	var resp *goreq.Response
+	var err error
+	for i := 0; i < cli.retries; i++ {
+		resp, err = cli.buildRequest("GET", LIST_ALERTS_URL + "?" + v.Encode(), nil).Do()	
+		if err == nil {
+			break
+		}
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
+	}
 	if err != nil {
 		return nil, errors.New("Could not retrieve the alert: a problem occured while sending the request")
 	}
@@ -238,8 +276,15 @@ func (cli *OpsGenieAlertClient) ListNotes(req alerts.ListAlertNotesRequest) (*al
 		return nil, errors.New("Either Id or Alias should be set in the request not both.")	
 	}	
 	v, _ := goquery.Values(req)
-	resp, err := cli.buildRequest("GET", LIST_ALERT_NOTES_URL + "?" + v.Encode(), nil).Do()
-	// resp, err := goreq.Request{ Method: "GET", Uri: LIST_ALERT_NOTES_URL + "?" + v.Encode(), }.Do()	
+	var resp *goreq.Response
+	var err error
+	for i := 0; i < cli.retries; i++ {
+		resp, err = cli.buildRequest("GET", LIST_ALERT_NOTES_URL + "?" + v.Encode(), nil).Do()	
+		if err == nil {
+			break
+		}
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
+	}
 	if err != nil {
 		return nil, errors.New("Could not send the request: a problem occured while sending the request")
 	}
@@ -272,8 +317,15 @@ func (cli *OpsGenieAlertClient) ListLogs(req alerts.ListAlertLogsRequest) (*aler
 		return nil, errors.New("Either Id or Alias should be set in the request not both.")	
 	}		
 	v, _ := goquery.Values(req)	
-	resp, err := cli.buildRequest("GET", LIST_ALERT_LOGS_URL + "?" + v.Encode(), nil).Do()
-	// resp, err := goreq.Request{ Method: "GET", Uri: LIST_ALERT_LOGS_URL + "?" + v.Encode(), }.Do()	
+	var resp *goreq.Response
+	var err error
+	for i := 0; i < cli.retries; i++ {
+		resp, err = cli.buildRequest("GET", LIST_ALERT_LOGS_URL + "?" + v.Encode(), nil).Do()	
+		if err == nil {
+			break
+		}
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
+	}
 	if err != nil {
 		return nil, errors.New("Could not retrieve the logs: a problem occured while sending the request")
 	}
@@ -306,8 +358,15 @@ func (cli *OpsGenieAlertClient) ListRecipients(req alerts.ListAlertRecipientsReq
 		return nil, errors.New("Either Id or Alias should be set in the request not both.")	
 	}		
 	v, _ := goquery.Values(req)
-	resp, err := cli.buildRequest("GET", LIST_ALERT_RECIPIENTS_URL + "?" + v.Encode(), nil).Do()
-	// resp, err := goreq.Request{ Method: "GET", Uri: LIST_ALERT_RECIPIENTS_URL + "?" + v.Encode(), }.Do()
+	var resp *goreq.Response
+	var err error
+	for i := 0; i < cli.retries; i++ {
+		resp, err = cli.buildRequest("GET", LIST_ALERT_RECIPIENTS_URL + "?" + v.Encode(), nil).Do()		
+		if err == nil {
+			break
+		}
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
+	}
 	if err != nil {
 		return nil, errors.New("Can not list the recipient list, unable to send the request")
 	}
@@ -339,8 +398,15 @@ func (cli *OpsGenieAlertClient) Acknowledge(req alerts.AcknowledgeAlertRequest) 
 	if req.AlertId != "" && req.Alias != "" {
 		return nil, errors.New("Either Alert Id or Alias should be set in the request not both.")	
 	}		
-	resp, err := cli.buildRequest("POST", ACKNOWLEDGE_ALERT_URL, req).Do()
-	// resp, err := goreq.Request{ Method: "POST", Uri: ACKNOWLEDGE_ALERT_URL, Body: req, }.Do()
+	var resp *goreq.Response
+	var err error
+	for i := 0; i < cli.retries; i++ {
+		resp, err = cli.buildRequest("POST", ACKNOWLEDGE_ALERT_URL, req).Do()	
+		if err == nil {
+			break
+		}
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
+	}
 	if err != nil {
 		return nil, errors.New("Can not ack the alert, unable to send the request")
 	}
@@ -372,8 +438,15 @@ func (cli *OpsGenieAlertClient) Renotify(req alerts.RenotifyAlertRequest) (*aler
 	if req.AlertId != "" && req.Alias != "" {
 		return nil, errors.New("Either Alert Id or Alias should be set in the request not both.")	
 	}		
-	resp, err := cli.buildRequest("POST", RENOTIFY_ALERT_URL, req).Do()
-	// resp, err := goreq.Request{ Method: "POST", Uri: RENOTIFY_ALERT_URL, Body: req, }.Do()
+	var resp *goreq.Response
+	var err error
+	for i := 0; i < cli.retries; i++ {
+		resp, err = cli.buildRequest("POST", RENOTIFY_ALERT_URL, req).Do()
+		if err == nil {
+			break
+		}
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
+	}	
 	if err != nil {
 		return nil, errors.New("Can not renotify, unable to send the request")
 	}
@@ -405,8 +478,15 @@ func (cli *OpsGenieAlertClient) TakeOwnership(req alerts.TakeOwnershipAlertReque
 	if req.AlertId != "" && req.Alias != "" {
 		return nil, errors.New("Either Alert Id or Alias should be set in the request not both.")	
 	}		
-	resp, err := cli.buildRequest("POST", TAKE_OWNERSHIP_ALERT_URL, req).Do()
-	// resp, err := goreq.Request{ Method: "POST", Uri: TAKE_OWNERSHIP_ALERT_URL, Body: req, }.Do()
+	var resp *goreq.Response
+	var err error
+	for i := 0; i < cli.retries; i++ {
+		resp, err = cli.buildRequest("POST", TAKE_OWNERSHIP_ALERT_URL, req).Do()	
+		if err == nil {
+			break
+		}
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
+	}
 	if err != nil {
 		return nil, errors.New("Can not change the ownership, unable to send the request")
 	}
@@ -441,8 +521,15 @@ func (cli *OpsGenieAlertClient) AssignOwner(req alerts.AssignOwnerAlertRequest) 
 	if req.AlertId != "" && req.Alias != "" {
 		return nil, errors.New("Either Alert Id or Alias should be set in the request not both.")	
 	}		
-	resp, err := cli.buildRequest("POST", ASSIGN_OWNERSHIP_ALERT_URL, req).Do()
-	// resp, err := goreq.Request{ Method: "POST", Uri: ASSIGN_OWNERSHIP_ALERT_URL, Body: req, }.Do()
+	var resp *goreq.Response
+	var err error
+	for i := 0; i < cli.retries; i++ {
+		resp, err = cli.buildRequest("POST", ASSIGN_OWNERSHIP_ALERT_URL, req).Do()
+		if err == nil {
+			break
+		}
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
+	}
 	if err != nil {
 		return nil, errors.New("Can not assign the owner, unable to send the request")
 	}
@@ -477,8 +564,15 @@ func (cli *OpsGenieAlertClient) AddTeam(req alerts.AddTeamAlertRequest) (*alerts
 	if req.AlertId != "" && req.Alias != "" {
 		return nil, errors.New("Either Alert Id or Alias should be set in the request not both.")	
 	}		
-	resp, err := cli.buildRequest("POST", ADD_TEAM_ALERT_URL, req).Do()
-	// resp, err := goreq.Request{ Method: "POST", Uri: ADD_TEAM_ALERT_URL, Body: req, }.Do()
+	var resp *goreq.Response
+	var err error
+	for i := 0; i < cli.retries; i++ {
+		resp, err = cli.buildRequest("POST", ADD_TEAM_ALERT_URL, req).Do()	
+		if err == nil {
+			break
+		}
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
+	}
 	if err != nil {
 		return nil, errors.New("Team can not be added, unable to send the request")
 	}
@@ -513,8 +607,15 @@ func (cli *OpsGenieAlertClient) AddRecipient(req alerts.AddRecipientAlertRequest
 	if req.AlertId != "" && req.Alias != "" {
 		return nil, errors.New("Either Alert Id or Alias should be set in the request not both.")	
 	}		
-	resp, err := cli.buildRequest("POST", ADD_RECIPIENT_ALERT_URL, req).Do()
-	// resp, err := goreq.Request{ Method: "POST", Uri: ADD_RECIPIENT_ALERT_URL, Body: req, }.Do()
+	var resp *goreq.Response
+	var err error
+	for i := 0; i < cli.retries; i++ {
+		resp, err = cli.buildRequest("POST", ADD_RECIPIENT_ALERT_URL, req).Do()
+		if err == nil {
+			break
+		}
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
+	}
 	if err != nil {
 		return nil, errors.New("Can not add recipient, unable to send the request")
 	}
@@ -549,8 +650,15 @@ func (cli *OpsGenieAlertClient) AddNote(req alerts.AddNoteAlertRequest) (*alerts
 	if req.AlertId != "" && req.Alias != "" {
 		return nil, errors.New("Either Alert Id or Alias should be set in the request not both.")	
 	}			
-	resp, err := cli.buildRequest("POST", ADD_NOTE_ALERT_URL, req).Do()
-	// resp, err := goreq.Request{ Method: "POST", Uri: ADD_NOTE_ALERT_URL, Body: req, }.Do()
+	var resp *goreq.Response
+	var err error
+	for i := 0; i < cli.retries; i++ {
+		resp, err = cli.buildRequest("POST", ADD_NOTE_ALERT_URL, req).Do()	
+		if err == nil {
+			break
+		}
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
+	}
 	if err != nil {
 		return nil, errors.New("Can not add note, unable to send the request.")
 	}
@@ -585,8 +693,15 @@ func (cli *OpsGenieAlertClient) ExecuteAction(req alerts.ExecuteActionAlertReque
 	if req.AlertId != "" && req.Alias != "" {
 		return nil, errors.New("Either Alert Id or Alias should be set in the request not both.")	
 	}	
-	resp, err := cli.buildRequest("POST", EXECUTE_ACTION_ALERT_URL, req).Do()
-	// resp, err := goreq.Request{ Method: "POST", Uri: EXECUTE_ACTION_ALERT_URL, Body: req, }.Do()
+	var resp *goreq.Response
+	var err error
+	for i := 0; i < cli.retries; i++ {
+		resp, err = cli.buildRequest("POST", EXECUTE_ACTION_ALERT_URL, req).Do()	
+		if err == nil {
+			break
+		}
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
+	}
 	if err != nil {
 		return nil, errors.New("Can not execute the action, unable to send the request.")
 	}
@@ -717,7 +832,15 @@ func (cli *OpsGenieAlertClient) AttachFile(req alerts.AttachFileAlertRequest) (*
 		}
 		client.Transport = &http.Transport{Proxy: http.ProxyURL(proxyUrl)}
 	}
-    res, err := client.Do(httpReq)
+	var res *http.Response
+	for i := 0; i < cli.retries; i++ {
+		res, err = client.Do(httpReq)	
+		if err == nil {
+			break
+		}
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
+	}
+
     if err != nil {
         return nil, errors.New("Can not attach the file, unable to send the request.")
     }

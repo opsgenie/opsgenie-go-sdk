@@ -51,8 +51,15 @@ func (cli *OpsGeniePolicyClient) Enable(req policy.EnablePolicyRequest) (*policy
 		return nil, errors.New("Either Api Key or Id should be provided, not both")	
 	}
 	// send the request
-	resp, err := cli.buildRequest("POST", ENABLE_POLICY_URL, req).Do()
-	// resp, err := goreq.Request{ Method: "POST", Uri: ENABLE_POLICY_URL, Body: req, }.Do()	
+	var resp *goreq.Response
+	var err error
+	for i := 0; i < cli.retries; i++ {
+		resp, err = cli.buildRequest("POST", ENABLE_POLICY_URL, req).Do()
+		if err == nil {
+			break
+		}
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
+	}	
 	if err != nil {
 		return nil, errors.New("Can not enable the policy, unable to send the request")
 	}
@@ -83,8 +90,15 @@ func (cli *OpsGeniePolicyClient) Disable(req policy.DisablePolicyRequest) (*poli
 		return nil, errors.New("Either Api Key or Id should be provided, not both")	
 	}
 	// send the request
-	resp, err := cli.buildRequest("POST", DISABLE_POLICY_URL, req).Do()
-	// resp, err := goreq.Request{ Method: "POST", Uri: DISABLE_POLICY_URL, Body: req, }.Do()	
+	var resp *goreq.Response
+	var err error
+	for i := 0; i < cli.retries; i++ {
+		resp, err = cli.buildRequest("POST", DISABLE_POLICY_URL, req).Do()
+		if err == nil {
+			break
+		}
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
+	}
 	if err != nil {
 		return nil, errors.New("Can not disable the policy, unable to send the request")
 	}

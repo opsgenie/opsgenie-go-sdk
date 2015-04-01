@@ -36,6 +36,7 @@ const ENDPOINT_URL string = "https://api.opsgenie.com"
 
 const DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS time.Duration = 1
 const DEFAULT_MAX_RETRY_ATTEMPTS int = 1
+const TIME_SLEEP_BETWEEN_REQUESTS time.Duration = 500 * time.Millisecond
 
 // OpsGenieClient is a general data type used for:
 // 	- authenticating callers through their api keys and 

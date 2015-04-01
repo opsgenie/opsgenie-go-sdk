@@ -50,8 +50,15 @@ func (cli *OpsGenieIntegrationClient) Enable(req integration.EnableIntegrationRe
 		return nil, errors.New("Either Api Key or Id should be provided, not both")	
 	}
 	// send the request
-	resp, err := cli.buildRequest("POST", ENABLE_INTEGRATION_URL, req).Do()
-	// resp, err := goreq.Request{ Method: "POST", Uri: ENABLE_INTEGRATION_URL, Body: req, }.Do()	
+	var resp *goreq.Response
+	var err error
+	for i := 0; i < cli.retries; i++ {
+		resp, err = cli.buildRequest("POST", ENABLE_INTEGRATION_URL, req).Do()	
+		if err == nil {
+			break
+		}
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
+	}
 	if err != nil {
 		return nil, errors.New("Can not enable the integration, unable to send the request")
 	}
@@ -82,8 +89,15 @@ func (cli *OpsGenieIntegrationClient) Disable(req integration.DisableIntegration
 		return nil, errors.New("Either Api Key or Id should be provided, not both")	
 	}
 	// send the request
-	resp, err := cli.buildRequest("POST", DISABLE_INTEGRATION_URL, req).Do()
-	// resp, err := goreq.Request{ Method: "POST", Uri: DISABLE_INTEGRATION_URL, Body: req, }.Do()	
+	var resp *goreq.Response
+	var err error
+	for i := 0; i < cli.retries; i++ {
+		resp, err = cli.buildRequest("POST", DISABLE_INTEGRATION_URL, req).Do()		
+		if err == nil {
+			break
+		}
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
+	}
 	if err != nil {
 		return nil, errors.New("Can not disable the integration, unable to send the request")
 	}
