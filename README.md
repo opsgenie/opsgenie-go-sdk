@@ -4,7 +4,8 @@
 OpsGenie GO SDK aims to access OpsGenie Web API through HTTP calls 
 from a client application purely written in Go language.
 
-Beta release covers *the Alert API* and *the Heartbeat API*. Future releases 
+Beta release covers *the Alert API*, *the Heartbeat API*, 
+*the Integration API* and *the Policy API*. Future releases 
 are subject to be delivered for packing more APIs soon.
 
 ## Pre-requisites
@@ -47,3 +48,5 @@ about the Web API.
 
 * [Alert API](https://www.opsgenie.com/docs/web-api/alert-api)
 * [Heartbeat API](https://www.opsgenie.com/docs/web-api/heartbeat-api)
+* [Integration API](https://www.opsgenie.com/docs/web-api/integration-api)
+* [Policy API](https://www.opsgenie.com/docs/web-api/policy-api)
