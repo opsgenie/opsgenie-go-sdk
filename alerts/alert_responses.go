@@ -40,6 +40,49 @@ type GetAlertResponse struct {
 	SystemData map[string]string	`json:"systemData"`
 }
 
+func (res *GetAlertResponse) GetIntegrationType() string {
+	if val, ok := res.SystemData["integrationType"]; ok {
+		return val
+	}
+	return ""
+}
+func (res *GetAlertResponse) GetIntegrationId() string {
+	if val, ok := res.SystemData["integrationId"]; ok {
+		return val
+	}
+	return ""
+}
+func (res *GetAlertResponse) GetIntegrationName() string {
+	if val, ok := res.SystemData["integrationName"]; ok {
+		return val
+	}
+	return ""
+}
+func (res *GetAlertResponse) GetAckTime() int {
+	if val, ok := res.SystemData["ackTime"]; ok {
+		return val
+	}
+	return -1
+}
+func (res *GetAlertResponse) GetAcknowledgedBy() string {
+	if val, ok := res.SystemData["acknowledgedBy"]; ok {
+		return val
+	}
+	return ""
+}
+func (res *GetAlertResponse) GetCloseTime() int {
+	if val, ok := res.SystemData["closeTime"]; ok {
+		return val
+	}
+	return ""
+}
+func (res *GetAlertResponse) GetClosedBy() string {
+	if val, ok := res.SystemData["closedBy"]; ok {
+		return val
+	}
+	return ""
+}
+
 type ListAlertsResponse struct {
 	Alerts []struct {
 		Id 				string `json:"id"`
