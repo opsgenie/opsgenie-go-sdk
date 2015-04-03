@@ -3,25 +3,25 @@
 // license that can be found in the LICENSE file.
 
 /*
-Package client manages the creation of API clients. 
-API user first creates a pointer of type OpsGenieClient. Following that
-he/she can set some configurations for HTTP communication layer by setting 
-a proxy definition and/or transport layer options. 
+	Package client manages the creation of API clients. 
+	API user first creates a pointer of type OpsGenieClient. Following that
+	he/she can set some configurations for HTTP communication layer by setting 
+	a proxy definition and/or transport layer options. 
 
-Introduction
+	Introduction
 
-The most fundamental and general use case is being able to access the 
-OpsGenie Web API by coding a Go program.
-The program -by mean of a client application- can send OpsGenie Web API 
-the requests using the 'client' package in a higher level. For the programmer 
-of the client application, that reduces the number of LoCs.
-Besides it will result a less error-prone application and reduce 
-the complexity by hiding the low-level networking, error-handling and 
-byte-processing calls.
+	The most fundamental and general use case is being able to access the 
+	OpsGenie Web API by coding a Go program.
+	The program -by mean of a client application- can send OpsGenie Web API 
+	the requests using the 'client' package in a higher level. For the programmer 
+	of the client application, that reduces the number of LoCs.
+	Besides it will result a less error-prone application and reduce 
+	the complexity by hiding the low-level networking, error-handling and 
+	byte-processing calls.
 
-Package client has ports for all entry points to the Web API. 
-The OpsGenie Web API is structured in JSON-bodied 
-calls (except the file attachment).
+	Package client has ports for all entry points to the Web API. 
+	The OpsGenie Web API is structured in JSON-bodied 
+	calls (except the file attachment).
 */
 package client
 
