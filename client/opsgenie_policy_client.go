@@ -29,6 +29,7 @@ func (cli *OpsGeniePolicyClient) buildRequest(method string, uri string, body in
 	if cli.proxy != "" {
 		req.Proxy = cli.proxy
 	}
+	req.UserAgent = userAgentParam.ToString()
 	return req
 }
 

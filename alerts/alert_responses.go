@@ -1,5 +1,7 @@
 package alerts
 
+import "strconv"
+
 type CreateAlertResponse struct	{
 	Message	string	`json:"message"`
 	AlertId	string	`json:"alertId"`
@@ -60,7 +62,12 @@ func (res *GetAlertResponse) GetIntegrationName() string {
 }
 func (res *GetAlertResponse) GetAckTime() int {
 	if val, ok := res.SystemData["ackTime"]; ok {
-		return val
+		i, err := strconv.Atoi(val)
+		if err != nil {
+			return -1
+		} else {
+			return i
+		}
 	}
 	return -1
 }
@@ -72,9 +79,14 @@ func (res *GetAlertResponse) GetAcknowledgedBy() string {
 }
 func (res *GetAlertResponse) GetCloseTime() int {
 	if val, ok := res.SystemData["closeTime"]; ok {
-		return val
+		i, err := strconv.Atoi(val)
+		if err != nil {
+			return -1
+		} else {
+			return i
+		}
 	}
-	return ""
+	return -1
 }
 func (res *GetAlertResponse) GetClosedBy() string {
 	if val, ok := res.SystemData["closedBy"]; ok {

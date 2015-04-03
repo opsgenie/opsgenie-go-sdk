@@ -54,6 +54,7 @@ func (cli *OpsGenieAlertClient) buildRequest(method string, uri string, body int
 	if cli.proxy != "" {
 		req.Proxy = cli.proxy
 	}
+	req.UserAgent = userAgentParam.ToString()
 	return req
 }
 

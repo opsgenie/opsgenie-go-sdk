@@ -28,6 +28,8 @@ package client
 import (
 	"errors"
 	"time"
+	"runtime"
+	"fmt"
 )
 
 // OpsGenie Go SDK performs HTTP calls to the Web API.
@@ -37,6 +39,21 @@ const ENDPOINT_URL string = "https://api.opsgenie.com"
 const DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS time.Duration = 1
 const DEFAULT_MAX_RETRY_ATTEMPTS int = 1
 const TIME_SLEEP_BETWEEN_REQUESTS time.Duration = 500 * time.Millisecond
+
+// User-Agent values tool/version (OS;GO_Version;language)
+type RequestHeaderUserAgent struct {
+	sdkName 	string
+	version 	string
+	os 			string
+	goVersion 	string
+	timezone	string
+}
+
+func (p RequestHeaderUserAgent) ToString() string {
+	return fmt.Sprintf("%s/%s (%s;%s;%s)", p.sdkName, p.version, p.os, p.goVersion, p.timezone)	
+}
+
+var userAgentParam RequestHeaderUserAgent
 
 // OpsGenieClient is a general data type used for:
 // 	- authenticating callers through their api keys and 
@@ -152,4 +169,15 @@ func (cli *OpsGenieClient) Policy() (*OpsGeniePolicyClient, error) {
 		}
 	}	
 	return policyClient, nil
+}
+
+// Initializer for the package client
+// Initializes the User-Agent parameter of the requests.
+// TODO version information must be read from a MANIFEST file
+func init() {
+	userAgentParam.sdkName = "opsgenie-go-sdk"
+	userAgentParam.version = "1.0.0"
+	userAgentParam.os = runtime.GOOS
+	userAgentParam.goVersion = runtime.Version()
+	userAgentParam.timezone = time.Local.String()
 }

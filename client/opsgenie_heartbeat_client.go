@@ -37,6 +37,7 @@ func (cli *OpsGenieHeartbeatClient) buildRequest(method string, uri string, body
 	if cli.proxy != "" {
 		req.Proxy = cli.proxy
 	}
+	req.UserAgent = userAgentParam.ToString()
 	return req
 }
 
