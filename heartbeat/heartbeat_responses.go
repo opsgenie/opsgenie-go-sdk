@@ -13,7 +13,7 @@ type UpdateHeartbeatResponse struct {
 }
 
 type EnableHeartbeatResponse struct {
-	Status 	string	`json:"status"`	
+	Status 	string	`json:"status"`
 	Code	int	`json:"code"`
 }
 
@@ -41,15 +41,15 @@ type GetHeartbeatResponse struct {
 
 type ListHeartbeatsResponse struct {
 	Heartbeats []struct {
-			Id				string	`json:"id"`
-			Name			string	`json:"name"`
-			Status			string	`json:"status"`
-			Description		string	`json:"description"`
-			Enabled 		bool	`json:"enabled"`
-			LastHeartbeat	uint64	`json:"lastHeartBeat"`
-			Interval		int		`json:"interval"`
-			IntervalUnit	string 	`json:"intervalUnit"`
-			Expired			bool	`json:"expired"`
+		Id				string	`json:"id"`
+		Name			string	`json:"name"`
+		Status			string	`json:"status"`
+		Description		string	`json:"description"`
+		Enabled 		bool	`json:"enabled"`
+		LastHeartbeat	uint64	`json:"lastHeartBeat"`
+		Interval		int		`json:"interval"`
+		IntervalUnit	string 	`json:"intervalUnit"`
+		Expired			bool	`json:"expired"`
 	}	`json:"heartbeats"`
 }
 
@@ -57,6 +57,6 @@ type SendHeartbeatResponse struct {
 	WillExpireAt 	uint64		`json:"willExpireAt"`
 	Status			string 		`json:"status"`
 	Heartbeat 		uint64 		`json:"heartbeat"`
-	Took			int 		`json:"took"`	
-	Code			int 		`json:"code"`	
+	Took			int 		`json:"took"`
+	Code			int 		`json:"code"`
 }

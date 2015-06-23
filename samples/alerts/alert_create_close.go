@@ -7,7 +7,7 @@ import (
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
 )
 
-const API_KEY string = "YOUR API KEY HERE"
+var API_KEY string = "YOUR API KEY HERE"
 
 var NOTIFY_ARR []string = []string{"YOUR USERNAME HERE"}
 
@@ -15,7 +15,7 @@ func main() {
 	
 	cli := new (ogcli.OpsGenieClient)
 	cli.SetApiKey(API_KEY)
-	
+
 	alertCli, cliErr := cli.Alert()
 	
 	if cliErr != nil {
@@ -23,7 +23,7 @@ func main() {
 	}
 
 	// create the alert
-	req := alerts.CreateAlertRequest{Message: samples.RandString("Test", 8) }
+	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test", 8) }
 	response, alertErr := alertCli.Create(req)
 	
 	if alertErr != nil {
@@ -36,7 +36,7 @@ func main() {
 	fmt.Println("code:", response.Code)
 
 	// close the alert
-	cloreq := alerts.CloseAlertRequest{AlertId: response.AlertId, Notify: NOTIFY_ARR }
+	cloreq := alerts.CloseAlertRequest{Id: response.AlertId, Notify: NOTIFY_ARR }
 	cloresponse, alertErr := alertCli.Close(cloreq)
 	if alertErr != nil {
 		panic(alertErr)

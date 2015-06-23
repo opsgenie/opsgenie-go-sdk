@@ -5,10 +5,11 @@ import (
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	"fmt"
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
+	"os"
 )
 
-const API_KEY string = "YOUR API KEY HERE"
-const PATH_TO_FILE string = "/your/path/to/file/here"
+var API_KEY string = "YOUR API KEY HERE"
+var PATH_TO_FILE string = "/your/path/to/file/here"
 
 func main() {
 	cli := new (ogcli.OpsGenieClient)
@@ -21,7 +22,7 @@ func main() {
 	}
 
 	// create the alert
-	req := alerts.CreateAlertRequest{Message: samples.RandString("Test", 8) }
+	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test", 8) }
 	response, alertErr := alertCli.Create(req)
 	
 	if alertErr != nil {
@@ -33,7 +34,13 @@ func main() {
 	fmt.Println("status:", 	response.Status)
 	fmt.Println("code:", 	response.Code)
 
-	attachFileReq := alerts.AttachFileAlertRequest{AlertId: response.AlertId, Attachment: PATH_TO_FILE, }
+	file, err := os.OpenFile(PATH_TO_FILE, os.O_RDWR, 0666)
+	if err != nil{
+		panic(err)
+	}
+	defer file.Close()
+
+	attachFileReq := alerts.AttachFileAlertRequest{Id: response.AlertId, Attachment: file, }
 	attachFileResp, attachFileErr := alertCli.AttachFile( attachFileReq )
 	
 	if attachFileErr != nil {

@@ -11,27 +11,26 @@ type ClientProxyConfiguration struct {
 	Username	string
 	Password	string
 	ProxyUri 	string
-	Secured		bool
+	Protocol	string
 }
 
 type HttpTransportSettings struct {
 	ConnectionTimeout	time.Duration
+	RequestTimeout		time.Duration
 	MaxRetryAttempts	int
 }
 
 func (proxy *ClientProxyConfiguration) ToString() string {
-	protocol := "http"
-	if proxy.Secured {
-		protocol = "https"
-	}
-
 	if proxy.ProxyUri != "" {
 		return proxy.ProxyUri
-	}	
-	if proxy.Username != "" && proxy.Password != "" {		
-		return fmt.Sprintf("%s://%s:%s@%s:%d", protocol, proxy.Username, proxy.Password, proxy.Host, proxy.Port)
+	}
+	if proxy.Protocol == ""{
+		proxy.Protocol = "http"
+	}
+	if proxy.Username != "" && proxy.Password != "" {
+		return fmt.Sprintf("%s://%s:%s@%s:%d", proxy.Protocol, proxy.Username, proxy.Password, proxy.Host, proxy.Port)
 	} else {
-		return fmt.Sprintf("%s://%s:%d", protocol, proxy.Host, proxy.Port )
+		return fmt.Sprintf("%s://%s:%d", proxy.Protocol, proxy.Host, proxy.Port )
 	}
 	return ""
 }

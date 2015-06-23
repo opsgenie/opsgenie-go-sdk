@@ -1,7 +1,5 @@
 package alerts
 
-import "strconv"
-
 type CreateAlertResponse struct	{
 	Message	string	`json:"message"`
 	AlertId	string	`json:"alertId"`
@@ -39,57 +37,47 @@ type GetAlertResponse struct {
 	Acknowledged bool				`json:"acknowledged"`
 	Owner	string					`json:"owner"`
 	Actions []string				`json:"actions"`
-	SystemData map[string]string	`json:"systemData"`
+	SystemData map[string]interface{}	`json:"systemData"`
 }
 
 func (res *GetAlertResponse) GetIntegrationType() string {
-	if val, ok := res.SystemData["integrationType"]; ok {
+	if val, ok := res.SystemData["integrationType"].(string); ok {
 		return val
 	}
 	return ""
 }
 func (res *GetAlertResponse) GetIntegrationId() string {
-	if val, ok := res.SystemData["integrationId"]; ok {
+	if val, ok := res.SystemData["integrationId"].(string); ok {
 		return val
 	}
 	return ""
 }
 func (res *GetAlertResponse) GetIntegrationName() string {
-	if val, ok := res.SystemData["integrationName"]; ok {
+	if val, ok := res.SystemData["integrationName"].(string); ok {
 		return val
 	}
 	return ""
 }
 func (res *GetAlertResponse) GetAckTime() int {
-	if val, ok := res.SystemData["ackTime"]; ok {
-		i, err := strconv.Atoi(val)
-		if err != nil {
-			return -1
-		} else {
-			return i
-		}
+	if val, ok := res.SystemData["ackTime"].(int); ok {
+		return val;
 	}
 	return -1
 }
 func (res *GetAlertResponse) GetAcknowledgedBy() string {
-	if val, ok := res.SystemData["acknowledgedBy"]; ok {
+	if val, ok := res.SystemData["acknowledgedBy"].(string); ok {
 		return val
 	}
 	return ""
 }
 func (res *GetAlertResponse) GetCloseTime() int {
-	if val, ok := res.SystemData["closeTime"]; ok {
-		i, err := strconv.Atoi(val)
-		if err != nil {
-			return -1
-		} else {
-			return i
-		}
+	if val, ok := res.SystemData["closeTime"].(int); ok {
+		return val;
 	}
 	return -1
 }
 func (res *GetAlertResponse) GetClosedBy() string {
-	if val, ok := res.SystemData["closedBy"]; ok {
+	if val, ok := res.SystemData["closedBy"].(string); ok {
 		return val
 	}
 	return ""
@@ -137,13 +125,12 @@ type ListAlertRecipientsResponse struct {
 		StateChangedAt int `json:"stateChangedAt"`
 	}`json:"users"`
 
-	Groups []struct {
-		Group map[string]struct {
-			Username string `json:"username"`
-			State string `json:"state"`
-			Method string `json:"method"`
-			StateChangedAt int `json:"stateChangedAt"`
-		}
+
+	Groups map[string][]struct {
+		Username string `json:"username"`
+		State string `json:"state"`
+		Method string `json:"method"`
+		StateChangedAt int `json:"stateChangedAt"`
 	}`json:"groups"`
 }
 
@@ -154,42 +141,42 @@ type AcknowledgeAlertResponse struct {
 
 type RenotifyAlertResponse struct {
 	Status 	string 	`json:"status"`
-	Code 	int 	`json:"code"`	
+	Code 	int 	`json:"code"`
 }
 
 type TakeOwnershipAlertResponse struct {
 	Status 	string 	`json:"status"`
-	Code 	int 	`json:"code"`	
+	Code 	int 	`json:"code"`
 }
 
 type AssignOwnerAlertResponse struct {
 	Status 	string 	`json:"status"`
-	Code 	int 	`json:"code"`	
+	Code 	int 	`json:"code"`
 }
 
 type AddTeamAlertResponse struct {
 	Status 	string 	`json:"status"`
-	Code 	int 	`json:"code"`	
+	Code 	int 	`json:"code"`
 }
 
 type AddRecipientAlertResponse struct {
 	Status 	string 	`json:"status"`
-	Code 	int 	`json:"code"`		
+	Code 	int 	`json:"code"`
 }
 
 type AddNoteAlertResponse struct {
 	Status 	string 	`json:"status"`
-	Code 	int 	`json:"code"`		
+	Code 	int 	`json:"code"`
 }
 
 type ExecuteActionAlertResponse struct {
 	Result 	string 	`json:"result"`
-	Code 	int 	`json:"code"`		
+	Code 	int 	`json:"code"`
 }
 
 type AttachFileAlertResponse struct {
 	Status 	string 	`json:"status"`
-	Code 	int 	`json:"code"`		
+	Code 	int 	`json:"code"`
 }
 
 

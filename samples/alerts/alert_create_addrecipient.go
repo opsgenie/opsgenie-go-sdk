@@ -8,12 +8,11 @@ import (
 )
 
 var API_KEY string = "YOUR API KEY HERE"
-
 func main() {
 	
 	cli := new (ogcli.OpsGenieClient)
 	cli.SetApiKey(API_KEY)
-
+	
 	alertCli, cliErr := cli.Alert()
 	
 	if cliErr != nil {
@@ -21,7 +20,7 @@ func main() {
 	}
 
 	// create the alert
-	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test", 8) }
+	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test",8) }
 	response, alertErr := alertCli.Create(req)
 	
 	if alertErr != nil {
@@ -33,13 +32,14 @@ func main() {
 	fmt.Println("status:", 	response.Status)
 	fmt.Println("code:", 	response.Code)
 
-	// acknowledge the alert
-	ackReq := alerts.AcknowledgeAlertRequest{ Id: response.AlertId }
-	ackResponse, alertErr := alertCli.Acknowledge(ackReq)
+	// add recipient
+	addRecipientReq := alerts.AddRecipientAlertRequest{ Id: response.AlertId, Recipient: "recipient", }
+	addRecipientResponse, alertErr := alertCli.AddRecipient(addRecipientReq)
+
 	if alertErr != nil {
 		panic(alertErr)
 	}
 
-	fmt.Println("status:", ackResponse.Status)
-	fmt.Println("code:", ackResponse.Code)
+	fmt.Println("status:",  addRecipientResponse.Status)
+	fmt.Println("code:",  addRecipientResponse.Code)
 }

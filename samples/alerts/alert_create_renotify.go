@@ -8,11 +8,8 @@ import (
 )
 
 var API_KEY string = "YOUR API KEY HERE"
-var USER string = "YOUR USERNAME HERE"
 
 func main() {
-	
-	
 	cli := new (ogcli.OpsGenieClient)
 	cli.SetApiKey(API_KEY)
 	
@@ -23,7 +20,7 @@ func main() {
 	}
 
 	// create the alert
-	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test", 8), Note: "Created for testing purposes", User: USER, }
+	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test",8), Note: "Created for testing purposes",}
 	response, alertErr := alertCli.Create(req)
 	
 	if alertErr != nil {
@@ -35,18 +32,13 @@ func main() {
 	fmt.Println("status:", response.Status)
 	fmt.Println("code:", response.Code)
 
-	// close the alert
-	getLogsReq := alerts.ListAlertLogsRequest{Id: response.AlertId}
-	getLogsResponse, alertErr := alertCli.ListLogs(getLogsReq)
+	// renotify
+	renReq := alerts.RenotifyAlertRequest{ Id: response.AlertId}
+	renResponse, alertErr := alertCli.Renotify(renReq)
 	if alertErr != nil {
 		panic(alertErr)
 	}
 
-	logs := getLogsResponse.Logs
-	for _, log := range logs {
-		fmt.Println("Owner:", log.Owner)
-		fmt.Println("Log:", log.Log)
-		fmt.Println("Log type:", log.LogType)
-		fmt.Println("Created at:", log.CreatedAt)
-	}
+	fmt.Println("status:", renResponse.Status)
+	fmt.Println("code:", renResponse.Code)
 }

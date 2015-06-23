@@ -7,9 +7,9 @@ import (
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
 )
 
-const API_KEY string = "YOUR API KEY HERE"
+var API_KEY string = "YOUR API KEY HERE"
 
-const TEAM_NAME string = "YOUR TEAM NAME HERE"
+var TEAM_NAME string = "YOUR TEAM NAME HERE"
 
 func main() {
 	
@@ -23,7 +23,7 @@ func main() {
 	}
 
 	// create the alert
-	req := alerts.CreateAlertRequest{Message: samples.RandString("Test", 8) }
+	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test", 8) }
 	response, alertErr := alertCli.Create(req)
 	
 	if alertErr != nil {
@@ -36,7 +36,7 @@ func main() {
 	fmt.Println("code:", 	response.Code)
 
 	// assign the owner for the alert
-	addTeamReq := alerts.AddTeamAlertRequest{ AlertId: response.AlertId, Team: TEAM_NAME, }
+	addTeamReq := alerts.AddTeamAlertRequest{ Id: response.AlertId, Team: TEAM_NAME, }
 	addTeamResponse, alertErr := alertCli.AddTeam(addTeamReq)
 	
 	if alertErr != nil {

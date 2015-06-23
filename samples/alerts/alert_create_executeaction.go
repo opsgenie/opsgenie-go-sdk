@@ -7,14 +7,14 @@ import (
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
 )
 
-const API_KEY string = "YOUR API KEY HERE"
+var API_KEY string = "YOUR API KEY HERE"
 var ACTIONS []string = []string{"ping", "pong"}
-const ACTION_TO_EXEC string = "pong"
+var ACTION_TO_EXEC string = "pong"
 
 func main() {
 	
 	cli := new (ogcli.OpsGenieClient)
-	cli.SetApiKey()
+	cli.SetApiKey(API_KEY)
 	
 	alertCli, cliErr := cli.Alert()
 	
@@ -23,7 +23,7 @@ func main() {
 	}
 
 	// create the alert
-	req := alerts.CreateAlertRequest{Message: fmt.Sprintf("Test - %s", randSeq(10)), Actions: ACTIONS, }
+	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test - ",10), Actions: ACTIONS,}
 	response, alertErr := alertCli.Create(req)
 	
 	if alertErr != nil {
@@ -36,7 +36,7 @@ func main() {
 	fmt.Println("code:", 	response.Code)
 
 	// execute sample 'pong' action for the alert
-	execActionReq := alerts.ExecuteActionAlertRequest{ AlertId: response.AlertId, Action: ACTION_TO_EXEC, Note: "Action <b>pong</b> executed by the Go API" }
+	execActionReq := alerts.ExecuteActionAlertRequest{ Id: response.AlertId, Action: ACTION_TO_EXEC, Note: "Action <b>pong</b> executed by the Go API" }
 	execActionResponse, alertErr := alertCli.ExecuteAction(execActionReq)
 	
 	if alertErr != nil {

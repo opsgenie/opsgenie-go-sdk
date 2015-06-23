@@ -3,10 +3,10 @@ package heartbeat
 type AddHeartbeatRequest struct {
 	ApiKey string 		`json:"apiKey,omitempty"`
 	Name string			`json:"name,omitempty"`
-	Interval int 			`json:"interval,omitempty"`
+	Interval int 		`json:"interval,omitempty"`
 	IntervalUnit string	`json:"intervalUnit,omitempty"`
 	Description string	`json:"description,omitempty"`
-	Enabled bool		`json:"enabled,omitempty"`
+	Enabled *bool		`json:"enabled,omitempty"`
 }
 
 type UpdateHeartbeatRequest struct {
@@ -16,19 +16,19 @@ type UpdateHeartbeatRequest struct {
 	Interval int 		`json:"interval,omitempty"`
 	IntervalUnit string `json:"intervalUnit,omitempty"`
 	Description string 	`json:"description,omitempty"`
-	Enabled bool 		`json:"enabled,omitempty"`
+	Enabled *bool 		`json:"enabled,omitempty"`
 }
 
 type EnableHeartbeatRequest struct {
-	ApiKey string	`url:"apiKey,omitempty"`
-	Id string		`url:"id,omitempty"`
-	Name string		`url:"name,omitempty"`
+	ApiKey string	`json:"apiKey,omitempty"`
+	Id string		`json:"id,omitempty"`
+	Name string		`json:"name,omitempty"`
 }
 
 type DisableHeartbeatRequest struct {
-	ApiKey string	`url:"apiKey,omitempty"`
-	Id string		`url:"id,omitempty"`
-	Name string		`url:"name,omitempty"`
+	ApiKey string	`json:"apiKey,omitempty"`
+	Id string		`json:"id,omitempty"`
+	Name string		`json:"name,omitempty"`
 }
 
 type DeleteHeartbeatRequest struct {
@@ -49,5 +49,5 @@ type ListHeartbeatsRequest struct {
 
 type SendHeartbeatRequest struct {
 	ApiKey 	string	`json:"apiKey,omitempty"`
-	Name 	string	`json:"name,omitempty"` 
+	Name 	string	`json:"name,omitempty"`
 }

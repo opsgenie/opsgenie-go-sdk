@@ -1,8 +1,11 @@
 package alerts
 
+import (
+	"os"
+)
 type AcknowledgeAlertRequest struct {
 	ApiKey	string	`json:"apiKey,omitempty"`
-	AlertId	string	`json:"alertId,omitempty"`
+	Id	string	`json:"id,omitempty"`
 	Alias	string 	`json:"alias,omitempty"`
 	User	string	`json:"user,omitempty"`
 	Note	string	`json:"note,omitempty"`
@@ -11,7 +14,7 @@ type AcknowledgeAlertRequest struct {
 
 type AddNoteAlertRequest struct {
 	ApiKey 	string	`json:"apiKey,omitempty"`
-	AlertId	string	`json:"alertId,omitempty"`
+	Id	string	`json:"id,omitempty"`
 	Alias	string	`json:"alias,omitempty"`
 	Note 	string	`json:"note,omitempty"`
 	User	string	`json:"user,omitempty"`
@@ -20,9 +23,9 @@ type AddNoteAlertRequest struct {
 
 type AddRecipientAlertRequest struct {
 	ApiKey	string		`json:"apiKey,omitempty"`
-	AlertId	string		`json:"alertId,omitempty"`
+	Id	string		`json:"id,omitempty"`
 	Alias	string		`json:"alias,omitempty"`
-	Recipient string	`json:"recipient,omitempty"`	
+	Recipient string	`json:"recipient,omitempty"`
 	User	string		`json:"user,omitempty"`
 	Note	string		`json:"note,omitempty"`
 	Source	string		`json:"source,omitempty"`
@@ -30,7 +33,7 @@ type AddRecipientAlertRequest struct {
 
 type AddTeamAlertRequest struct {
 	ApiKey string	`json:"apiKey,omitempty"`
-	AlertId	string	`json:"alertId,omitempty"`
+	Id	string	`json:"id,omitempty"`
 	Alias	string	`json:"alias,omitempty"`
 	Team 	string	`json:"team,omitempty"`
 	User	string	`json:"user,omitempty"`
@@ -39,7 +42,7 @@ type AddTeamAlertRequest struct {
 }
 type AssignOwnerAlertRequest struct {
 	ApiKey 	string	`json:"apiKey,omitempty"`
-	AlertId	string 	`json:"alertId,omitempty"`
+	Id	string 	`json:"id,omitempty"`
 	Alias 	string	`json:"alias,omitempty"`
 	Owner	string	`json:"owner,omitempty"`
 	User	string	`json:"user,omitempty"`
@@ -49,9 +52,9 @@ type AssignOwnerAlertRequest struct {
 
 type AttachFileAlertRequest struct {
 	ApiKey 	string		`json:"apiKey,omitempty"`
-	AlertId	string		`json:"alertId,omitempty"`
+	Id	string		`json:"id,omitempty"`
 	Alias	string		`json:"alias,omitempty"`
-	Attachment	string	`json:"attachment,omitempty"`
+	Attachment	*os.File	`json:"attachment,omitempty"`
 	User	string		`json:"user,omitempty"`
 	Source	string		`json:"source,omitempty"`
 	IndexFile	string	`json:"indexFile,omitempty"`
@@ -61,7 +64,7 @@ type AttachFileAlertRequest struct {
 
 type CloseAlertRequest struct {
 	ApiKey	string		`json:"apiKey,omitempty"`
-	AlertId	string		`json:"alertId,omitempty"`
+	Id	string		`json:"id,omitempty"`
 	Alias	string		`json:"alias,omitempty"`
 	User	string		`json:"user,omitempty"`
 	Note	string		`json:"note,omitempty"`
@@ -79,7 +82,7 @@ type CreateAlertRequest struct {
 	Actions	[]string 		`json:"actions,omitempty"`
 	Source	string 			`json:"source,omitempty"`
 	Tags	[]string 		`json:"tags,omitempty"`
-	Details	[]string 		`json:"details,omitempty"`
+	Details	map[string]string		`json:"details,omitempty"`
 	Entity	string 			`json:"entity,omitempty"`
 	User	string 			`json:"user,omitempty"`
 	Note	string 			`json:"note,omitempty"`
@@ -87,7 +90,7 @@ type CreateAlertRequest struct {
 
 type DeleteAlertRequest struct {
 	ApiKey 		string 	`url:"apiKey,omitempty"`
-	AlertId 	string 	`url:"alertId,omitempty"`
+	Id 	string 	`url:"id,omitempty"`
 	Alias 		string 	`url:"alias,omitempty"`
 	User 		string 	`url:"user,omitempty"`
 	Source 		string 	`url:"source,omitempty"`
@@ -95,7 +98,7 @@ type DeleteAlertRequest struct {
 
 type ExecuteActionAlertRequest struct {
 	ApiKey	string 	`json:"apiKey,omitempty"`
-	AlertId	string	`json:"alertId,omitempty"`
+	Id	string	`json:"id,omitempty"`
 	Alias	string	`json:"alias,omitempty"`
 	Action 	string	`json:"action,omitempty"`
 	User 	string	`json:"user,omitempty"`
@@ -132,7 +135,7 @@ type ListAlertRecipientsRequest struct {
 	ApiKey	string	`url:"apiKey,omitempty"`
 	Id		string	`url:"id,omitempty"`
 	Alias	string	`url:"alias,omitempty"`
-}	
+}
 
 type ListAlertsRequest struct {
 	ApiKey 			string 	`url:"apiKey,omitempty"`
@@ -148,7 +151,7 @@ type ListAlertsRequest struct {
 
 type RenotifyAlertRequest struct {
 	ApiKey 	string			`json:"apiKey,omitempty"`
-	AlertId	string 			`json:"alertId,omitempty"`
+	Id	string 			`json:"id,omitempty"`
 	Alias	string			`json:"alias,omitempty"`
 	Recipients	[]string	`json:"recipients,omitempty"`
 	User	string			`json:"user,omitempty"`
@@ -158,7 +161,7 @@ type RenotifyAlertRequest struct {
 
 type TakeOwnershipAlertRequest struct {
 	ApiKey string 		`json:"apiKey,omitempty"`
-	AlertId 	string 	`json:"alertId,omitempty"`
+	Id 	string 	`json:"id,omitempty"`
 	Alias		string	`json:"alias,omitempty"`
 	User 		string	`json:"user,omitempty"`
 	Note		string	`json:"note,omitempty"`

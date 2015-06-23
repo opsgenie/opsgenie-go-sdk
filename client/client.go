@@ -30,14 +30,19 @@ import (
 	"time"
 	"runtime"
 	"fmt"
+	"github.com/franela/goreq"
+	"github.com/opsgenie/opsgenie-go-sdk/logging"
+	goquery "github.com/google/go-querystring/query"
+	"encoding/json"
 )
 
 // OpsGenie Go SDK performs HTTP calls to the Web API.
 // The Web API is designated by a URL so called an endpoint
-const ENDPOINT_URL string = "https://api.opsgenie.com" 
+var ENDPOINT_URL = "https://api.opsgenie.com"
 
-const DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS time.Duration = 1
-const DEFAULT_MAX_RETRY_ATTEMPTS int = 1
+const DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS time.Duration = 50 * time.Second
+const DEFAULT_REQUEST_TIMEOUT_IN_SECONDS time.Duration = 100 * time.Second
+const DEFAULT_MAX_RETRY_ATTEMPTS int = 5
 const TIME_SLEEP_BETWEEN_REQUESTS time.Duration = 500 * time.Millisecond
 
 // User-Agent values tool/version (OS;GO_Version;language)
@@ -50,24 +55,23 @@ type RequestHeaderUserAgent struct {
 }
 
 func (p RequestHeaderUserAgent) ToString() string {
-	return fmt.Sprintf("%s/%s (%s;%s;%s)", p.sdkName, p.version, p.os, p.goVersion, p.timezone)	
+	return fmt.Sprintf("%s/%s (%s;%s;%s)", p.sdkName, p.version, p.os, p.goVersion, p.timezone)
 }
 
 var userAgentParam RequestHeaderUserAgent
 
 // OpsGenieClient is a general data type used for:
 // 	- authenticating callers through their api keys and 
-// 	- instanciating "alert" and "heartbeat" clients
+// 	- instantiating "alert" and "heartbeat" clients
 //	- setting HTTP transport layer configurations
 type OpsGenieClient struct {
 	proxy *ClientProxyConfiguration
 	httpTransportSettings *HttpTransportSettings
 	apiKey string
+	opsGenieApiUrl string
 }
-// Setters:
-//	- proxy
-//	- http transport layer conf
-//	- api key
+
+// Setters
 func (cli *OpsGenieClient) SetClientProxyConfiguration(conf *ClientProxyConfiguration) {
 	cli.proxy = conf
 }
@@ -76,99 +80,196 @@ func (cli *OpsGenieClient) SetHttpTransportSettings(settings *HttpTransportSetti
 	cli.httpTransportSettings = settings
 }
 
-func (cli *OpsGenieClient) SetApiKey(key string) error {
-	if key == "" {
-		return errors.New("API Key can not be empty")
-	}
+func (cli *OpsGenieClient) SetApiKey(key string){
 	cli.apiKey = key
-	return nil
 }
 
-// Instanciates a new OpsGenieAlertClient
+func (cli *OpsGenieClient) SetOpsGenieApiUrl(url string){
+	if url != "" {
+		cli.opsGenieApiUrl = url
+	}
+}
+
+func (cli *OpsGenieClient) GetOpsGenieApiUrl() string{
+	if cli.opsGenieApiUrl == ""{
+		cli.opsGenieApiUrl = ENDPOINT_URL
+	}
+	return cli.opsGenieApiUrl
+}
+
+func (cli *OpsGenieClient) GetApiKey() string{
+	return cli.apiKey
+}
+
+func (cli *OpsGenieClient) MakeHttpTransportSettings(){
+	if cli.httpTransportSettings != nil {
+		if cli.httpTransportSettings.MaxRetryAttempts <= 0 {
+			cli.httpTransportSettings.MaxRetryAttempts = DEFAULT_MAX_RETRY_ATTEMPTS
+		}
+		if cli.httpTransportSettings.ConnectionTimeout <= 0 {
+			cli.httpTransportSettings.ConnectionTimeout = DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS
+		}
+		if cli.httpTransportSettings.RequestTimeout <= 0 {
+			cli.httpTransportSettings.RequestTimeout = DEFAULT_REQUEST_TIMEOUT_IN_SECONDS
+		}
+	}else{
+		cli.httpTransportSettings = &HttpTransportSettings{MaxRetryAttempts: DEFAULT_MAX_RETRY_ATTEMPTS, ConnectionTimeout: DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS, RequestTimeout: DEFAULT_REQUEST_TIMEOUT_IN_SECONDS}
+	}
+}
+
+// Instantiates a new OpsGenieAlertClient
 // and sets the api key to be used alongside the execution.
 func (cli *OpsGenieClient) Alert() (*OpsGenieAlertClient, error) {
-	if cli.apiKey == "" {
-		return nil, errors.New("API Key should be set first")
-	}
-	alertClient := new (OpsGenieAlertClient)
-	alertClient.apiKey = cli.apiKey
-	if cli.proxy != nil {
-		alertClient.proxy = cli.proxy.ToString()	
-	}
-	alertClient.SetConnectionTimeout( DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS * time.Second )
-	alertClient.SetMaxRetryAttempts( DEFAULT_MAX_RETRY_ATTEMPTS )
+	cli.MakeHttpTransportSettings()
 
-	if cli.httpTransportSettings != nil {
-		if cli.httpTransportSettings.ConnectionTimeout > 0 {
-			alertClient.SetConnectionTimeout( cli.httpTransportSettings.ConnectionTimeout )			
-		}
-		if cli.httpTransportSettings.MaxRetryAttempts > 0 {
-			alertClient.SetMaxRetryAttempts(cli.httpTransportSettings.MaxRetryAttempts)
-		}
+	alertClient := new (OpsGenieAlertClient)
+	alertClient.SetOpsGenieClient(*cli)
+
+	if cli.opsGenieApiUrl == ""{
+		alertClient.SetOpsGenieApiUrl(ENDPOINT_URL)
 	}
+
 	return alertClient, nil
 }
-// Instanciates a new OpsGenieHeartbeatClient
+// Instantiates a new OpsGenieHeartbeatClient
 // and sets the api key to be used alongside the execution.
 func (cli *OpsGenieClient) Heartbeat() (*OpsGenieHeartbeatClient, error) {
-	if cli.apiKey == "" {
-		return nil, errors.New("API Key should be set first")
-	}
+	cli.MakeHttpTransportSettings()
+
 	heartbeatClient := new (OpsGenieHeartbeatClient)
-	heartbeatClient.apiKey = cli.apiKey
-	if cli.proxy != nil {
-		heartbeatClient.proxy = cli.proxy.ToString()	
-	}
-	heartbeatClient.SetConnectionTimeout(DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS * time.Second)
-	heartbeatClient.SetMaxRetryAttempts(DEFAULT_MAX_RETRY_ATTEMPTS)
-	if cli.httpTransportSettings != nil {
-		if cli.httpTransportSettings.ConnectionTimeout > 0 {
-			heartbeatClient.SetConnectionTimeout(cli.httpTransportSettings.ConnectionTimeout)			
-		}
+	heartbeatClient.SetOpsGenieClient(*cli)
+
+	if cli.opsGenieApiUrl == ""{
+		heartbeatClient.SetOpsGenieApiUrl(ENDPOINT_URL)
 	}
 
 	return heartbeatClient, nil
 }
-// Instanciates a new OpsGenieIntegrationClient
+// Instantiates a new OpsGenieIntegrationClient
 // and sets the api key to be used alongside the execution.
 func (cli *OpsGenieClient) Integration() (*OpsGenieIntegrationClient, error) {
-	if cli.apiKey == "" {
-		return nil, errors.New("API Key should be set first")
-	}
+	cli.MakeHttpTransportSettings()
+
 	integrationClient := new (OpsGenieIntegrationClient)
-	integrationClient.apiKey = cli.apiKey
-	if cli.proxy != nil {
-		integrationClient.proxy = cli.proxy.ToString()	
+	integrationClient.SetOpsGenieClient(*cli)
+
+	if cli.opsGenieApiUrl == ""{
+		integrationClient.SetOpsGenieApiUrl(ENDPOINT_URL)
 	}
-	integrationClient.SetConnectionTimeout(DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS * time.Second)
-	integrationClient.SetMaxRetryAttempts(DEFAULT_MAX_RETRY_ATTEMPTS)	
-	if cli.httpTransportSettings != nil {
-		if cli.httpTransportSettings.ConnectionTimeout > 0 {
-			integrationClient.SetConnectionTimeout(cli.httpTransportSettings.ConnectionTimeout)			
-		}
-	}	
+
 	return integrationClient, nil
 }
 
-// Instanciates a new OpsGeniePolicyClient
+// Instantiates a new OpsGeniePolicyClient
 // and sets the api key to be used alongside the execution.
 func (cli *OpsGenieClient) Policy() (*OpsGeniePolicyClient, error) {
-	if cli.apiKey == "" {
-		return nil, errors.New("API Key should be set first")
-	}
+	cli.MakeHttpTransportSettings()
+
 	policyClient := new (OpsGeniePolicyClient)
-	policyClient.apiKey = cli.apiKey
-	if cli.proxy != nil {
-		policyClient.proxy = cli.proxy.ToString()	
+	policyClient.SetOpsGenieClient(*cli)
+
+	if cli.opsGenieApiUrl == ""{
+		policyClient.SetOpsGenieApiUrl(ENDPOINT_URL)
 	}
-	policyClient.SetConnectionTimeout(DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS * time.Second)
-	policyClient.SetMaxRetryAttempts(DEFAULT_MAX_RETRY_ATTEMPTS)	
-	if cli.httpTransportSettings != nil {
-		if cli.httpTransportSettings.ConnectionTimeout > 0 {
-			policyClient.SetConnectionTimeout(cli.httpTransportSettings.ConnectionTimeout)	
-		}
-	}	
+
 	return policyClient, nil
+}
+
+func (cli *OpsGenieClient) buildCommonRequestProps() goreq.Request{
+	if cli.httpTransportSettings == nil{
+		cli.MakeHttpTransportSettings()
+	}
+	goreq.SetConnectTimeout(cli.httpTransportSettings.ConnectionTimeout)
+	req := goreq.Request{}
+	if cli.proxy != nil {
+		req.Proxy = cli.proxy.ToString()
+	}
+	req.UserAgent = userAgentParam.ToString()
+	req.Timeout = cli.httpTransportSettings.RequestTimeout
+	req.Insecure = true
+//	req.AddHeader("Connection","Keep-Alive")
+
+	return req
+}
+
+func (cli * OpsGenieClient) buildGetRequest(uri string, request interface{}) goreq.Request{
+	req := cli.buildCommonRequestProps()
+	req.Method = "GET"
+	req.ContentType = "application/x-www-form-urlencoded; charset=UTF-8"
+	uri = cli.opsGenieApiUrl + uri
+	v, _ := goquery.Values(request)
+	req.Uri = uri + "?" + v.Encode()
+	logging.Logger().Info("Executing OpsGenie request to ["+ uri + "] with parameters: ", v)
+	return req
+}
+
+func (cli * OpsGenieClient) buildPostRequest(uri string, request interface{}) goreq.Request{
+	req := cli.buildCommonRequestProps()
+	req.Method = "POST"
+	req.ContentType = "application/json; charset=utf-8"
+	req.Uri = cli.opsGenieApiUrl + uri
+	req.Body = request
+	j, _ := json.Marshal(request)
+	logging.Logger().Info("Executing OpsGenie request to ["+ req.Uri + "] with content parameters: ", string(j))
+
+	return req
+}
+
+func (cli * OpsGenieClient) buildDeleteRequest(uri string, request interface{}) goreq.Request{
+	req := cli.buildGetRequest(uri, request)
+	req.Method = "DELETE"
+	return req
+}
+
+func (cli *OpsGenieClient) sendRequest (req goreq.Request) (*goreq.Response, error) {
+	// send the request
+	var resp *goreq.Response
+	var err error
+	for i := 0; i < cli.httpTransportSettings.MaxRetryAttempts; i++ {
+		resp, err = req.Do()
+		if err == nil  && resp.StatusCode < 500{
+			break
+		}
+		if resp != nil{
+			defer resp.Body.Close()
+			logging.Logger().Info(fmt.Sprintf("Retrying request [%s] ResponseCode:[%d]. RetryCount: %d",req.Uri, resp.StatusCode,(i+1)))
+		}else{
+			logging.Logger().Info(fmt.Sprintf("Retrying request [%s] Reason:[%s]. RetryCount: %d",req.Uri, err.Error(),(i+1)))
+		}
+		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS * time.Duration(i+1))
+	}
+	if err != nil {
+		message := "Unable to send the request " + err.Error()
+		logging.Logger().Warn(message)
+		return nil, errors.New(message)
+	}
+	// check for the returning http status
+	statusCode := resp.StatusCode
+	if statusCode >= 400 {
+		body, err := resp.Body.ToString()
+		if err != nil{
+			message := "Server response with error can not be parsed " + err.Error()
+			logging.Logger().Warn(message)
+			return nil, errors.New(message)
+		}
+		return nil, getErrorMessage(statusCode, body)
+	}else{
+		return resp, nil
+	}
+}
+
+func getErrorMessage (httpStatusCode int, responseBody string) error {
+	if httpStatusCode >= 400 && httpStatusCode < 500 {
+		message := fmt.Sprintf("Client error occurred; Response Code: %d, Response Body: " + responseBody , httpStatusCode)
+		logging.Logger().Warn(message)
+		return errors.New(message)
+	}
+	if httpStatusCode >= 500 {
+		message := fmt.Sprintf("Server error occurred; Response Code: %d, Response Body: " + responseBody, httpStatusCode)
+		logging.Logger().Info(message)
+		return errors.New(message)
+	}
+	return nil
 }
 
 // Initializer for the package client

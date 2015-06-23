@@ -7,9 +7,8 @@ import (
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
 )
 
-const API_KEY string = "YOUR API KEY HERE"
-
-const OWNER string = "YOUR USERNAME HERE"
+var API_KEY string = "YOUR API KEY HERE"
+var OWNER string = "YOUR USERNAME HERE"
 
 func main() {
 	
@@ -23,7 +22,7 @@ func main() {
 	}
 
 	// create the alert
-	req := alerts.CreateAlertRequest{Message: samples.RandString("Test", 8) }
+	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test", 8) }
 	response, alertErr := alertCli.Create(req)
 	
 	if alertErr != nil {
@@ -36,7 +35,7 @@ func main() {
 	fmt.Println("code:", 	response.Code)
 
 	// assign the owner for the alert
-	assignOwnerReq := alerts.AssignOwnerAlertRequest{ AlertId: response.AlertId, Owner: OWNER, }
+	assignOwnerReq := alerts.AssignOwnerAlertRequest{ Id: response.AlertId, Owner: OWNER, }
 	assignOwnerResponse, alertErr := alertCli.AssignOwner(assignOwnerReq)
 	
 	if alertErr != nil {

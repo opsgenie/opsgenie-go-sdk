@@ -7,8 +7,8 @@ import (
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
 )
 
-const API_KEY string = "YOUR API KEY HERE"
-const USER string = "YOUR USERNAME HERE"
+var API_KEY string = "YOUR API KEY HERE"
+var USER string = "YOUR USERNAME HERE"
 
 func main() {
 	
@@ -22,7 +22,7 @@ func main() {
 	}
 
 	// create the alert
-	req := alerts.CreateAlertRequest{Message: samples.RandString("Test", 8), Note: "Created for testing purposes", User: USER, }
+	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test", 8), Note: "Created for testing purposes", User: USER, }
 	response, alertErr := alertCli.Create(req)
 	
 	if alertErr != nil {

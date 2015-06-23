@@ -7,9 +7,8 @@ import (
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
 )
 
-const API_KEY string ="YOUR API KEY HERE"
-
-const SOURCE string = "Go API"
+var API_KEY string ="YOUR API KEY HERE"
+var SOURCE string = "Go API"
 
 func main() {
 	
@@ -23,7 +22,7 @@ func main() {
 	}
 
 	// create the alert
-	req := alerts.CreateAlertRequest{Message: samples.RandString("Test", 8) }
+	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test", 8) }
 	response, alertErr := alertCli.Create(req)
 	
 	if alertErr != nil {
@@ -36,7 +35,7 @@ func main() {
 	fmt.Println("code:", response.Code)
 
 	// delete the alert
-	delreq := alerts.DeleteAlertRequest{AlertId: response.AlertId, Source: SOURCE }
+	delreq := alerts.DeleteAlertRequest{Id: response.AlertId, Source: SOURCE }
 	cloresponse, alertErr := alertCli.Delete(delreq)
 	if alertErr != nil {
 		panic(alertErr)

@@ -1,0 +1,8 @@
+alert:
+    apiKey: ac82a3bf-7845-4ab8-ae3e-8a4e38bc946f
+    user: tuba@ifountain.com
+    actions:
+        - ping
+        - pong
+
+opsgenie.api.url: http://192.168.2.221:9000

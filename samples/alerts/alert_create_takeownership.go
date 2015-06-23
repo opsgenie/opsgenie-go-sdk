@@ -7,7 +7,7 @@ import (
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
 )
 
-const API_KEY string = "YOUR API KEY HERE"
+var API_KEY string = "YOUR API KEY HERE"
 
 func main() {
 	
@@ -21,7 +21,7 @@ func main() {
 	}
 
 	// create the alert
-	req := alerts.CreateAlertRequest{Message: samples.RandString("Test", 8) }
+	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test", 8) }
 	response, alertErr := alertCli.Create(req)
 	
 	if alertErr != nil {
@@ -34,7 +34,7 @@ func main() {
 	fmt.Println("code:", 	response.Code)
 
 	// take ownership of the alert
-	takeOwnershipReq := alerts.TakeOwnershipAlertRequest{ AlertId: response.AlertId }
+	takeOwnershipReq := alerts.TakeOwnershipAlertRequest{ Id: response.AlertId }
 	takeOwnershipResponse, alertErr := alertCli.TakeOwnership(takeOwnershipReq)
 	
 	if alertErr != nil {
