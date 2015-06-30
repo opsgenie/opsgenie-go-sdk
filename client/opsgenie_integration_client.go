@@ -2,6 +2,7 @@ package client
 
 import (
 	"errors"
+
 	integration "github.com/opsgenie/opsgenie-go-sdk/integration"
 	"github.com/opsgenie/opsgenie-go-sdk/logging"
 )

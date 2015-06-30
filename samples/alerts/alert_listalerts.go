@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	alerts "github.com/opsgenie/opsgenie-go-sdk/alerts"
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 )

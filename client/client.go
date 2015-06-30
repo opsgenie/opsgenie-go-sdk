@@ -29,11 +29,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"runtime"
+	"time"
+
 	"github.com/franela/goreq"
 	goquery "github.com/google/go-querystring/query"
 	"github.com/opsgenie/opsgenie-go-sdk/logging"
-	"runtime"
-	"time"
 )
 
 // OpsGenie Go SDK performs HTTP calls to the Web API.

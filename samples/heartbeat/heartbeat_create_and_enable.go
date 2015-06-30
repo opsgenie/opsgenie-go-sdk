@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	hb "github.com/opsgenie/opsgenie-go-sdk/heartbeat"
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"

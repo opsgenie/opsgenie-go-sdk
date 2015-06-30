@@ -1,12 +1,13 @@
 package test
 
 import (
-	hb "github.com/opsgenie/opsgenie-go-sdk/heartbeat"
-	"github.com/stretchr/testify/require"
-	"github.com/stretchr/testify/suite"
 	"strings"
 	"testing"
 	"time"
+
+	hb "github.com/opsgenie/opsgenie-go-sdk/heartbeat"
+	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/suite"
 )
 
 type HeartbeatTestSuite struct {

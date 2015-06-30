@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	itg "github.com/opsgenie/opsgenie-go-sdk/integration"
 )

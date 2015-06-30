@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
+	"os"
+
 	alerts "github.com/opsgenie/opsgenie-go-sdk/alerts"
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
-	"os"
 )
 
 var API_KEY string = "YOUR API KEY HERE"

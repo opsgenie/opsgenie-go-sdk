@@ -2,13 +2,14 @@ package test
 
 import (
 	"fmt"
-	alerts "github.com/opsgenie/opsgenie-go-sdk/alerts"
-	"github.com/stretchr/testify/require"
 	"os"
 	"strconv"
 	"strings"
 	"testing"
 	"time"
+
+	alerts "github.com/opsgenie/opsgenie-go-sdk/alerts"
+	"github.com/stretchr/testify/require"
 )
 
 type RenotifyWaitAction struct {

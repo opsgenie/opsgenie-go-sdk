@@ -8,8 +8,6 @@ import (
 	"crypto/tls"
 	"errors"
 	"fmt"
-	"github.com/opsgenie/opsgenie-go-sdk/alerts"
-	"github.com/opsgenie/opsgenie-go-sdk/logging"
 	"io"
 	"io/ioutil"
 	"mime/multipart"
@@ -19,6 +17,9 @@ import (
 	"os"
 	"path/filepath"
 	"time"
+
+	"github.com/opsgenie/opsgenie-go-sdk/alerts"
+	"github.com/opsgenie/opsgenie-go-sdk/logging"
 )
 
 const (

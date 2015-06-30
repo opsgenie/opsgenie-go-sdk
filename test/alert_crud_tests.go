@@ -1,12 +1,13 @@
 package test
 
 import (
-	alerts "github.com/opsgenie/opsgenie-go-sdk/alerts"
-	"github.com/stretchr/testify/require"
-	"github.com/stretchr/testify/suite"
 	"strings"
 	"testing"
 	"time"
+
+	alerts "github.com/opsgenie/opsgenie-go-sdk/alerts"
+	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/suite"
 )
 
 type AlertTestSuite struct {

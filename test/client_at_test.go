@@ -3,6 +3,10 @@ package test
 import (
 	"errors"
 	"fmt"
+	"io/ioutil"
+	"os"
+	"testing"
+
 	"github.com/franela/goreq"
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	itg "github.com/opsgenie/opsgenie-go-sdk/integration"
@@ -10,9 +14,6 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 	yaml "gopkg.in/yaml.v2"
-	"io/ioutil"
-	"os"
-	"testing"
 )
 
 type ClientTestConfig struct {
