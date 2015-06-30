@@ -1,9 +1,9 @@
 package main
 
 import (
+	"fmt"
 	alerts "github.com/opsgenie/opsgenie-go-sdk/alerts"
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
-	"fmt"
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
 )
 
@@ -12,20 +12,20 @@ var API_KEY string = "YOUR API KEY HERE"
 var NOTIFY_ARR []string = []string{"YOUR USERNAME HERE"}
 
 func main() {
-	
-	cli := new (ogcli.OpsGenieClient)
+
+	cli := new(ogcli.OpsGenieClient)
 	cli.SetApiKey(API_KEY)
 
 	alertCli, cliErr := cli.Alert()
-	
+
 	if cliErr != nil {
 		panic(cliErr)
 	}
 
 	// create the alert
-	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test", 8) }
+	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test", 8)}
 	response, alertErr := alertCli.Create(req)
-	
+
 	if alertErr != nil {
 		panic(alertErr)
 	}
@@ -36,7 +36,7 @@ func main() {
 	fmt.Println("code:", response.Code)
 
 	// close the alert
-	cloreq := alerts.CloseAlertRequest{Id: response.AlertId, Notify: NOTIFY_ARR }
+	cloreq := alerts.CloseAlertRequest{Id: response.AlertId, Notify: NOTIFY_ARR}
 	cloresponse, alertErr := alertCli.Close(cloreq)
 	if alertErr != nil {
 		panic(alertErr)

@@ -1,14 +1,14 @@
 package client
 
 import (
-	policy "github.com/opsgenie/opsgenie-go-sdk/policy"
 	"errors"
 	"github.com/opsgenie/opsgenie-go-sdk/logging"
+	policy "github.com/opsgenie/opsgenie-go-sdk/policy"
 )
 
 const (
-	ENABLE_POLICY_URL 		= "/v1/json/alert/policy/enable"
-	DISABLE_POLICY_URL 		= "/v1/json/alert/policy/disable"
+	ENABLE_POLICY_URL  = "/v1/json/alert/policy/enable"
+	DISABLE_POLICY_URL = "/v1/json/alert/policy/disable"
 )
 
 type OpsGeniePolicyClient struct {
@@ -19,19 +19,19 @@ func (cli *OpsGeniePolicyClient) SetOpsGenieClient(ogCli OpsGenieClient) {
 	cli.OpsGenieClient = ogCli
 }
 
-func (cli *OpsGeniePolicyClient) Enable(req policy.EnablePolicyRequest) (*policy.EnablePolicyResponse, error){
+func (cli *OpsGeniePolicyClient) Enable(req policy.EnablePolicyRequest) (*policy.EnablePolicyResponse, error) {
 	req.ApiKey = cli.apiKey
 	resp, err := cli.sendRequest(cli.buildPostRequest(ENABLE_POLICY_URL, req))
 
 	if resp == nil {
 		return nil, err
-	}else {
+	} else {
 		defer resp.Body.Close()
 
 		// try to parse the returning JSON into the response
 		var enablePolicyResp policy.EnablePolicyResponse
 		if err = resp.Body.FromJsonTo(&enablePolicyResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -40,19 +40,19 @@ func (cli *OpsGeniePolicyClient) Enable(req policy.EnablePolicyRequest) (*policy
 	}
 }
 
-func (cli *OpsGeniePolicyClient) Disable(req policy.DisablePolicyRequest) (*policy.DisablePolicyResponse, error){
+func (cli *OpsGeniePolicyClient) Disable(req policy.DisablePolicyRequest) (*policy.DisablePolicyResponse, error) {
 	req.ApiKey = cli.apiKey
 	resp, err := cli.sendRequest(cli.buildPostRequest(DISABLE_POLICY_URL, req))
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		// try to parse the returning JSON into the response
 		var disablePolicyResp policy.DisablePolicyResponse
 		if err = resp.Body.FromJsonTo(&disablePolicyResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}

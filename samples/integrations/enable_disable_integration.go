@@ -1,25 +1,26 @@
 package main
 
 import (
-	itg "github.com/opsgenie/opsgenie-go-sdk/integration"
-	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	"fmt"
+	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
+	itg "github.com/opsgenie/opsgenie-go-sdk/integration"
 )
 
 var API_KEY string = "YOUR API KEY HERE"
 var INTEGRATION_NAME = "YOUR INTEGRATION NAME HERE"
+
 func main() {
-	cli := new (ogcli.OpsGenieClient)
+	cli := new(ogcli.OpsGenieClient)
 	cli.SetApiKey(API_KEY)
 	cli.SetOpsGenieApiUrl("http://localhost:9000")
 
 	integrationCli, cliErr := cli.Integration()
-	
+
 	if cliErr != nil {
 		panic(cliErr)
 	}
 	//disable integration
-	disableReq := itg.DisableIntegrationRequest{Name : INTEGRATION_NAME}
+	disableReq := itg.DisableIntegrationRequest{Name: INTEGRATION_NAME}
 	_, itgError := integrationCli.Disable(disableReq)
 
 	if itgError != nil {

@@ -1,44 +1,44 @@
 // Copyright 2015 OpsGenie. All rights reserved.
-// Use of this source code is governed by an Apache Software 
+// Use of this source code is governed by an Apache Software
 // license that can be found in the LICENSE file.
 package client
 
 import (
-	"github.com/opsgenie/opsgenie-go-sdk/alerts"
-	"io"
-	"os"
-	"fmt"
-	"mime/multipart"
-	"net/http"
 	"bytes"
-	"errors"
-	"net/url"
-	"time"
-	"io/ioutil"
 	"crypto/tls"
-	"net"
-	"path/filepath"
+	"errors"
+	"fmt"
+	"github.com/opsgenie/opsgenie-go-sdk/alerts"
 	"github.com/opsgenie/opsgenie-go-sdk/logging"
+	"io"
+	"io/ioutil"
+	"mime/multipart"
+	"net"
+	"net/http"
+	"net/url"
+	"os"
+	"path/filepath"
+	"time"
 )
 
-const(
-	CREATE_ALERT_URL 			= "/v1/json/alert"
-	CLOSE_ALERT_URL 			= "/v1/json/alert/close"
-	DELETE_ALERT_URL 			= "/v1/json/alert"
-	GET_ALERT_URL 				= "/v1/json/alert"
-	LIST_ALERTS_URL 			= "/v1/json/alert"
-	LIST_ALERT_NOTES_URL 		= "/v1/json/alert/note"
-	LIST_ALERT_LOGS_URL 		= "/v1/json/alert/log"
-	LIST_ALERT_RECIPIENTS_URL 	= "/v1/json/alert/recipient"
-	ACKNOWLEDGE_ALERT_URL 		= "/v1/json/alert/acknowledge"
-	RENOTIFY_ALERT_URL 			= "/v1/json/alert/renotify"
-	TAKE_OWNERSHIP_ALERT_URL 	= "/v1/json/alert/takeOwnership"
-	ASSIGN_OWNERSHIP_ALERT_URL 	= "/v1/json/alert/assign"
-	ADD_TEAM_ALERT_URL 			= "/v1/json/alert/team"
-	ADD_RECIPIENT_ALERT_URL 	= "/v1/json/alert/recipient"
-	ADD_NOTE_ALERT_URL 			= "/v1/json/alert/note"
-	EXECUTE_ACTION_ALERT_URL 	= "/v1/json/alert/executeAction"
-	ATTACH_FILE_ALERT_URL 		= "/v1/json/alert/attach"
+const (
+	CREATE_ALERT_URL           = "/v1/json/alert"
+	CLOSE_ALERT_URL            = "/v1/json/alert/close"
+	DELETE_ALERT_URL           = "/v1/json/alert"
+	GET_ALERT_URL              = "/v1/json/alert"
+	LIST_ALERTS_URL            = "/v1/json/alert"
+	LIST_ALERT_NOTES_URL       = "/v1/json/alert/note"
+	LIST_ALERT_LOGS_URL        = "/v1/json/alert/log"
+	LIST_ALERT_RECIPIENTS_URL  = "/v1/json/alert/recipient"
+	ACKNOWLEDGE_ALERT_URL      = "/v1/json/alert/acknowledge"
+	RENOTIFY_ALERT_URL         = "/v1/json/alert/renotify"
+	TAKE_OWNERSHIP_ALERT_URL   = "/v1/json/alert/takeOwnership"
+	ASSIGN_OWNERSHIP_ALERT_URL = "/v1/json/alert/assign"
+	ADD_TEAM_ALERT_URL         = "/v1/json/alert/team"
+	ADD_RECIPIENT_ALERT_URL    = "/v1/json/alert/recipient"
+	ADD_NOTE_ALERT_URL         = "/v1/json/alert/note"
+	EXECUTE_ACTION_ALERT_URL   = "/v1/json/alert/executeAction"
+	ATTACH_FILE_ALERT_URL      = "/v1/json/alert/attach"
 )
 
 type OpsGenieAlertClient struct {
@@ -55,13 +55,13 @@ func (cli *OpsGenieAlertClient) Create(req alerts.CreateAlertRequest) (*alerts.C
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		var createAlertResp alerts.CreateAlertResponse
 		// check if the response can be unmarshalled
 		if err = resp.Body.FromJsonTo(&createAlertResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -75,13 +75,13 @@ func (cli *OpsGenieAlertClient) Close(req alerts.CloseAlertRequest) (*alerts.Clo
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		var closeAlertResp alerts.CloseAlertResponse
 		// check if the response can be unmarshalled
-		if err =  resp.Body.FromJsonTo(&closeAlertResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+		if err = resp.Body.FromJsonTo(&closeAlertResp); err != nil {
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -95,13 +95,13 @@ func (cli *OpsGenieAlertClient) Delete(req alerts.DeleteAlertRequest) (*alerts.D
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		var deleteAlertResp alerts.DeleteAlertResponse
 		// check if the response can be unmarshalled
-		if err =  resp.Body.FromJsonTo(&deleteAlertResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+		if err = resp.Body.FromJsonTo(&deleteAlertResp); err != nil {
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -115,13 +115,13 @@ func (cli *OpsGenieAlertClient) Get(req alerts.GetAlertRequest) (*alerts.GetAler
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		var getAlertResp alerts.GetAlertResponse
 		// check if the response can be unmarshalled
-		if err =  resp.Body.FromJsonTo(&getAlertResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+		if err = resp.Body.FromJsonTo(&getAlertResp); err != nil {
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -135,13 +135,13 @@ func (cli *OpsGenieAlertClient) List(req alerts.ListAlertsRequest) (*alerts.List
 
 	if resp == nil {
 		return nil, errors.New(err.Error())
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		var listAlertsResp alerts.ListAlertsResponse
 		// check if the response can be unmarshalled
-		if err =  resp.Body.FromJsonTo(&listAlertsResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+		if err = resp.Body.FromJsonTo(&listAlertsResp); err != nil {
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -155,13 +155,13 @@ func (cli *OpsGenieAlertClient) ListNotes(req alerts.ListAlertNotesRequest) (*al
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		var listAlertNotesResp alerts.ListAlertNotesResponse
 		// check if the response can be unmarshalled
-		if err =  resp.Body.FromJsonTo(&listAlertNotesResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+		if err = resp.Body.FromJsonTo(&listAlertNotesResp); err != nil {
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -175,13 +175,13 @@ func (cli *OpsGenieAlertClient) ListLogs(req alerts.ListAlertLogsRequest) (*aler
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		var listAlertLogsResp alerts.ListAlertLogsResponse
 		// check if the response can be unmarshalled
-		if err =  resp.Body.FromJsonTo(&listAlertLogsResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+		if err = resp.Body.FromJsonTo(&listAlertLogsResp); err != nil {
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -195,13 +195,13 @@ func (cli *OpsGenieAlertClient) ListRecipients(req alerts.ListAlertRecipientsReq
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		var listAlertRecipientsResp alerts.ListAlertRecipientsResponse
 		// check if the response can be unmarshalled
-		if err =  resp.Body.FromJsonTo(&listAlertRecipientsResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+		if err = resp.Body.FromJsonTo(&listAlertRecipientsResp); err != nil {
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -215,13 +215,13 @@ func (cli *OpsGenieAlertClient) Acknowledge(req alerts.AcknowledgeAlertRequest) 
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		var acknowledgeAlertResp alerts.AcknowledgeAlertResponse
 		// check if the response can be unmarshalled
-		if err =  resp.Body.FromJsonTo(&acknowledgeAlertResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+		if err = resp.Body.FromJsonTo(&acknowledgeAlertResp); err != nil {
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -235,13 +235,13 @@ func (cli *OpsGenieAlertClient) Renotify(req alerts.RenotifyAlertRequest) (*aler
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		var renotifyAlertResp alerts.RenotifyAlertResponse
 		// check if the response can be unmarshalled
-		if err =  resp.Body.FromJsonTo(&renotifyAlertResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+		if err = resp.Body.FromJsonTo(&renotifyAlertResp); err != nil {
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -255,13 +255,13 @@ func (cli *OpsGenieAlertClient) TakeOwnership(req alerts.TakeOwnershipAlertReque
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		var takeOwnershipResp alerts.TakeOwnershipAlertResponse
 		// check if the response can be unmarshalled
-		if err =  resp.Body.FromJsonTo(&takeOwnershipResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+		if err = resp.Body.FromJsonTo(&takeOwnershipResp); err != nil {
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -275,13 +275,13 @@ func (cli *OpsGenieAlertClient) AssignOwner(req alerts.AssignOwnerAlertRequest) 
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		var assignOwnerAlertResp alerts.AssignOwnerAlertResponse
 		// check if the response can be unmarshalled
-		if err =  resp.Body.FromJsonTo(&assignOwnerAlertResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+		if err = resp.Body.FromJsonTo(&assignOwnerAlertResp); err != nil {
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -295,13 +295,13 @@ func (cli *OpsGenieAlertClient) AddTeam(req alerts.AddTeamAlertRequest) (*alerts
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		var addTeamAlertResp alerts.AddTeamAlertResponse
 		// check if the response can be unmarshalled
-		if err =  resp.Body.FromJsonTo(&addTeamAlertResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+		if err = resp.Body.FromJsonTo(&addTeamAlertResp); err != nil {
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -315,13 +315,13 @@ func (cli *OpsGenieAlertClient) AddRecipient(req alerts.AddRecipientAlertRequest
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		var addRecipientAlertResp alerts.AddRecipientAlertResponse
 		// check if the response can be unmarshalled
-		if err =  resp.Body.FromJsonTo(&addRecipientAlertResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+		if err = resp.Body.FromJsonTo(&addRecipientAlertResp); err != nil {
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -335,13 +335,13 @@ func (cli *OpsGenieAlertClient) AddNote(req alerts.AddNoteAlertRequest) (*alerts
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		var addNoteAlertResp alerts.AddNoteAlertResponse
 		// check if the response can be unmarshalled
-		if err =  resp.Body.FromJsonTo(&addNoteAlertResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+		if err = resp.Body.FromJsonTo(&addNoteAlertResp); err != nil {
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -355,13 +355,13 @@ func (cli *OpsGenieAlertClient) ExecuteAction(req alerts.ExecuteActionAlertReque
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		var executeActionAlertResp alerts.ExecuteActionAlertResponse
 		// check if the response can be unmarshalled
-		if err =  resp.Body.FromJsonTo(&executeActionAlertResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+		if err = resp.Body.FromJsonTo(&executeActionAlertResp); err != nil {
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -377,7 +377,7 @@ func (cli *OpsGenieAlertClient) AttachFile(req alerts.AttachFileAlertRequest) (*
 	path := req.Attachment.Name()
 	file, err := os.Open(path)
 	defer file.Close()
-	if err != nil{
+	if err != nil {
 		message := "Attachment can not be opened for reading. " + err.Error()
 		logging.Logger().Warn(message)
 		return nil, errors.New(message)
@@ -398,22 +398,22 @@ func (cli *OpsGenieAlertClient) AttachFile(req alerts.AttachFileAlertRequest) (*
 	// Add the other fields
 	// empty fields should not be placed into the request
 	// otherwise it yields an incomplete boundary exception
-	if req.ApiKey != ""{
-		if err = writeField(*w, "apiKey", req.ApiKey); err != nil{
+	if req.ApiKey != "" {
+		if err = writeField(*w, "apiKey", req.ApiKey); err != nil {
 			return nil, err
 		}
 	}
-	if req.Id != ""{
+	if req.Id != "" {
 		if err = writeField(*w, "id", req.Id); err != nil {
 			return nil, err
 		}
 	}
-	if req.Alias != ""{
-		if err = writeField(*w, "alias", req.Alias); err != nil{
+	if req.Alias != "" {
+		if err = writeField(*w, "alias", req.Alias); err != nil {
 			return nil, err
 		}
 	}
-	if req.User != ""{
+	if req.User != "" {
 		if err = writeField(*w, "user", req.User); err != nil {
 			return nil, err
 		}
@@ -428,14 +428,14 @@ func (cli *OpsGenieAlertClient) AttachFile(req alerts.AttachFileAlertRequest) (*
 			return nil, err
 		}
 	}
-	if req.Note != ""{
+	if req.Note != "" {
 		if err = writeField(*w, "note", req.Note); err != nil {
 			return nil, err
 		}
 	}
 
 	w.Close()
-	httpReq, err := http.NewRequest("POST", cli.opsGenieApiUrl + ATTACH_FILE_ALERT_URL, &b)
+	httpReq, err := http.NewRequest("POST", cli.opsGenieApiUrl+ATTACH_FILE_ALERT_URL, &b)
 	if err != nil {
 		message := "Can not create the multipart/form-data request. " + err.Error()
 		logging.Logger().Warn(message)
@@ -443,9 +443,9 @@ func (cli *OpsGenieAlertClient) AttachFile(req alerts.AttachFileAlertRequest) (*
 	}
 	httpReq.Header.Set("Content-Type", w.FormDataContentType())
 	transport := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify : true},
-		Proxy: http.ProxyFromEnvironment,
-		Dial:  func(netw, addr string) (net.Conn, error) {
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+		Proxy:           http.ProxyFromEnvironment,
+		Dial: func(netw, addr string) (net.Conn, error) {
 			conn, err := net.DialTimeout(netw, addr, cli.httpTransportSettings.ConnectionTimeout)
 			if err != nil {
 				message := "Error occurred while connecting: " + err.Error()
@@ -461,7 +461,7 @@ func (cli *OpsGenieAlertClient) AttachFile(req alerts.AttachFileAlertRequest) (*
 	if cli.proxy != nil {
 		proxyUrl, proxyErr := url.Parse(cli.proxy.ToString())
 		if proxyErr != nil {
-			message := "Can not set the proxy configuration "  + proxyErr.Error()
+			message := "Can not set the proxy configuration " + proxyErr.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -476,10 +476,10 @@ func (cli *OpsGenieAlertClient) AttachFile(req alerts.AttachFileAlertRequest) (*
 			defer res.Body.Close()
 			break
 		}
-		if res != nil{
-			logging.Logger().Info(fmt.Sprintf("Retrying request [%s] ResponseCode:[%d]. RetryCount: %d",url, res.StatusCode,(i+1)))
-		}else{
-			logging.Logger().Info(fmt.Sprintf("Retrying request [%s] Reason:[%s]. RetryCount: %d",url, err.Error(),(i+1)))
+		if res != nil {
+			logging.Logger().Info(fmt.Sprintf("Retrying request [%s] ResponseCode:[%d]. RetryCount: %d", url, res.StatusCode, (i + 1)))
+		} else {
+			logging.Logger().Info(fmt.Sprintf("Retrying request [%s] Reason:[%s]. RetryCount: %d", url, err.Error(), (i + 1)))
 		}
 		time.Sleep(TIME_SLEEP_BETWEEN_REQUESTS)
 	}
@@ -494,9 +494,9 @@ func (cli *OpsGenieAlertClient) AttachFile(req alerts.AttachFileAlertRequest) (*
 	httpStatusCode := res.StatusCode
 	if httpStatusCode >= 400 {
 		body, err := ioutil.ReadAll(res.Body)
-		if err == nil{
+		if err == nil {
 			return nil, getErrorMessage(httpStatusCode, string(body[:]))
-		}else{
+		} else {
 			message := fmt.Sprintf("Couldn't read the response, ", err)
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
@@ -507,9 +507,9 @@ func (cli *OpsGenieAlertClient) AttachFile(req alerts.AttachFileAlertRequest) (*
 	return &attachFileAlertResp, nil
 }
 
-func writeField (w multipart.Writer, fieldName string, fieldVal string) error {
+func writeField(w multipart.Writer, fieldName string, fieldVal string) error {
 	if err := w.WriteField(fieldName, fieldVal); err != nil {
-		message := "Can not write field "  + fieldName +" into the request. Reason: " + err.Error()
+		message := "Can not write field " + fieldName + " into the request. Reason: " + err.Error()
 		logging.Logger().Warn(message)
 		return errors.New(message)
 	}

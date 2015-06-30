@@ -1,16 +1,16 @@
 package main
 
 import (
+	"fmt"
 	alerts "github.com/opsgenie/opsgenie-go-sdk/alerts"
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
-	"fmt"
 )
 
 var API_KEY string = "YOUR API KEY HERE"
 
 func main() {
 
-	cli := new (ogcli.OpsGenieClient)
+	cli := new(ogcli.OpsGenieClient)
 	cli.SetApiKey(API_KEY)
 
 	alertCli, cliErr := cli.Alert()

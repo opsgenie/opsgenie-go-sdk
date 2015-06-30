@@ -1,22 +1,21 @@
 package client
 
 import (
-	"github.com/opsgenie/opsgenie-go-sdk/heartbeat"
 	"errors"
+	"github.com/opsgenie/opsgenie-go-sdk/heartbeat"
 	"github.com/opsgenie/opsgenie-go-sdk/logging"
 )
 
 const (
-	ADD_HEARTBEAT_URL 		= "/v1/json/heartbeat"
-	UPDATE_HEARTBEAT_URL 	= "/v1/json/heartbeat"
-	ENABLE_HEARTBEAT_URL 	= "/v1/json/heartbeat/enable"
-	DISABLE_HEARTBEAT_URL 	= "/v1/json/heartbeat/disable"
-	DELETE_HEARTBEAT_URL 	= "/v1/json/heartbeat"
-	GET_HEARTBEAT_URL 		= "/v1/json/heartbeat"
-	LIST_HEARTBEAT_URL 		= "/v1/json/heartbeat"
-	SEND_HEARTBEAT_URL 		= "/v1/json/heartbeat/send"
+	ADD_HEARTBEAT_URL     = "/v1/json/heartbeat"
+	UPDATE_HEARTBEAT_URL  = "/v1/json/heartbeat"
+	ENABLE_HEARTBEAT_URL  = "/v1/json/heartbeat/enable"
+	DISABLE_HEARTBEAT_URL = "/v1/json/heartbeat/disable"
+	DELETE_HEARTBEAT_URL  = "/v1/json/heartbeat"
+	GET_HEARTBEAT_URL     = "/v1/json/heartbeat"
+	LIST_HEARTBEAT_URL    = "/v1/json/heartbeat"
+	SEND_HEARTBEAT_URL    = "/v1/json/heartbeat/send"
 )
-
 
 type OpsGenieHeartbeatClient struct {
 	OpsGenieClient
@@ -26,20 +25,20 @@ func (cli *OpsGenieHeartbeatClient) SetOpsGenieClient(ogCli OpsGenieClient) {
 	cli.OpsGenieClient = ogCli
 }
 
-func (cli *OpsGenieHeartbeatClient) Add(req heartbeat.AddHeartbeatRequest) (*heartbeat.AddHeartbeatResponse, error){
+func (cli *OpsGenieHeartbeatClient) Add(req heartbeat.AddHeartbeatRequest) (*heartbeat.AddHeartbeatResponse, error) {
 	req.ApiKey = cli.apiKey
 
 	resp, err := cli.sendRequest(cli.buildPostRequest(ADD_HEARTBEAT_URL, req))
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		// try to parse the returning JSON into the response
 		var addHeartbeatResp heartbeat.AddHeartbeatResponse
 		if err = resp.Body.FromJsonTo(&addHeartbeatResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -52,25 +51,25 @@ func (cli *OpsGenieHeartbeatClient) Add(req heartbeat.AddHeartbeatRequest) (*hea
 // Mandatory Parameters:
 // 	- id: 		Id of the heartbeat
 // 	- apiKey: 	API key is used for authenticating API requests
-// Optional Parameters	
+// Optional Parameters
 // 	- name: 			Name of the heartbeat
-// 	- interval: 		Specifies how often a heartbeat message should be expected. 
+// 	- interval: 		Specifies how often a heartbeat message should be expected.
 // 	- intervalUnit: 	interval specified as minutes, hours or days
 // 	- description:	 	An optional description of the heartbeat
 // 	- enabled: 			Enable/disable heartbeat monitoring
-func (cli *OpsGenieHeartbeatClient) Update(req heartbeat.UpdateHeartbeatRequest) (*heartbeat.UpdateHeartbeatResponse, error){
+func (cli *OpsGenieHeartbeatClient) Update(req heartbeat.UpdateHeartbeatRequest) (*heartbeat.UpdateHeartbeatResponse, error) {
 	req.ApiKey = cli.apiKey
 	resp, err := cli.sendRequest(cli.buildPostRequest(UPDATE_HEARTBEAT_URL, req))
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		// try to parse the returning JSON into the response
 		var updateHeartbeatResp heartbeat.UpdateHeartbeatResponse
 		if err = resp.Body.FromJsonTo(&updateHeartbeatResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -79,20 +78,19 @@ func (cli *OpsGenieHeartbeatClient) Update(req heartbeat.UpdateHeartbeatRequest)
 	}
 }
 
-
-func (cli *OpsGenieHeartbeatClient) Enable(req heartbeat.EnableHeartbeatRequest) (*heartbeat.EnableHeartbeatResponse, error){
+func (cli *OpsGenieHeartbeatClient) Enable(req heartbeat.EnableHeartbeatRequest) (*heartbeat.EnableHeartbeatResponse, error) {
 	req.ApiKey = cli.apiKey
 	resp, err := cli.sendRequest(cli.buildPostRequest(ENABLE_HEARTBEAT_URL, req))
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		// try to parse the returning JSON into the response
 		var enableHeartbeatResp heartbeat.EnableHeartbeatResponse
 		if err = resp.Body.FromJsonTo(&enableHeartbeatResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -101,19 +99,19 @@ func (cli *OpsGenieHeartbeatClient) Enable(req heartbeat.EnableHeartbeatRequest)
 	}
 }
 
-func (cli *OpsGenieHeartbeatClient) Disable(req heartbeat.DisableHeartbeatRequest) (*heartbeat.DisableHeartbeatResponse, error){
+func (cli *OpsGenieHeartbeatClient) Disable(req heartbeat.DisableHeartbeatRequest) (*heartbeat.DisableHeartbeatResponse, error) {
 	req.ApiKey = cli.apiKey
 	resp, err := cli.sendRequest(cli.buildPostRequest(DISABLE_HEARTBEAT_URL, req))
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		// try to parse the returning JSON into the response
 		var disableHeartbeatResp heartbeat.DisableHeartbeatResponse
 		if err = resp.Body.FromJsonTo(&disableHeartbeatResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -123,19 +121,19 @@ func (cli *OpsGenieHeartbeatClient) Disable(req heartbeat.DisableHeartbeatReques
 
 }
 
-func (cli *OpsGenieHeartbeatClient) Delete(req heartbeat.DeleteHeartbeatRequest) (*heartbeat.DeleteHeartbeatResponse, error){
+func (cli *OpsGenieHeartbeatClient) Delete(req heartbeat.DeleteHeartbeatRequest) (*heartbeat.DeleteHeartbeatResponse, error) {
 	req.ApiKey = cli.apiKey
 	resp, err := cli.sendRequest(cli.buildDeleteRequest(DELETE_HEARTBEAT_URL, req))
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		// try to parse the returning JSON into the response
 		var deleteHeartbeatResp heartbeat.DeleteHeartbeatResponse
 		if err = resp.Body.FromJsonTo(&deleteHeartbeatResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -144,19 +142,19 @@ func (cli *OpsGenieHeartbeatClient) Delete(req heartbeat.DeleteHeartbeatRequest)
 	}
 }
 
-func (cli *OpsGenieHeartbeatClient) Get(req heartbeat.GetHeartbeatRequest) (*heartbeat.GetHeartbeatResponse, error){
+func (cli *OpsGenieHeartbeatClient) Get(req heartbeat.GetHeartbeatRequest) (*heartbeat.GetHeartbeatResponse, error) {
 	req.ApiKey = cli.apiKey
 	resp, err := cli.sendRequest(cli.buildGetRequest(GET_HEARTBEAT_URL, req))
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		// try to parse the returning JSON into the response
 		var getHeartbeatResp heartbeat.GetHeartbeatResponse
 		if err = resp.Body.FromJsonTo(&getHeartbeatResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -165,19 +163,19 @@ func (cli *OpsGenieHeartbeatClient) Get(req heartbeat.GetHeartbeatRequest) (*hea
 	}
 }
 
-func (cli *OpsGenieHeartbeatClient) List(req heartbeat.ListHeartbeatsRequest) (*heartbeat.ListHeartbeatsResponse, error){
+func (cli *OpsGenieHeartbeatClient) List(req heartbeat.ListHeartbeatsRequest) (*heartbeat.ListHeartbeatsResponse, error) {
 	req.ApiKey = cli.apiKey
 	resp, err := cli.sendRequest(cli.buildGetRequest(LIST_HEARTBEAT_URL, req))
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		// try to parse the returning JSON into the response
 		var listHeartbeatsResp heartbeat.ListHeartbeatsResponse
 		if err = resp.Body.FromJsonTo(&listHeartbeatsResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -186,19 +184,19 @@ func (cli *OpsGenieHeartbeatClient) List(req heartbeat.ListHeartbeatsRequest) (*
 	}
 }
 
-func (cli *OpsGenieHeartbeatClient) Send(req heartbeat.SendHeartbeatRequest) (*heartbeat.SendHeartbeatResponse, error){
+func (cli *OpsGenieHeartbeatClient) Send(req heartbeat.SendHeartbeatRequest) (*heartbeat.SendHeartbeatResponse, error) {
 	req.ApiKey = cli.apiKey
 	resp, err := cli.sendRequest(cli.buildPostRequest(SEND_HEARTBEAT_URL, req))
 
 	if resp == nil {
 		return nil, err
-	}else{
+	} else {
 		defer resp.Body.Close()
 
 		// try to parse the returning JSON into the response
 		var sendHeartbeatResp heartbeat.SendHeartbeatResponse
 		if err = resp.Body.FromJsonTo(&sendHeartbeatResp); err != nil {
-			message := "Server response can not be parsed, "  + err.Error()
+			message := "Server response can not be parsed, " + err.Error()
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
@@ -206,4 +204,3 @@ func (cli *OpsGenieHeartbeatClient) Send(req heartbeat.SendHeartbeatRequest) (*h
 		return &sendHeartbeatResp, nil
 	}
 }
-

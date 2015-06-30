@@ -1,9 +1,10 @@
 package logging
 
 import (
-	"github.com/cihub/seelog"
 	"fmt"
+	"github.com/cihub/seelog"
 )
+
 var logger seelog.LoggerInterface
 
 func init() {
@@ -20,12 +21,12 @@ func UseLogger(newLogger seelog.LoggerInterface) {
 	seelog.UseLogger(logger)
 }
 
-func Logger() seelog.LoggerInterface{
+func Logger() seelog.LoggerInterface {
 	return logger
 }
 
-func ConfigureLogger(testConfig []byte){
-	loggr, err := seelog.LoggerFromConfigAsBytes([] byte(testConfig))
+func ConfigureLogger(testConfig []byte) {
+	loggr, err := seelog.LoggerFromConfigAsBytes([]byte(testConfig))
 	if err != nil {
 		fmt.Println("error occured: " + err.Error())
 	}

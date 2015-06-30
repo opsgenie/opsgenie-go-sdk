@@ -2,10 +2,10 @@ package test
 
 import (
 	hb "github.com/opsgenie/opsgenie-go-sdk/heartbeat"
-	"testing"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 	"strings"
+	"testing"
 	"time"
 )
 
@@ -18,10 +18,10 @@ func (suite *HeartbeatTestSuite) SetupTest() {
 }
 
 // Heartbeat tests
-func  (suite *HeartbeatTestSuite) TestAddHeartbeat() {
+func (suite *HeartbeatTestSuite) TestAddHeartbeat() {
 	t := suite.T()
 	suffix := time.Now().String()
-	id := createHeartbeat(t, "hb" + suffix)
+	id := createHeartbeat(t, "hb"+suffix)
 
 	//get heartbeat with id
 	getReq := hb.GetHeartbeatRequest{Id: id}
@@ -42,10 +42,10 @@ func  (suite *HeartbeatTestSuite) TestAddHeartbeat() {
 	t.Log("[OK] get heartbeat with name successful")
 }
 
-func  (suite *HeartbeatTestSuite) TestUpdateHeartbeat() {
+func (suite *HeartbeatTestSuite) TestUpdateHeartbeat() {
 	t := suite.T()
 	suffix := time.Now().String()
-	id := createHeartbeat(t, "hb" + suffix)
+	id := createHeartbeat(t, "hb"+suffix)
 
 	enabled := false
 	updateReq := hb.UpdateHeartbeatRequest{Id: id, Name: "updated heartbeat" + suffix, Description: "Some description", Interval: 20, IntervalUnit: "minutes", Enabled: &enabled}
@@ -63,7 +63,7 @@ func  (suite *HeartbeatTestSuite) TestUpdateHeartbeat() {
 	require.NotNil(t, getResp)
 
 	require.Equal(t, id, getResp.Id, "id comparison failed")
-	require.Equal(t, "updated heartbeat" + suffix, getResp.Name, "name comparison failed")
+	require.Equal(t, "updated heartbeat"+suffix, getResp.Name, "name comparison failed")
 	require.Equal(t, uint64(0), getResp.LastHeartbeat, "last heartbeat time comparison failed")
 	require.Equal(t, "Expired", getResp.Status, "status comparison failed")
 	require.Equal(t, 20, getResp.Interval, "interval comparison failed")
@@ -74,11 +74,11 @@ func  (suite *HeartbeatTestSuite) TestUpdateHeartbeat() {
 	t.Log("[OK] heartbeat updated")
 }
 
-func  (suite *HeartbeatTestSuite) TestEnableHeartbeat() {
+func (suite *HeartbeatTestSuite) TestEnableHeartbeat() {
 	t := suite.T()
 	suffix := time.Now().String()
 	enabled := false
-	req := hb.AddHeartbeatRequest{Name: "hb"+suffix, Enabled: &enabled}
+	req := hb.AddHeartbeatRequest{Name: "hb" + suffix, Enabled: &enabled}
 	response, hbErr := hbCli.Add(req)
 
 	require.Nil(t, hbErr)
@@ -87,7 +87,7 @@ func  (suite *HeartbeatTestSuite) TestEnableHeartbeat() {
 	require.NotNil(t, id)
 
 	enableReq := hb.EnableHeartbeatRequest{Id: id}
-	enableResp, enableErr := hbCli.Enable( enableReq )
+	enableResp, enableErr := hbCli.Enable(enableReq)
 
 	require.Nil(t, enableErr)
 	require.NotNil(t, enableResp)
@@ -102,11 +102,11 @@ func  (suite *HeartbeatTestSuite) TestEnableHeartbeat() {
 	t.Log("[OK] heartbeat enabled")
 }
 
-func  (suite *HeartbeatTestSuite) TestDisableHeartbeat() {
+func (suite *HeartbeatTestSuite) TestDisableHeartbeat() {
 	t := suite.T()
 	suffix := time.Now().String()
 	enabled := true
-	req := hb.AddHeartbeatRequest{Name: "hb"+suffix, Enabled: &enabled}
+	req := hb.AddHeartbeatRequest{Name: "hb" + suffix, Enabled: &enabled}
 	response, hbErr := hbCli.Add(req)
 
 	require.Nil(t, hbErr)
@@ -115,7 +115,7 @@ func  (suite *HeartbeatTestSuite) TestDisableHeartbeat() {
 	require.NotNil(t, id)
 
 	disableReq := hb.DisableHeartbeatRequest{Id: id}
-	disableResp, disableErr := hbCli.Disable( disableReq )
+	disableResp, disableErr := hbCli.Disable(disableReq)
 
 	require.Nil(t, disableErr)
 	require.NotNil(t, disableResp)
@@ -130,12 +130,12 @@ func  (suite *HeartbeatTestSuite) TestDisableHeartbeat() {
 	t.Log("[OK] heartbeat disabled")
 }
 
-func  (suite *HeartbeatTestSuite) TestSendHeartbeat() {
+func (suite *HeartbeatTestSuite) TestSendHeartbeat() {
 	t := suite.T()
 	suffix := time.Now().String()
-	id := createHeartbeat(t, "hb" + suffix)
+	id := createHeartbeat(t, "hb"+suffix)
 
-	sendReq := hb.SendHeartbeatRequest{Name: "hb"+suffix}
+	sendReq := hb.SendHeartbeatRequest{Name: "hb" + suffix}
 	sendResp, sendErr := hbCli.Send(sendReq)
 
 	require.Nil(t, sendErr)
@@ -148,28 +148,28 @@ func  (suite *HeartbeatTestSuite) TestSendHeartbeat() {
 	require.Nil(t, hbErr)
 	require.NotNil(t, getResp)
 	require.True(t, getResp.LastHeartbeat > uint64(0), "last heartbeat time comparison failed")
-	require.Equal(t, "Active" , getResp.Status, "heartbeat status comparison failed")
+	require.Equal(t, "Active", getResp.Status, "heartbeat status comparison failed")
 	t.Log("[OK] heartbeat sent successfully")
 }
 
-func  (suite *HeartbeatTestSuite) TestDeleteHeartbeat() {
+func (suite *HeartbeatTestSuite) TestDeleteHeartbeat() {
 	t := suite.T()
 	suffix := time.Now().String()
-	id := createHeartbeat(t, "hb" + suffix)
+	id := createHeartbeat(t, "hb"+suffix)
 
 	deleteReq := hb.DeleteHeartbeatRequest{Id: id}
-	deleteResp, deleteErr := hbCli.Delete( deleteReq )
+	deleteResp, deleteErr := hbCli.Delete(deleteReq)
 
 	require.Nil(t, deleteErr)
 	require.NotNil(t, deleteResp)
 	require.Equal(t, 200, deleteResp.Code, "Response Code should be 200")
 
-	getReq := hb.GetHeartbeatRequest{Id: id }
+	getReq := hb.GetHeartbeatRequest{Id: id}
 	getResp, getErr := hbCli.Get(getReq)
 
 	require.NotNil(t, getErr)
 	require.Nil(t, getResp)
-	require.True(t, strings.Contains(getErr.Error(), "Heartbeat with id ["+ id +"] does not exist"), "Error should contains ")
+	require.True(t, strings.Contains(getErr.Error(), "Heartbeat with id ["+id+"] does not exist"), "Error should contains ")
 	t.Log("[OK] heartbeat deleted successfully")
 }
 
@@ -195,7 +195,7 @@ func (suite *HeartbeatTestSuite) TestListHeartbeats() {
 
 	found := false
 
-	for _, beat := range(beats) {
+	for _, beat := range beats {
 		if beat.Id == id {
 			found = true
 			require.Equal(t, "hb1", beat.Name, "name comparison failed")
@@ -207,8 +207,8 @@ func (suite *HeartbeatTestSuite) TestListHeartbeats() {
 	t.Log("[OK] heartbeats list succesfully")
 }
 
-func deleteAllHeartbeats(t *testing.T){
-	for{
+func deleteAllHeartbeats(t *testing.T) {
+	for {
 		listReq := hb.ListHeartbeatsRequest{}
 		listResp, listErr := hbCli.List(listReq)
 
@@ -218,8 +218,8 @@ func deleteAllHeartbeats(t *testing.T){
 		if len(hbList) == 0 {
 			t.Log("All heartbeats deleted")
 			break
-		}else{
-			for i:=0;i<len(hbList); i++{
+		} else {
+			for i := 0; i < len(hbList); i++ {
 				heartbeat := hbList[i]
 				delreq := hb.DeleteHeartbeatRequest{Id: heartbeat.Id}
 				delResp, delErr := hbCli.Delete(delreq)
@@ -232,9 +232,9 @@ func deleteAllHeartbeats(t *testing.T){
 	}
 }
 
-func assertHeartbeat(t *testing.T, id string, getResp *hb.GetHeartbeatResponse, suffix string){
+func assertHeartbeat(t *testing.T, id string, getResp *hb.GetHeartbeatResponse, suffix string) {
 	require.Equal(t, id, getResp.Id, "id comparison failed")
-	require.Equal(t, "hb" + suffix, getResp.Name, "name comparison failed")
+	require.Equal(t, "hb"+suffix, getResp.Name, "name comparison failed")
 	require.Equal(t, uint64(0), getResp.LastHeartbeat, "last heartbeat time comparison failed")
 	require.Equal(t, "Expired", getResp.Status, "status comparison failed")
 	require.Equal(t, 10, getResp.Interval, "interval comparison failed")
@@ -243,7 +243,7 @@ func assertHeartbeat(t *testing.T, id string, getResp *hb.GetHeartbeatResponse, 
 	require.True(t, getResp.Enabled, "Heartbeat enabled should be true")
 }
 
-func createHeartbeat(t *testing.T, name string) string{
+func createHeartbeat(t *testing.T, name string) string {
 	req := hb.AddHeartbeatRequest{Name: name, Description: "descr", Interval: 10, IntervalUnit: "hours"}
 	response, hbErr := hbCli.Add(req)
 	require.Nil(t, hbErr)

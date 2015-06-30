@@ -1,25 +1,25 @@
 package test
 
 import (
+	"errors"
+	"fmt"
+	"github.com/franela/goreq"
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	itg "github.com/opsgenie/opsgenie-go-sdk/integration"
 	"github.com/opsgenie/opsgenie-go-sdk/policy"
-	"io/ioutil"
-	"testing"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 	yaml "gopkg.in/yaml.v2"
-	"errors"
+	"io/ioutil"
 	"os"
-	"github.com/franela/goreq"
-	"fmt"
+	"testing"
 )
 
 type ClientTestConfig struct {
 	Alert struct {
-		ApiKey 	string	`yaml:"apiKey"`
-		User 	string	`yaml:"user"`
-		Team 	string 	`yaml:"team"`
+		ApiKey  string   `yaml:"apiKey"`
+		User    string   `yaml:"user"`
+		Team    string   `yaml:"team"`
 		Actions []string `yaml:"actions"`
 	} `yaml:"alert"`
 
@@ -28,26 +28,26 @@ type ClientTestConfig struct {
 
 type EntityNames struct {
 	Integration string `json:"integration"`
-	Team string `json:"team"`
-	Policy string `json:"policy"`
+	Team        string `json:"team"`
+	Policy      string `json:"policy"`
 }
 
 // common globals
 var cli *ogcli.OpsGenieAlertClient
 var CONFIG_FILE_NAME string = "client_at_test_cfg.yaml"
-var	testCfg ClientTestConfig
+var testCfg ClientTestConfig
 var hbCli *ogcli.OpsGenieHeartbeatClient
 var itgCli *ogcli.OpsGenieIntegrationClient
 var policyCli *ogcli.OpsGeniePolicyClient
 var entityNames EntityNames
 
-func TestEnableDisableIntegration(t *testing.T){
+func TestEnableDisableIntegration(t *testing.T) {
 	disableReq := itg.DisableIntegrationRequest{Name: entityNames.Integration}
 	disableResp, disableErr := itgCli.Disable(disableReq)
 
 	require.Nil(t, disableErr)
 	require.NotNil(t, disableResp)
-	require.Equal(t, 200, disableResp.Code,  "Response Code should be 200")
+	require.Equal(t, 200, disableResp.Code, "Response Code should be 200")
 	require.Equal(t, "success", disableResp.Status, "Response Code should be 200")
 	t.Log("[OK] integration disabled")
 
@@ -61,12 +61,12 @@ func TestEnableDisableIntegration(t *testing.T){
 	t.Log("[OK] integration enabled")
 }
 
-func TestEnableDisablePolicy(t *testing.T){
+func TestEnableDisablePolicy(t *testing.T) {
 	disableReq := policy.DisablePolicyRequest{Name: entityNames.Policy}
 	disableResp, disableErr := policyCli.Disable(disableReq)
 	require.Nil(t, disableErr)
 	require.NotNil(t, disableResp)
-	require.Equal(t, 200, disableResp.Code,  "Response Code should be 200")
+	require.Equal(t, 200, disableResp.Code, "Response Code should be 200")
 	t.Log("[OK] policy disabled")
 
 	enableReq := policy.EnablePolicyRequest{Name: entityNames.Policy}
@@ -88,12 +88,12 @@ func TestHeartbeatClientSuite(t *testing.T) {
 
 // utility function
 func readSettingsFromConfigFile() error {
-	cfgData, err := ioutil.ReadFile( CONFIG_FILE_NAME )
+	cfgData, err := ioutil.ReadFile(CONFIG_FILE_NAME)
 	if err != nil {
 		return errors.New("Can not read from the configuration file: " + err.Error())
 	}
 	err = yaml.Unmarshal(cfgData, &testCfg)
-	if 	err != nil {
+	if err != nil {
 		return errors.New("Can not parse the configuration file: " + err.Error())
 	}
 	return nil
@@ -108,22 +108,22 @@ func TestMain(m *testing.M) {
 	}
 
 	// create an opsgenie client
-	opsGenieClient := new (ogcli.OpsGenieClient)
-	opsGenieClient.SetApiKey( testCfg.Alert.ApiKey )
+	opsGenieClient := new(ogcli.OpsGenieClient)
+	opsGenieClient.SetApiKey(testCfg.Alert.ApiKey)
 	opsGenieClient.SetOpsGenieApiUrl(testCfg.OpsGenieApiUrl)
-//	set := ogcli.HttpTransportSettings{RequestTimeout: 20 * time.Second, ConnectionTimeout: 10 * time.Second }
-//	opsGenieClient.SetHttpTransportSettings(&set)
-	opsGenieClient.SetClientProxyConfiguration(&ogcli.ClientProxyConfiguration{Host:"192.168.127.1", Port: 808, Protocol:"http"})
+	//	set := ogcli.HttpTransportSettings{RequestTimeout: 20 * time.Second, ConnectionTimeout: 10 * time.Second }
+	//	opsGenieClient.SetHttpTransportSettings(&set)
+	opsGenieClient.SetClientProxyConfiguration(&ogcli.ClientProxyConfiguration{Host: "192.168.127.1", Port: 808, Protocol: "http"})
 
-	req := goreq.Request{Method: "POST", Uri: opsGenieClient.GetOpsGenieApiUrl() + "/v1/json/sdkSetup", Body: map [string]string{"apiKey": opsGenieClient.GetApiKey()}}
+	req := goreq.Request{Method: "POST", Uri: opsGenieClient.GetOpsGenieApiUrl() + "/v1/json/sdkSetup", Body: map[string]string{"apiKey": opsGenieClient.GetApiKey()}}
 	resp, err := req.Do()
 	if err != nil {
-		fmt.Println("Could not send request to create test team, integration, policy; "  + err.Error())
+		fmt.Println("Could not send request to create test team, integration, policy; " + err.Error())
 	}
-	if resp != nil{
+	if resp != nil {
 		defer resp.Body.Close()
 		if err = resp.Body.FromJsonTo(&entityNames); err != nil {
-			fmt.Println("Server response for sdkSetup can not be parsed, "  + err.Error())
+			fmt.Println("Server response for sdkSetup can not be parsed, " + err.Error())
 		}
 	}
 
