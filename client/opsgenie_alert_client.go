@@ -498,7 +498,7 @@ func (cli *OpsGenieAlertClient) AttachFile(req alerts.AttachFileAlertRequest) (*
 		if err == nil {
 			return nil, getErrorMessage(httpStatusCode, string(body[:]))
 		} else {
-			message := fmt.Sprintf("Couldn't read the response, ", err)
+			message := fmt.Sprint("Couldn't read the response, ", err)
 			logging.Logger().Warn(message)
 			return nil, errors.New(message)
 		}
