@@ -121,7 +121,7 @@ func TestMain(m *testing.M) {
 	if resp != nil {
 		defer resp.Body.Close()
 		if err = resp.Body.FromJsonTo(&entityNames); err != nil {
-			fmt.Println("Server response for sdkSetup can not be parsed, " + err.Error())
+			fmt.Println("Server response for sdkSetup can not be parsed,  " + err.Error())
 		}
 	}
 
