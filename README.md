@@ -11,7 +11,7 @@ are subject to be delivered for packing more APIs soon.
 For more information about OpsGenie Go SDK, please refer to [OpsGenie Go API](https://www.opsgenie.com/docs/api-and-client-libraries/opsgenie-go-api) document.
 
 ## Pre-requisites
-* The API is built using Go 1.4.1. Some features may not be
+* The API is built using Go 1.4.2. Some features may not be
 available or supported unless you have installed a relevant version of Go.
 Please click [https://golang.org/dl/](https://golang.org/dl/) to download and
 get more information about installing Go on your computer.
