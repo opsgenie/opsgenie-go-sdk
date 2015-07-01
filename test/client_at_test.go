@@ -112,9 +112,6 @@ func TestMain(m *testing.M) {
 	opsGenieClient := new(ogcli.OpsGenieClient)
 	opsGenieClient.SetApiKey(testCfg.Alert.ApiKey)
 	opsGenieClient.SetOpsGenieApiUrl(testCfg.OpsGenieApiUrl)
-	//	set := ogcli.HttpTransportSettings{RequestTimeout: 20 * time.Second, ConnectionTimeout: 10 * time.Second }
-	//	opsGenieClient.SetHttpTransportSettings(&set)
-	opsGenieClient.SetClientProxyConfiguration(&ogcli.ClientProxyConfiguration{Host: "192.168.127.1", Port: 808, Protocol: "http"})
 
 	req := goreq.Request{Method: "POST", Uri: opsGenieClient.GetOpsGenieApiUrl() + "/v1/json/sdkSetup", Body: map[string]string{"apiKey": opsGenieClient.GetApiKey()}}
 	resp, err := req.Do()
