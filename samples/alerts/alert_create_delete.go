@@ -8,10 +8,9 @@ import (
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
 )
 
-var API_KEY string = "YOUR API KEY HERE"
-var SOURCE string = "Go API"
-
 func main() {
+	API_KEY := "YOUR API KEY HERE"
+	SOURCE := "Go API"
 
 	cli := new(ogcli.OpsGenieClient)
 	cli.SetApiKey(API_KEY)

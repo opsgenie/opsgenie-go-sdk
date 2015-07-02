@@ -7,10 +7,11 @@ import (
 	itg "github.com/opsgenie/opsgenie-go-sdk/integration"
 )
 
-var API_KEY string = "YOUR API KEY HERE"
 var INTEGRATION_NAME = "YOUR INTEGRATION NAME HERE"
 
 func main() {
+	API_KEY := "YOUR API KEY HERE"
+
 	cli := new(ogcli.OpsGenieClient)
 	cli.SetApiKey(API_KEY)
 	cli.SetOpsGenieApiUrl("http://localhost:9000")

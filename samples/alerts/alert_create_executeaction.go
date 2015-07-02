@@ -8,11 +8,10 @@ import (
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
 )
 
-var API_KEY string = "YOUR API KEY HERE"
-var ACTIONS []string = []string{"ping", "pong"}
-var ACTION_TO_EXEC string = "pong"
-
 func main() {
+	API_KEY := "YOUR API KEY HERE"
+	ACTIONS := []string{"ping", "pong"}
+	ACTION_TO_EXEC := "pong"
 
 	cli := new(ogcli.OpsGenieClient)
 	cli.SetApiKey(API_KEY)

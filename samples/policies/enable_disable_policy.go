@@ -7,10 +7,11 @@ import (
 	policy "github.com/opsgenie/opsgenie-go-sdk/policy"
 )
 
-var API_KEY string = "YOUR API KEY HERE"
 var POLICY_NAME = "YOUR POLICY NAME HERE"
 
 func main() {
+	API_KEY := "YOUR API KEY HERE"
+
 	cli := new(ogcli.OpsGenieClient)
 	cli.SetApiKey(API_KEY)
 	cli.SetOpsGenieApiUrl("http://localhost:9000")

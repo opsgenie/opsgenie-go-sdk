@@ -8,11 +8,9 @@ import (
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
 )
 
-var API_KEY string = "YOUR API KEY HERE"
-
-var NOTIFY_ARR []string = []string{"YOUR USERNAME HERE"}
-
 func main() {
+	API_KEY := "YOUR API KEY HERE"
+	NOTIFY_ARR := []string{"YOUR USERNAME HERE"}
 
 	cli := new(ogcli.OpsGenieClient)
 	cli.SetApiKey(API_KEY)

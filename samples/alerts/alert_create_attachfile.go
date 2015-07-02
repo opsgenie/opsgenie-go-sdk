@@ -9,10 +9,10 @@ import (
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
 )
 
-var API_KEY string = "YOUR API KEY HERE"
-var PATH_TO_FILE string = "/your/path/to/file/here"
-
 func main() {
+	API_KEY := "YOUR API KEY HERE"
+	PATH_TO_FILE := "/your/path/to/file/here"
+
 	cli := new(ogcli.OpsGenieClient)
 	cli.SetApiKey(API_KEY)
 
