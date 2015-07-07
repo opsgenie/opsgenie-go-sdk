@@ -6,13 +6,12 @@ import (
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	hb "github.com/opsgenie/opsgenie-go-sdk/heartbeat"
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
+	"github.com/opsgenie/opsgenie-go-sdk/samples/constants"
 )
 
 func main() {
-	API_KEY := "YOUR API KEY HERE"
-
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(API_KEY)
+	cli.SetApiKey(constants.API_KEY)
 
 	hbCli, cliErr := cli.Heartbeat()
 
@@ -28,11 +27,11 @@ func main() {
 		panic(hbErr)
 	}
 
-	fmt.Println("Heartbeat created")
-	fmt.Println("-----------------")
-	fmt.Println("id:", response.Id)
-	fmt.Println("status:", response.Status)
-	fmt.Println("code:", response.Code)
+	fmt.Printf("Heartbeat created\n")
+	fmt.Printf("-----------------\n")
+	fmt.Printf("id: %s\n", response.Id)
+	fmt.Printf("status: %s\n", response.Status)
+	fmt.Printf("code: %d\n", response.Code)
 
 	// enable the hb
 	getReq := hb.GetHeartbeatRequest{Id: response.Id}
@@ -41,15 +40,15 @@ func main() {
 		panic(getErr)
 	}
 
-	fmt.Println("Heartbeat details")
-	fmt.Println("-----------------")
-	fmt.Println("Id:", getResp.Id)
-	fmt.Println("Name:", getResp.Name)
-	fmt.Println("Status", getResp.Status)
-	fmt.Println("Description:", getResp.Description)
-	fmt.Println("Enabled?:", getResp.Enabled)
-	fmt.Println("Last Heart beat:", getResp.LastHeartbeat)
-	fmt.Println("Interval:", getResp.Interval)
-	fmt.Println("Interval Unit:", getResp.IntervalUnit)
-	fmt.Println("Expired?:", getResp.Expired)
+	fmt.Printf("Heartbeat details\n")
+	fmt.Printf("-----------------\n")
+	fmt.Printf("Id: %s\n", getResp.Id)
+	fmt.Printf("Name: %s\n", getResp.Name)
+	fmt.Printf("Status: %s\n", getResp.Status)
+	fmt.Printf("Description: %s\n", getResp.Description)
+	fmt.Printf("Enabled?: %t\n", getResp.Enabled)
+	fmt.Printf("Last Heartbeat: %d\n", getResp.LastHeartbeat)
+	fmt.Printf("Interval: %d\n", getResp.Interval)
+	fmt.Printf("Interval Unit: %s\n", getResp.IntervalUnit)
+	fmt.Printf("Expired?: %t\n", getResp.Expired)
 }

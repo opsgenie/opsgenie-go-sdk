@@ -116,12 +116,12 @@ func TestMain(m *testing.M) {
 	req := goreq.Request{Method: "POST", Uri: opsGenieClient.GetOpsGenieApiUrl() + "/v1/json/sdkSetup", Body: map[string]string{"apiKey": opsGenieClient.GetApiKey()}}
 	resp, err := req.Do()
 	if err != nil {
-		fmt.Println("Could not send request to create test team, integration, policy; " + err.Error())
+		fmt.Printf("Could not send request to create test team, integration, policy; %s\n", err.Error())
 	}
 	if resp != nil {
 		defer resp.Body.Close()
 		if err = resp.Body.FromJsonTo(&entityNames); err != nil {
-			fmt.Println("Server response for sdkSetup can not be parsed,  " + err.Error())
+			fmt.Printf("Server response for sdkSetup can not be parsed,  %s\n", err.Error())
 		}
 	}
 

@@ -6,14 +6,12 @@ import (
 	alerts "github.com/opsgenie/opsgenie-go-sdk/alerts"
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
+	"github.com/opsgenie/opsgenie-go-sdk/samples/constants"
 )
 
 func main() {
-	API_KEY := "YOUR API KEY HERE"
-	TEAM_NAME := "YOUR TEAM NAME HERE"
-
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(API_KEY)
+	cli.SetApiKey(constants.API_KEY)
 
 	alertCli, cliErr := cli.Alert()
 
@@ -29,19 +27,19 @@ func main() {
 		panic(alertErr)
 	}
 
-	fmt.Println("message:", response.Message)
-	fmt.Println("alert id:", response.AlertId)
-	fmt.Println("status:", response.Status)
-	fmt.Println("code:", response.Code)
+	fmt.Printf("message: %s\n", response.Message)
+	fmt.Printf("alert id: %s\n", response.AlertId)
+	fmt.Printf("status: %s\n", response.Status)
+	fmt.Printf("code: %d\n", response.Code)
 
 	// assign the owner for the alert
-	addTeamReq := alerts.AddTeamAlertRequest{Id: response.AlertId, Team: TEAM_NAME}
+	addTeamReq := alerts.AddTeamAlertRequest{Id: response.AlertId, Team: constants.TEAM_NAME}
 	addTeamResponse, alertErr := alertCli.AddTeam(addTeamReq)
 
 	if alertErr != nil {
 		panic(alertErr)
 	}
 
-	fmt.Println("status:", addTeamResponse.Status)
-	fmt.Println("code:", addTeamResponse.Code)
+	fmt.Printf("status: %s\n", addTeamResponse.Status)
+	fmt.Printf("code: %d\n", addTeamResponse.Code)
 }

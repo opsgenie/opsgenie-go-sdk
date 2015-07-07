@@ -27,12 +27,12 @@ type GetAlertResponse struct {
 	Alias        string                 `json:"alias"`
 	Entity       string                 `json:"entity"`
 	Id           string                 `json:"id"`
-	UpdatedAt    int                    `json:"updatedAt"`
+	UpdatedAt    uint64                 `json:"updatedAt"`
 	Message      string                 `json:"message"`
 	Details      map[string]string      `json:"details"`
 	Source       string                 `json:"source"`
 	Description  string                 `json:"description"`
-	CreatedAt    int                    `json:"createdAt"`
+	CreatedAt    uint64                 `json:"createdAt"`
 	IsSeen       bool                   `json:"isSeen"`
 	Acknowledged bool                   `json:"acknowledged"`
 	Owner        string                 `json:"owner"`
@@ -58,11 +58,11 @@ func (res *GetAlertResponse) GetIntegrationName() string {
 	}
 	return ""
 }
-func (res *GetAlertResponse) GetAckTime() int {
-	if val, ok := res.SystemData["ackTime"].(int); ok {
+func (res *GetAlertResponse) GetAckTime() uint64 {
+	if val, ok := res.SystemData["ackTime"].(uint64); ok {
 		return val
 	}
-	return -1
+	return 0
 }
 func (res *GetAlertResponse) GetAcknowledgedBy() string {
 	if val, ok := res.SystemData["acknowledgedBy"].(string); ok {
@@ -70,11 +70,11 @@ func (res *GetAlertResponse) GetAcknowledgedBy() string {
 	}
 	return ""
 }
-func (res *GetAlertResponse) GetCloseTime() int {
-	if val, ok := res.SystemData["closeTime"].(int); ok {
+func (res *GetAlertResponse) GetCloseTime() uint64 {
+	if val, ok := res.SystemData["closeTime"].(uint64); ok {
 		return val
 	}
-	return -1
+	return 0
 }
 func (res *GetAlertResponse) GetClosedBy() string {
 	if val, ok := res.SystemData["closedBy"].(string); ok {
@@ -91,8 +91,8 @@ type ListAlertsResponse struct {
 		Status       string `json:"status"`
 		IsSeen       bool   `json:"isSeen"`
 		Acknowledged bool   `json:"acknowledged"`
-		CreatedAt    int    `json:"createdAt"`
-		UpdatedAt    int    `json:"updatedAt"`
+		CreatedAt    uint64 `json:"createdAt"`
+		UpdatedAt    uint64 `json:"updatedAt"`
 		TinyId       string `json:"tinyId"`
 	} `json:"alerts"`
 }
@@ -103,7 +103,7 @@ type ListAlertNotesResponse struct {
 	Notes   []struct {
 		Note      string `json:"note"`
 		Owner     string `json:"owner"`
-		CreatedAt int    `json:"createdAt"`
+		CreatedAt uint64 `json:"createdAt"`
 	} `json:"notes"`
 }
 
@@ -113,7 +113,7 @@ type ListAlertLogsResponse struct {
 		Log       string `json:"log"`
 		LogType   string `json:"logType"`
 		Owner     string `json:"owner"`
-		CreatedAt int    `json:"createdAt"`
+		CreatedAt uint64 `json:"createdAt"`
 	} `json:"logs"`
 }
 
@@ -122,14 +122,14 @@ type ListAlertRecipientsResponse struct {
 		Username       string `json:"username"`
 		State          string `json:"state"`
 		Method         string `json:"method"`
-		StateChangedAt int    `json:"stateChangedAt"`
+		StateChangedAt uint64 `json:"stateChangedAt"`
 	} `json:"users"`
 
 	Groups map[string][]struct {
 		Username       string `json:"username"`
 		State          string `json:"state"`
 		Method         string `json:"method"`
-		StateChangedAt int    `json:"stateChangedAt"`
+		StateChangedAt uint64 `json:"stateChangedAt"`
 	} `json:"groups"`
 }
 

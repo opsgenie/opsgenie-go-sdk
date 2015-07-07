@@ -6,14 +6,12 @@ import (
 	alerts "github.com/opsgenie/opsgenie-go-sdk/alerts"
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
+	"github.com/opsgenie/opsgenie-go-sdk/samples/constants"
 )
 
 func main() {
-	API_KEY := "YOUR API KEY HERE"
-	USER := "YOUR USERNAME HERE"
-
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(API_KEY)
+	cli.SetApiKey(constants.API_KEY)
 
 	alertCli, cliErr := cli.Alert()
 
@@ -22,17 +20,17 @@ func main() {
 	}
 
 	// create the alert
-	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test", 8), Note: "Created for testing purposes", User: USER}
+	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test", 8), Note: "Created for testing purposes", User: constants.USER}
 	response, alertErr := alertCli.Create(req)
 
 	if alertErr != nil {
 		panic(alertErr)
 	}
 
-	fmt.Println("message:", response.Message)
-	fmt.Println("alert id:", response.AlertId)
-	fmt.Println("status:", response.Status)
-	fmt.Println("code:", response.Code)
+	fmt.Printf("message: %s\n", response.Message)
+	fmt.Printf("alert id: %s\n", response.AlertId)
+	fmt.Printf("status: %s\n", response.Status)
+	fmt.Printf("code: %d\n", response.Code)
 
 	// close the alert
 	getreq := alerts.GetAlertRequest{Id: response.AlertId}
@@ -41,23 +39,23 @@ func main() {
 		panic(alertErr)
 	}
 
-	fmt.Println("tags:", getresponse.Tags)
-	fmt.Println("count:", getresponse.Count)
-	fmt.Println("teams:", getresponse.Teams)
-	fmt.Println("recipients:", getresponse.Recipients)
-	fmt.Println("tiny id:", getresponse.TinyId)
-	fmt.Println("alias:", getresponse.Alias)
-	fmt.Println("entity:", getresponse.Entity)
-	fmt.Println("id:", getresponse.Id)
-	fmt.Println("updated at:", getresponse.UpdatedAt)
-	fmt.Println("message:", getresponse.Message)
-	fmt.Println("details:", getresponse.Details)
-	fmt.Println("source:", getresponse.Source)
-	fmt.Println("description:", getresponse.Description)
-	fmt.Println("created at:", getresponse.CreatedAt)
-	fmt.Println("is seen?:", getresponse.IsSeen)
-	fmt.Println("acknowledged?:", getresponse.Acknowledged)
-	fmt.Println("owner:", getresponse.Owner)
-	fmt.Println("actions:", getresponse.Actions)
-	fmt.Println("system data:", getresponse.SystemData)
+	fmt.Printf("tags: %v\n", getresponse.Tags)
+	fmt.Printf("count: %d\n", getresponse.Count)
+	fmt.Printf("teams: %v\n", getresponse.Teams)
+	fmt.Printf("recipients: %v\n", getresponse.Recipients)
+	fmt.Printf("tiny id: %s\n", getresponse.TinyId)
+	fmt.Printf("alias: %s\n", getresponse.Alias)
+	fmt.Printf("entity: %s\n", getresponse.Entity)
+	fmt.Printf("id: %s\n", getresponse.Id)
+	fmt.Printf("updated at: %d\n", getresponse.UpdatedAt)
+	fmt.Printf("message: %s\n", getresponse.Message)
+	fmt.Printf("details: %v\n", getresponse.Details)
+	fmt.Printf("source: %s\n", getresponse.Source)
+	fmt.Printf("description: %s\n", getresponse.Description)
+	fmt.Printf("created at: %d\n", getresponse.CreatedAt)
+	fmt.Printf("is seen?: %t\n", getresponse.IsSeen)
+	fmt.Printf("acknowledged?: %t\n", getresponse.Acknowledged)
+	fmt.Printf("owner: %s\n", getresponse.Owner)
+	fmt.Printf("actions: %s\n", getresponse.Actions)
+	fmt.Printf("system data: %v\n", getresponse.SystemData)
 }

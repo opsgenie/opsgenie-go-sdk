@@ -6,13 +6,12 @@ import (
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	hb "github.com/opsgenie/opsgenie-go-sdk/heartbeat"
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
+	"github.com/opsgenie/opsgenie-go-sdk/samples/constants"
 )
 
 func main() {
-	API_KEY := "YOUR API KEY HERE"
-
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(API_KEY)
+	cli.SetApiKey(constants.API_KEY)
 
 	hbCli, cliErr := cli.Heartbeat()
 
@@ -28,7 +27,7 @@ func main() {
 		panic(hbErr)
 	}
 
-	fmt.Println("id:", response.Id)
-	fmt.Println("status:", response.Status)
-	fmt.Println("code:", response.Code)
+	fmt.Printf("id: %s\n", response.Id)
+	fmt.Printf("status: %s\n", response.Status)
+	fmt.Printf("code: %d\n", response.Code)
 }

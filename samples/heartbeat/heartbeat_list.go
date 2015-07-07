@@ -6,13 +6,12 @@ import (
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	hb "github.com/opsgenie/opsgenie-go-sdk/heartbeat"
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
+	"github.com/opsgenie/opsgenie-go-sdk/samples/constants"
 )
 
 func main() {
-	API_KEY := "YOUR API KEY HERE"
-
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(API_KEY)
+	cli.SetApiKey(constants.API_KEY)
 
 	hbCli, cliErr := cli.Heartbeat()
 
@@ -28,11 +27,11 @@ func main() {
 		panic(hbErr)
 	}
 
-	fmt.Println("Heartbeat created")
-	fmt.Println("-----------------")
-	fmt.Println("id:", response.Id)
-	fmt.Println("status:", response.Status)
-	fmt.Println("code:", response.Code)
+	fmt.Printf("Heartbeat created\n")
+	fmt.Printf("-----------------\n")
+	fmt.Printf("id: %s\n", response.Id)
+	fmt.Printf("status: %s\n", response.Status)
+	fmt.Printf("code: %d\n", response.Code)
 
 	// list the HBs
 	listReq := hb.ListHeartbeatsRequest{}
@@ -41,19 +40,19 @@ func main() {
 		panic(listErr)
 	}
 
-	fmt.Println("Heartbeats")
-	fmt.Println("-----------------")
+	fmt.Printf("Heartbeats\n")
+	fmt.Printf("-----------------\n")
 	beats := listResp.Heartbeats
 	for _, beat := range beats {
-		fmt.Println("Id:", beat.Id)
-		fmt.Println("Name:", beat.Name)
-		fmt.Println("Status", beat.Status)
-		fmt.Println("Description:", beat.Description)
-		fmt.Println("Enabled?:", beat.Enabled)
-		fmt.Println("Last Heart beat:", beat.LastHeartbeat)
-		fmt.Println("Interval:", beat.Interval)
-		fmt.Println("Interval Unit:", beat.IntervalUnit)
-		fmt.Println("Expired?:", beat.Expired)
-		fmt.Println("-----------------")
+		fmt.Printf("Id: %s\n", beat.Id)
+		fmt.Printf("Name: %s\n", beat.Name)
+		fmt.Printf("Status %s\n", beat.Status)
+		fmt.Printf("Description: %s\n", beat.Description)
+		fmt.Printf("Enabled?: %t\n", beat.Enabled)
+		fmt.Printf("Last Heartbeat: %d\n", beat.LastHeartbeat)
+		fmt.Printf("Interval: %d\n", beat.Interval)
+		fmt.Printf("Interval Unit: %s\n", beat.IntervalUnit)
+		fmt.Printf("Expired?: %t\n", beat.Expired)
+		fmt.Printf("-----------------\n")
 	}
 }

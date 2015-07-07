@@ -6,15 +6,12 @@ import (
 	alerts "github.com/opsgenie/opsgenie-go-sdk/alerts"
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
+	"github.com/opsgenie/opsgenie-go-sdk/samples/constants"
 )
 
 func main() {
-	API_KEY := "YOUR API KEY HERE"
-	ACTIONS := []string{"ping", "pong"}
-	ACTION_TO_EXEC := "pong"
-
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(API_KEY)
+	cli.SetApiKey(constants.API_KEY)
 
 	alertCli, cliErr := cli.Alert()
 
@@ -23,26 +20,26 @@ func main() {
 	}
 
 	// create the alert
-	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test - ", 10), Actions: ACTIONS}
+	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test - ", 10), Actions: constants.ACTIONS}
 	response, alertErr := alertCli.Create(req)
 
 	if alertErr != nil {
 		panic(alertErr)
 	}
 
-	fmt.Println("message:", response.Message)
-	fmt.Println("alert id:", response.AlertId)
-	fmt.Println("status:", response.Status)
-	fmt.Println("code:", response.Code)
+	fmt.Printf("message: %s\n", response.Message)
+	fmt.Printf("alert id: %s\n", response.AlertId)
+	fmt.Printf("status: %s\n", response.Status)
+	fmt.Printf("code: %d\n", response.Code)
 
 	// execute sample 'pong' action for the alert
-	execActionReq := alerts.ExecuteActionAlertRequest{Id: response.AlertId, Action: ACTION_TO_EXEC, Note: "Action <b>pong</b> executed by the Go API"}
+	execActionReq := alerts.ExecuteActionAlertRequest{Id: response.AlertId, Action: constants.ACTION_TO_EXEC, Note: "Action <b>pong</b> executed by the Go API"}
 	execActionResponse, alertErr := alertCli.ExecuteAction(execActionReq)
 
 	if alertErr != nil {
 		panic(alertErr)
 	}
 
-	fmt.Println("status:", execActionResponse.Result)
-	fmt.Println("code:", execActionResponse.Code)
+	fmt.Printf("status: %s\n", execActionResponse.Result)
+	fmt.Printf("code: %d\n", execActionResponse.Code)
 }

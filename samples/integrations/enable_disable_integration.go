@@ -5,15 +5,12 @@ import (
 
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	itg "github.com/opsgenie/opsgenie-go-sdk/integration"
+	"github.com/opsgenie/opsgenie-go-sdk/samples/constants"
 )
 
-var INTEGRATION_NAME = "YOUR INTEGRATION NAME HERE"
-
 func main() {
-	API_KEY := "YOUR API KEY HERE"
-
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(API_KEY)
+	cli.SetApiKey(constants.API_KEY)
 	cli.SetOpsGenieApiUrl("http://localhost:9000")
 
 	integrationCli, cliErr := cli.Integration()
@@ -22,22 +19,22 @@ func main() {
 		panic(cliErr)
 	}
 	//disable integration
-	disableReq := itg.DisableIntegrationRequest{Name: INTEGRATION_NAME}
+	disableReq := itg.DisableIntegrationRequest{Name: constants.INTEGRATION_NAME}
 	_, itgError := integrationCli.Disable(disableReq)
 
 	if itgError != nil {
 		panic(itgError)
 	} else {
-		fmt.Println("Integration disabled successfuly")
+		fmt.Printf("Integration disabled successfuly\n")
 	}
 
 	//enable integration
-	enableReq := itg.EnableIntegrationRequest{Name: INTEGRATION_NAME}
+	enableReq := itg.EnableIntegrationRequest{Name: constants.INTEGRATION_NAME}
 	_, itgError = integrationCli.Enable(enableReq)
 
 	if itgError != nil {
 		panic(itgError)
 	} else {
-		fmt.Println("Integration enabled successfuly")
+		fmt.Printf("Integration enabled successfuly\n")
 	}
 }

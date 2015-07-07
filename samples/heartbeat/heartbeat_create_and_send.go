@@ -6,13 +6,12 @@ import (
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	hb "github.com/opsgenie/opsgenie-go-sdk/heartbeat"
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
+	"github.com/opsgenie/opsgenie-go-sdk/samples/constants"
 )
 
 func main() {
-	API_KEY := "YOUR API KEY HERE"
-
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(API_KEY)
+	cli.SetApiKey(constants.API_KEY)
 
 	hbCli, cliErr := cli.Heartbeat()
 
@@ -29,11 +28,11 @@ func main() {
 		panic(hbErr)
 	}
 
-	fmt.Println("Heartbeat added")
-	fmt.Println("---------------")
-	fmt.Println("id:", response.Id)
-	fmt.Println("status:", response.Status)
-	fmt.Println("code:", response.Code)
+	fmt.Printf("Heartbeat added\n")
+	fmt.Printf("---------------\n")
+	fmt.Printf("id: %s\n", response.Id)
+	fmt.Printf("status: %s\n", response.Status)
+	fmt.Printf("code: %d\n", response.Code)
 
 	// send heart beat request
 	sendReq := hb.SendHeartbeatRequest{Name: hbName}
@@ -43,10 +42,10 @@ func main() {
 		panic(sendErr)
 	}
 
-	fmt.Println("Heartbeat request sent")
-	fmt.Println("----------------------")
-	fmt.Println("Heart beat:", sendResp.Heartbeat)
-	fmt.Println("Will expire at:", sendResp.WillExpireAt)
-	fmt.Println("Status:", sendResp.Status)
-	fmt.Println("Code:", sendResp.Code)
+	fmt.Printf("Heartbeat request sent\n")
+	fmt.Printf("----------------------\n")
+	fmt.Printf("Heartbeat: %d\n", sendResp.Heartbeat)
+	fmt.Printf("Will expire at: %d\n", sendResp.WillExpireAt)
+	fmt.Printf("Status: %s\n", sendResp.Status)
+	fmt.Printf("Code: %d\n", sendResp.Code)
 }

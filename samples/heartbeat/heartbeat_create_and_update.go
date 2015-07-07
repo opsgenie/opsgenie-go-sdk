@@ -6,13 +6,12 @@ import (
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	hb "github.com/opsgenie/opsgenie-go-sdk/heartbeat"
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
+	"github.com/opsgenie/opsgenie-go-sdk/samples/constants"
 )
 
 func main() {
-	API_KEY := "YOUR API KEY HERE"
-
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(API_KEY)
+	cli.SetApiKey(constants.API_KEY)
 
 	hbCli, cliErr := cli.Heartbeat()
 
@@ -28,11 +27,11 @@ func main() {
 		panic(hbErr)
 	}
 
-	fmt.Println("Heartbeat added")
-	fmt.Println("---------------")
-	fmt.Println("id:", response.Id)
-	fmt.Println("status:", response.Status)
-	fmt.Println("code:", response.Code)
+	fmt.Printf("Heartbeat added\n")
+	fmt.Printf("---------------\n")
+	fmt.Printf("id: %s\n", response.Id)
+	fmt.Printf("status: %s\n", response.Status)
+	fmt.Printf("code: %d\n", response.Code)
 
 	// update the newly created heart beat, change the name
 	hbId := response.Id
@@ -43,9 +42,9 @@ func main() {
 		panic(updateErr)
 	}
 
-	fmt.Println("Heartbeat updated")
-	fmt.Println("-----------------")
-	fmt.Println("id:", updateResp.Id)
-	fmt.Println("status:", updateResp.Status)
-	fmt.Println("code:", updateResp.Code)
+	fmt.Printf("Heartbeat updated\n")
+	fmt.Printf("-----------------\n")
+	fmt.Printf("id: %s\n", updateResp.Id)
+	fmt.Printf("status: %s\n", updateResp.Status)
+	fmt.Printf("code: %d\n", updateResp.Code)
 }

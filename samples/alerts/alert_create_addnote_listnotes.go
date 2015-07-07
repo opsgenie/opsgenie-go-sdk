@@ -6,13 +6,12 @@ import (
 	alerts "github.com/opsgenie/opsgenie-go-sdk/alerts"
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
+	"github.com/opsgenie/opsgenie-go-sdk/samples/constants"
 )
 
 func main() {
-	API_KEY := "YOUR API KEY HERE"
-
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(API_KEY)
+	cli.SetApiKey(constants.API_KEY)
 
 	alertCli, cliErr := cli.Alert()
 
@@ -28,10 +27,10 @@ func main() {
 		panic(alertErr)
 	}
 
-	fmt.Println("message:", response.Message)
-	fmt.Println("alert id:", response.AlertId)
-	fmt.Println("status:", response.Status)
-	fmt.Println("code:", response.Code)
+	fmt.Printf("message: %s\n", response.Message)
+	fmt.Printf("alert id: %s\n", response.AlertId)
+	fmt.Printf("status: %s\n", response.Status)
+	fmt.Printf("code: %d\n", response.Code)
 
 	addnotereq := alerts.AddNoteAlertRequest{}
 	// add alert ten notes
@@ -42,7 +41,7 @@ func main() {
 		if alertErr != nil {
 			panic(alertErr)
 		}
-		fmt.Println("[Add note] ", addnoteresp.Status, addnoteresp.Code)
+		fmt.Printf("[Add note] %s %d\n", addnoteresp.Status, addnoteresp.Code)
 	}
 	listNotesReq := alerts.ListAlertNotesRequest{Id: response.AlertId}
 	listNotesResponse, alertErr := alertCli.ListNotes(listNotesReq)
@@ -52,14 +51,14 @@ func main() {
 
 	alertNotes := listNotesResponse.Notes
 
-	fmt.Println("Last key:", listNotesResponse.LastKey)
-	fmt.Println("Notes:")
-	fmt.Println("------")
+	fmt.Printf("Last key: %s\n", listNotesResponse.LastKey)
+	fmt.Printf("Notes:\n")
+	fmt.Printf("------\n")
 
 	for _, note := range alertNotes {
-		fmt.Println("Note:", note.Note)
-		fmt.Println("Owner:", note.Owner)
-		fmt.Println("Created at:", note.CreatedAt)
-		fmt.Println("-------------------------")
+		fmt.Printf("Note: %s\n", note.Note)
+		fmt.Printf("Owner: %s\n", note.Owner)
+		fmt.Printf("Created at: %d\n", note.CreatedAt)
+		fmt.Printf("-------------------------\n")
 	}
 }

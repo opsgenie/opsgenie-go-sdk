@@ -3,15 +3,14 @@ package main
 import (
 	"fmt"
 
-	alerts "github.com/opsgenie/opsgenie-go-sdk/alerts"
+	"github.com/opsgenie/opsgenie-go-sdk/alerts"
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
+	"github.com/opsgenie/opsgenie-go-sdk/samples/constants"
 )
 
 func main() {
-	API_KEY := "YOUR API KEY HERE"
-
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(API_KEY)
+	cli.SetApiKey(constants.API_KEY)
 
 	alertCli, cliErr := cli.Alert()
 
@@ -28,14 +27,14 @@ func main() {
 	}
 
 	for _, alert := range listresp.Alerts {
-		fmt.Println("Id: ", alert.Id)
-		fmt.Println("Alias: ", alert.Alias)
-		fmt.Println("Message: ", alert.Message)
-		fmt.Println("Status: ", alert.Status)
-		fmt.Println("IsSeen?: ", alert.IsSeen)
-		fmt.Println("Acknowledged?: ", alert.Acknowledged)
-		fmt.Println("Created at: ", alert.CreatedAt)
-		fmt.Println("Updated at: ", alert.UpdatedAt)
-		fmt.Println("Tiny id: ", alert.TinyId)
+		fmt.Printf("Id: %s\n", alert.Id)
+		fmt.Printf("Alias: %s\n", alert.Alias)
+		fmt.Printf("Message: %s\n", alert.Message)
+		fmt.Printf("Status: %s\n", alert.Status)
+		fmt.Printf("IsSeen?: %t\n", alert.IsSeen)
+		fmt.Printf("Acknowledged?: %t\n", alert.Acknowledged)
+		fmt.Printf("Created at: %d\n", alert.CreatedAt)
+		fmt.Printf("Updated at: %d\n", alert.UpdatedAt)
+		fmt.Printf("Tiny id: %s\n", alert.TinyId)
 	}
 }

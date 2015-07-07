@@ -6,13 +6,12 @@ import (
 	alerts "github.com/opsgenie/opsgenie-go-sdk/alerts"
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
+	"github.com/opsgenie/opsgenie-go-sdk/samples/constants"
 )
 
 func main() {
-	API_KEY := "YOUR API KEY HERE"
-
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(API_KEY)
+	cli.SetApiKey(constants.API_KEY)
 
 	alertCli, cliErr := cli.Alert()
 
@@ -28,10 +27,10 @@ func main() {
 		panic(alertErr)
 	}
 
-	fmt.Println("message:", response.Message)
-	fmt.Println("alert id:", response.AlertId)
-	fmt.Println("status:", response.Status)
-	fmt.Println("code:", response.Code)
+	fmt.Printf("message: %s\n", response.Message)
+	fmt.Printf("alert id: %s\n", response.AlertId)
+	fmt.Printf("status: %s\n", response.Status)
+	fmt.Printf("code: %d\n", response.Code)
 
 	// acknowledge the alert
 	ackReq := alerts.AcknowledgeAlertRequest{Id: response.AlertId}
@@ -40,6 +39,6 @@ func main() {
 		panic(alertErr)
 	}
 
-	fmt.Println("status:", ackResponse.Status)
-	fmt.Println("code:", ackResponse.Code)
+	fmt.Printf("status: %s\n", ackResponse.Status)
+	fmt.Printf("code: %d\n", ackResponse.Code)
 }

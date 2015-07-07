@@ -6,13 +6,12 @@ import (
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	hb "github.com/opsgenie/opsgenie-go-sdk/heartbeat"
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
+	"github.com/opsgenie/opsgenie-go-sdk/samples/constants"
 )
 
 func main() {
-	API_KEY := "YOUR API KEY HERE"
-
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(API_KEY)
+	cli.SetApiKey(constants.API_KEY)
 
 	hbCli, cliErr := cli.Heartbeat()
 
@@ -28,11 +27,11 @@ func main() {
 		panic(hbErr)
 	}
 
-	fmt.Println("Heartbeat created")
-	fmt.Println("-----------------")
-	fmt.Println("id:", response.Id)
-	fmt.Println("status:", response.Status)
-	fmt.Println("code:", response.Code)
+	fmt.Printf("Heartbeat created\n")
+	fmt.Printf("-----------------\n")
+	fmt.Printf("id: %s\n", response.Id)
+	fmt.Printf("status: %s\n", response.Status)
+	fmt.Printf("code: %d\n", response.Code)
 
 	// enable the hb
 	deleteReq := hb.DeleteHeartbeatRequest{Id: response.Id}
@@ -41,8 +40,8 @@ func main() {
 		panic(deleteErr)
 	}
 
-	fmt.Println("Heartbeat deleted")
-	fmt.Println("-----------------")
-	fmt.Println("Status:", deleteResp.Status)
-	fmt.Println("Code:", deleteResp.Code)
+	fmt.Printf("Heartbeat deleted\n")
+	fmt.Printf("-----------------\n")
+	fmt.Printf("Status: %s\n", deleteResp.Status)
+	fmt.Printf("Code: %d\n", deleteResp.Code)
 }

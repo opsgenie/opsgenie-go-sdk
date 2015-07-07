@@ -139,11 +139,11 @@ type ListAlertRecipientsRequest struct {
 
 type ListAlertsRequest struct {
 	ApiKey        string `url:"apiKey,omitempty"`
-	CreatedAfter  int    `url:"createdAfter,omitempty"`
-	CreatedBefore int    `url:"createdBefore,omitempty"`
-	UpdatedAfter  int    `url:"updatedAfter,omitempty"`
-	UpdatedBefore int    `url:"updatedBefore,omitempty"`
-	Limit         int    `url:"limit,omitempty"`
+	CreatedAfter  uint64 `url:"createdAfter,omitempty"`
+	CreatedBefore uint64 `url:"createdBefore,omitempty"`
+	UpdatedAfter  uint64 `url:"updatedAfter,omitempty"`
+	UpdatedBefore uint64 `url:"updatedBefore,omitempty"`
+	Limit         uint64 `url:"limit,omitempty"`
 	Status        string `url:"status,omitempty"`
 	SortBy        string `url:"sortBy,omitempty"`
 	Order         string `url:"order,omitempty"`

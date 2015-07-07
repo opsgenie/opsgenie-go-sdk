@@ -4,17 +4,13 @@ import (
 	"fmt"
 
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
-	policy "github.com/opsgenie/opsgenie-go-sdk/policy"
+	"github.com/opsgenie/opsgenie-go-sdk/policy"
+	"github.com/opsgenie/opsgenie-go-sdk/samples/constants"
 )
 
-var POLICY_NAME = "YOUR POLICY NAME HERE"
-
 func main() {
-	API_KEY := "YOUR API KEY HERE"
-
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(API_KEY)
-	cli.SetOpsGenieApiUrl("http://localhost:9000")
+	cli.SetApiKey(constants.API_KEY)
 
 	policyCli, cliErr := cli.Policy()
 
@@ -22,22 +18,22 @@ func main() {
 		panic(cliErr)
 	}
 	//disable policy
-	disableReq := policy.DisablePolicyRequest{Name: POLICY_NAME}
+	disableReq := policy.DisablePolicyRequest{Name: constants.POLICY_NAME}
 	_, itgError := policyCli.Disable(disableReq)
 
 	if itgError != nil {
 		panic(itgError)
 	} else {
-		fmt.Println("Policy disabled successfuly")
+		fmt.Printf("Policy disabled successfuly\n")
 	}
 
 	//enable policy
-	enableReq := policy.EnablePolicyRequest{Name: POLICY_NAME}
+	enableReq := policy.EnablePolicyRequest{Name: constants.POLICY_NAME}
 	_, itgError = policyCli.Enable(enableReq)
 
 	if itgError != nil {
 		panic(itgError)
 	} else {
-		fmt.Println("Policy enabled successfuly")
+		fmt.Printf("Policy enabled successfuly\n")
 	}
 }

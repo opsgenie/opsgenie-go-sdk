@@ -6,14 +6,12 @@ import (
 	alerts "github.com/opsgenie/opsgenie-go-sdk/alerts"
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	samples "github.com/opsgenie/opsgenie-go-sdk/samples"
+	"github.com/opsgenie/opsgenie-go-sdk/samples/constants"
 )
 
 func main() {
-	API_KEY := "YOUR API KEY HERE"
-	USER := "YOUR USERNAME HERE"
-
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(API_KEY)
+	cli.SetApiKey(constants.API_KEY)
 
 	alertCli, cliErr := cli.Alert()
 
@@ -22,17 +20,17 @@ func main() {
 	}
 
 	// create the alert
-	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test", 8), Note: "Created for testing purposes", User: USER}
+	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test", 8), Note: "Created for testing purposes", User: constants.USER}
 	response, alertErr := alertCli.Create(req)
 
 	if alertErr != nil {
 		panic(alertErr)
 	}
 
-	fmt.Println("message:", response.Message)
-	fmt.Println("alert id:", response.AlertId)
-	fmt.Println("status:", response.Status)
-	fmt.Println("code:", response.Code)
+	fmt.Printf("message: %s\n", response.Message)
+	fmt.Printf("alert id: %s\n", response.AlertId)
+	fmt.Printf("status: %s\n", response.Status)
+	fmt.Printf("code: %d\n", response.Code)
 
 	// close the alert
 	getLogsReq := alerts.ListAlertLogsRequest{Id: response.AlertId}
@@ -43,9 +41,9 @@ func main() {
 
 	logs := getLogsResponse.Logs
 	for _, log := range logs {
-		fmt.Println("Owner:", log.Owner)
-		fmt.Println("Log:", log.Log)
-		fmt.Println("Log type:", log.LogType)
-		fmt.Println("Created at:", log.CreatedAt)
+		fmt.Printf("Owner: %s\n", log.Owner)
+		fmt.Printf("Log: %s\n", log.Log)
+		fmt.Printf("Log type: %s\n", log.LogType)
+		fmt.Printf("Created at: %d\n", log.CreatedAt)
 	}
 }

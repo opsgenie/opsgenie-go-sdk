@@ -29,7 +29,7 @@ func Logger() seelog.LoggerInterface {
 func ConfigureLogger(testConfig []byte) {
 	loggr, err := seelog.LoggerFromConfigAsBytes([]byte(testConfig))
 	if err != nil {
-		fmt.Println("error occured: " + err.Error())
+		fmt.Printf("error occured: %s\n", err.Error())
 	}
 	logger = loggr
 	seelog.UseLogger(loggr)
