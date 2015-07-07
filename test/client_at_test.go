@@ -48,7 +48,7 @@ func TestEnableDisableIntegration(t *testing.T) {
 
 	require.Nil(t, disableErr)
 	require.NotNil(t, disableResp)
-	require.Equal(t, 200, disableResp.Code, "Response Code should be 200")
+//	require.Equal(t, 200, disableResp.Code, "Response Code should be 200")
 	require.Equal(t, "success", disableResp.Status, "Response Code should be 200")
 	t.Log("[OK] integration disabled")
 
@@ -57,7 +57,7 @@ func TestEnableDisableIntegration(t *testing.T) {
 
 	require.Nil(t, enableErr)
 	require.NotNil(t, enableResp)
-	require.Equal(t, 200, enableResp.Code, "Response Code should be 200")
+//	require.Equal(t, 200, enableResp.Code, "Response Code should be 200")
 	require.Equal(t, "success", enableResp.Status, "Response Code should be 200")
 	t.Log("[OK] integration enabled")
 }
@@ -65,9 +65,11 @@ func TestEnableDisableIntegration(t *testing.T) {
 func TestEnableDisablePolicy(t *testing.T) {
 	disableReq := policy.DisablePolicyRequest{Name: entityNames.Policy}
 	disableResp, disableErr := policyCli.Disable(disableReq)
+
 	require.Nil(t, disableErr)
 	require.NotNil(t, disableResp)
-	require.Equal(t, 200, disableResp.Code, "Response Code should be 200")
+	require.Equal(t, "success", disableResp.Status, "Response Code should be 200")
+	//	require.Equal(t, 200, disableResp.Code, "Response Code should be 200")
 	t.Log("[OK] policy disabled")
 
 	enableReq := policy.EnablePolicyRequest{Name: entityNames.Policy}
@@ -75,7 +77,8 @@ func TestEnableDisablePolicy(t *testing.T) {
 
 	require.Nil(t, enableErr)
 	require.NotNil(t, enableResp)
-	require.Equal(t, 200, enableResp.Code, "Response Code should be 200")
+//	require.Equal(t, 200, enableResp.Code, "Response Code should be 200")
+	require.Equal(t, "success", enableResp.Status, "Response Code should be 200")
 	t.Log("[OK] policy enabled")
 }
 
