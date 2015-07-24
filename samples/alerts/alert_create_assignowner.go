@@ -11,7 +11,7 @@ import (
 
 func main() {
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(constants.API_KEY)
+	cli.SetAPIKey(constants.APIKey)
 
 	alertCli, cliErr := cli.Alert()
 
@@ -28,12 +28,12 @@ func main() {
 	}
 
 	fmt.Printf("message: %s\n", response.Message)
-	fmt.Printf("alert id: %s\n", response.AlertId)
+	fmt.Printf("alert id: %s\n", response.AlertID)
 	fmt.Printf("status: %s\n", response.Status)
 	fmt.Printf("code: %d\n", response.Code)
 
 	// assign the owner for the alert
-	assignOwnerReq := alerts.AssignOwnerAlertRequest{Id: response.AlertId, Owner: constants.OWNER}
+	assignOwnerReq := alerts.AssignOwnerAlertRequest{ID: response.AlertID, Owner: constants.Owner}
 	assignOwnerResponse, alertErr := alertCli.AssignOwner(assignOwnerReq)
 
 	if alertErr != nil {

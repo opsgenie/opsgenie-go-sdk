@@ -1,15 +1,21 @@
+/*
+Copyright 2015 OpsGenie. All rights reserved.
+Use of this source code is governed by a Apache Software
+license that can be found in the LICENSE file.
+*/
+//Package constants provides common variables used in samples.
 package constants
 
-var API_KEY = "YOUR API KEY HERE"
+var APIKey = "YOUR API KEY HERE"
 
-var TEAM_NAME = "YOUR TEAM NAME HERE"
-var OWNER = "YOUR USERNAME HERE"
-var PATH_TO_FILE = "/your/path/to/file/here"
-var NOTIFY_ARR = []string{"YOUR USERNAME HERE"}
-var SOURCE = "Go API"
-var ACTIONS = []string{"ping", "pong"}
-var ACTION_TO_EXEC = "pong"
-var USER = "YOUR USERNAME HERE"
+var TeamName = "YOUR TEAM NAME HERE"
+var Owner = "YOUR USERNAME HERE"
+var PathToFile = "/your/path/to/file/here"
+var NotifyArr = []string{"YOUR USERNAME HERE"}
+var Source = "Go API"
+var Actions = []string{"ping", "pong"}
+var ActionToExec = "pong"
+var User = "YOUR USERNAME HERE"
 
-var POLICY_NAME = "YOUR POLICY NAME HERE"
-var INTEGRATION_NAME = "YOUR INTEGRATION NAME HERE"
+var PolicyName = "YOUR POLICY NAME HERE"
+var IntegrationName = "YOUR INTEGRATION NAME HERE"

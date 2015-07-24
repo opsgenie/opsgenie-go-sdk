@@ -1,30 +1,40 @@
+/*
+Copyright 2015 OpsGenie. All rights reserved.
+Use of this source code is governed by a Apache Software
+license that can be found in the LICENSE file.
+*/
+
+//Package alerts provides requests and response structures to achieve Alert API actions.
 package alerts
 
 import (
 	"os"
 )
 
+// AcknowledgeAlertRequest provides necessary parameter structure to Acknowledge an alert at OpsGenie.
 type AcknowledgeAlertRequest struct {
-	ApiKey string `json:"apiKey,omitempty"`
-	Id     string `json:"id,omitempty"`
+	APIKey string `json:"apiKey,omitempty"`
+	ID     string `json:"id,omitempty"`
 	Alias  string `json:"alias,omitempty"`
 	User   string `json:"user,omitempty"`
 	Note   string `json:"note,omitempty"`
 	Source string `json:"source,omitempty"`
 }
 
+// AddNoteAlertRequest provides necessary parameter structure to Add Note to an alert at OpsGenie.
 type AddNoteAlertRequest struct {
-	ApiKey string `json:"apiKey,omitempty"`
-	Id     string `json:"id,omitempty"`
+	APIKey string `json:"apiKey,omitempty"`
+	ID     string `json:"id,omitempty"`
 	Alias  string `json:"alias,omitempty"`
 	Note   string `json:"note,omitempty"`
 	User   string `json:"user,omitempty"`
 	Source string `json:"source,omitempty"`
 }
 
+// AddRecipientAlertRequest provides necessary parameter structure to Add Recipient to an alert at OpsGenie.
 type AddRecipientAlertRequest struct {
-	ApiKey    string `json:"apiKey,omitempty"`
-	Id        string `json:"id,omitempty"`
+	APIKey    string `json:"apiKey,omitempty"`
+	ID        string `json:"id,omitempty"`
 	Alias     string `json:"alias,omitempty"`
 	Recipient string `json:"recipient,omitempty"`
 	User      string `json:"user,omitempty"`
@@ -32,18 +42,21 @@ type AddRecipientAlertRequest struct {
 	Source    string `json:"source,omitempty"`
 }
 
+// AddTeamAlertRequest provides necessary parameter structure to Add Team to an alert at OpsGenie.
 type AddTeamAlertRequest struct {
-	ApiKey string `json:"apiKey,omitempty"`
-	Id     string `json:"id,omitempty"`
+	APIKey string `json:"apiKey,omitempty"`
+	ID     string `json:"id,omitempty"`
 	Alias  string `json:"alias,omitempty"`
 	Team   string `json:"team,omitempty"`
 	User   string `json:"user,omitempty"`
 	Note   string `json:"note,omitempty"`
 	Source string `json:"source,omitempty"`
 }
+
+// AssignOwnerAlertRequest provides necessary parameter structure to Assign a User as Owner to an alert at OpsGenie.
 type AssignOwnerAlertRequest struct {
-	ApiKey string `json:"apiKey,omitempty"`
-	Id     string `json:"id,omitempty"`
+	APIKey string `json:"apiKey,omitempty"`
+	ID     string `json:"id,omitempty"`
 	Alias  string `json:"alias,omitempty"`
 	Owner  string `json:"owner,omitempty"`
 	User   string `json:"user,omitempty"`
@@ -51,9 +64,10 @@ type AssignOwnerAlertRequest struct {
 	Source string `json:"source,omitempty"`
 }
 
+// AttachFileAlertRequest provides necessary parameter structure to Attach File to an alert at OpsGenie.
 type AttachFileAlertRequest struct {
-	ApiKey     string   `json:"apiKey,omitempty"`
-	Id         string   `json:"id,omitempty"`
+	APIKey     string   `json:"apiKey,omitempty"`
+	ID         string   `json:"id,omitempty"`
 	Alias      string   `json:"alias,omitempty"`
 	Attachment *os.File `json:"attachment,omitempty"`
 	User       string   `json:"user,omitempty"`
@@ -62,9 +76,10 @@ type AttachFileAlertRequest struct {
 	Note       string   `json:"note,omitempty"`
 }
 
+// CloseAlertRequest provides necessary parameter structure to Close an alert at OpsGenie.
 type CloseAlertRequest struct {
-	ApiKey string   `json:"apiKey,omitempty"`
-	Id     string   `json:"id,omitempty"`
+	APIKey string   `json:"apiKey,omitempty"`
+	ID     string   `json:"id,omitempty"`
 	Alias  string   `json:"alias,omitempty"`
 	User   string   `json:"user,omitempty"`
 	Note   string   `json:"note,omitempty"`
@@ -72,8 +87,9 @@ type CloseAlertRequest struct {
 	Source string   `json:"source,omitempty"`
 }
 
+// CreateAlertRequest provides necessary parameter structure to Create an alert at OpsGenie.
 type CreateAlertRequest struct {
-	ApiKey      string            `json:"apiKey,omitempty"`
+	APIKey      string            `json:"apiKey,omitempty"`
 	Message     string            `json:"message,omitempty"`
 	Teams       []string          `json:"teams,omitempty"`
 	Alias       string            `json:"alias,omitempty"`
@@ -88,17 +104,19 @@ type CreateAlertRequest struct {
 	Note        string            `json:"note,omitempty"`
 }
 
+// DeleteAlertRequest provides necessary parameter structure to Delete an alert from OpsGenie.
 type DeleteAlertRequest struct {
-	ApiKey string `url:"apiKey,omitempty"`
-	Id     string `url:"id,omitempty"`
+	APIKey string `url:"apiKey,omitempty"`
+	ID     string `url:"id,omitempty"`
 	Alias  string `url:"alias,omitempty"`
 	User   string `url:"user,omitempty"`
 	Source string `url:"source,omitempty"`
 }
 
+// ExecuteActionAlertRequest provides necessary parameter structure to Execute Custom Actions on an alert at OpsGenie.
 type ExecuteActionAlertRequest struct {
-	ApiKey string `json:"apiKey,omitempty"`
-	Id     string `json:"id,omitempty"`
+	APIKey string `json:"apiKey,omitempty"`
+	ID     string `json:"id,omitempty"`
 	Alias  string `json:"alias,omitempty"`
 	Action string `json:"action,omitempty"`
 	User   string `json:"user,omitempty"`
@@ -106,39 +124,44 @@ type ExecuteActionAlertRequest struct {
 	Note   string `json:"note,omitempty"`
 }
 
+// GetAlertRequest provides necessary parameter structure to Retrieve an alert details from OpsGenie.
 type GetAlertRequest struct {
-	ApiKey string `url:"apiKey,omitempty"`
-	Id     string `url:"id,omitempty"`
+	APIKey string `url:"apiKey,omitempty"`
+	ID     string `url:"id,omitempty"`
 	Alias  string `url:"alias,omitempty"`
-	TinyId string `url:"tinyId,omitempty"`
+	TinyID string `url:"tinyId,omitempty"`
 }
 
+// ListAlertLogsRequest provides necessary parameter structure to Retrieve activity logs of an alert from OpsGenie.
 type ListAlertLogsRequest struct {
-	ApiKey  string `url:"apiKey,omitempty"`
-	Id      string `url:"id,omitempty"`
+	APIKey  string `url:"apiKey,omitempty"`
+	ID      string `url:"id,omitempty"`
 	Alias   string `url:"alias,omitempty"`
-	Limit   string `url:"limit,omitempty"`
+	Limit   uint64 `url:"limit,omitempty"`
 	Order   string `url:"order,omitempty"`
 	LastKey string `url:"lastKey,omitempty"`
 }
 
+// ListAlertNotesRequest provides necessary parameter structure to Retrieve notes of an alert from OpsGenie.
 type ListAlertNotesRequest struct {
-	ApiKey  string `url:"apiKey,omitempty"`
-	Id      string `url:"id,omitempty"`
+	APIKey  string `url:"apiKey,omitempty"`
+	ID      string `url:"id,omitempty"`
 	Alias   string `url:"alias,omitempty"`
-	Limit   string `url:"limit,omitempty"`
+	Limit   uint64 `url:"limit,omitempty"`
 	Order   string `url:"order,omitempty"`
 	LastKey string `url:"lastKey,omitempty"`
 }
 
+// ListAlertRecipientsRequest provides necessary parameter structure to Retrieve recipients of an alert from OpsGenie.
 type ListAlertRecipientsRequest struct {
-	ApiKey string `url:"apiKey,omitempty"`
-	Id     string `url:"id,omitempty"`
+	APIKey string `url:"apiKey,omitempty"`
+	ID     string `url:"id,omitempty"`
 	Alias  string `url:"alias,omitempty"`
 }
 
+// ListAlertsRequest provides necessary parameter structure to Retrieve alerts from OpsGenie.
 type ListAlertsRequest struct {
-	ApiKey        string `url:"apiKey,omitempty"`
+	APIKey        string `url:"apiKey,omitempty"`
 	CreatedAfter  uint64 `url:"createdAfter,omitempty"`
 	CreatedBefore uint64 `url:"createdBefore,omitempty"`
 	UpdatedAfter  uint64 `url:"updatedAfter,omitempty"`
@@ -149,9 +172,10 @@ type ListAlertsRequest struct {
 	Order         string `url:"order,omitempty"`
 }
 
+// RenotifyAlertRequest provides necessary parameter structure to Re-notify recipients at OpsGenie.
 type RenotifyAlertRequest struct {
-	ApiKey     string   `json:"apiKey,omitempty"`
-	Id         string   `json:"id,omitempty"`
+	APIKey     string   `json:"apiKey,omitempty"`
+	ID         string   `json:"id,omitempty"`
 	Alias      string   `json:"alias,omitempty"`
 	Recipients []string `json:"recipients,omitempty"`
 	User       string   `json:"user,omitempty"`
@@ -159,9 +183,10 @@ type RenotifyAlertRequest struct {
 	Source     string   `json:"source,omitempty"`
 }
 
+// TakeOwnershipAlertRequest provides necessary parameter structure to Become the Owner of an alert at OpsGenie.
 type TakeOwnershipAlertRequest struct {
-	ApiKey string `json:"apiKey,omitempty"`
-	Id     string `json:"id,omitempty"`
+	APIKey string `json:"apiKey,omitempty"`
+	ID     string `json:"id,omitempty"`
 	Alias  string `json:"alias,omitempty"`
 	User   string `json:"user,omitempty"`
 	Note   string `json:"note,omitempty"`

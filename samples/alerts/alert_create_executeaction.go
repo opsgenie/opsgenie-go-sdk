@@ -11,7 +11,7 @@ import (
 
 func main() {
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(constants.API_KEY)
+	cli.SetAPIKey(constants.APIKey)
 
 	alertCli, cliErr := cli.Alert()
 
@@ -20,7 +20,7 @@ func main() {
 	}
 
 	// create the alert
-	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test - ", 10), Actions: constants.ACTIONS}
+	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test - ", 10), Actions: constants.Actions}
 	response, alertErr := alertCli.Create(req)
 
 	if alertErr != nil {
@@ -28,12 +28,12 @@ func main() {
 	}
 
 	fmt.Printf("message: %s\n", response.Message)
-	fmt.Printf("alert id: %s\n", response.AlertId)
+	fmt.Printf("alert id: %s\n", response.AlertID)
 	fmt.Printf("status: %s\n", response.Status)
 	fmt.Printf("code: %d\n", response.Code)
 
 	// execute sample 'pong' action for the alert
-	execActionReq := alerts.ExecuteActionAlertRequest{Id: response.AlertId, Action: constants.ACTION_TO_EXEC, Note: "Action <b>pong</b> executed by the Go API"}
+	execActionReq := alerts.ExecuteActionAlertRequest{ID: response.AlertID, Action: constants.ActionToExec, Note: "Action <b>pong</b> executed by the Go API"}
 	execActionResponse, alertErr := alertCli.ExecuteAction(execActionReq)
 
 	if alertErr != nil {

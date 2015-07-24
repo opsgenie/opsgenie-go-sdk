@@ -12,12 +12,12 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-type RenotifyWaitAction struct {
-	Id string
+type renotifyWaitAction struct {
+	ID string
 }
 
-func (act RenotifyWaitAction) check(t *testing.T) bool {
-	listLogsReq := alerts.ListAlertLogsRequest{Id: act.Id}
+func (act renotifyWaitAction) check(t *testing.T) bool {
+	listLogsReq := alerts.ListAlertLogsRequest{ID: act.ID}
 	listLogsResponse, alertErr := cli.ListLogs(listLogsReq)
 
 	require.Nil(t, alertErr)
@@ -32,20 +32,20 @@ func (act RenotifyWaitAction) check(t *testing.T) bool {
 	return false
 }
 
-func (suite *AlertTestSuite) TestRenotifyAlert() {
+func (suite *alertTestSuite) TestRenotifyAlert() {
 	t := suite.T()
 	suffix := time.Now().String()
 	user := "owneruser"
 	id := createAlert(t, suffix)
 
-	renotifyReq := alerts.RenotifyAlertRequest{Id: id, User: user}
+	renotifyReq := alerts.RenotifyAlertRequest{ID: id, User: user}
 	renotifyResp, alertErr := cli.Renotify(renotifyReq)
 
 	require.Nil(t, alertErr)
 	require.NotNil(t, renotifyResp)
 	require.Equal(t, 200, renotifyResp.Code, "Response Code should be 200")
 
-	require.True(t, waitFor(t, RenotifyWaitAction{Id: id}), "Alert logs should contain renotifying log.")
+	require.True(t, waitFor(t, renotifyWaitAction{ID: id}), "Alert logs should contain renotifying log.")
 
 	//renotify with alias
 	suffix = time.Now().String()
@@ -58,16 +58,16 @@ func (suite *AlertTestSuite) TestRenotifyAlert() {
 	require.NotNil(t, renotifyResp)
 	require.Equal(t, 200, renotifyResp.Code, "Response Code should be 200")
 
-	require.True(t, waitFor(t, RenotifyWaitAction{Id: id}), "Alert logs should contain renotifying log.")
+	require.True(t, waitFor(t, renotifyWaitAction{ID: id}), "Alert logs should contain renotifying log.")
 	t.Log("[OK] renotified successfully")
 }
 
-type ListAlertLogsWaitAction struct {
-	Id string
+type listAlertLogsWaitAction struct {
+	ID string
 }
 
-func (act ListAlertLogsWaitAction) check(t *testing.T) bool {
-	listLogsReq := alerts.ListAlertLogsRequest{Id: act.Id}
+func (act listAlertLogsWaitAction) check(t *testing.T) bool {
+	listLogsReq := alerts.ListAlertLogsRequest{ID: act.ID}
 	listLogsResponse, alertErr := cli.ListLogs(listLogsReq)
 
 	require.Nil(t, alertErr)
@@ -86,7 +86,7 @@ func (act ListAlertLogsWaitAction) check(t *testing.T) bool {
 	return false
 }
 
-func (suite *AlertTestSuite) TestListAlertLogs() {
+func (suite *alertTestSuite) TestListAlertLogs() {
 	t := suite.T()
 	suffix := time.Now().String()
 	req := alerts.CreateAlertRequest{Message: "message" + suffix, Recipients: []string{"user1"}}
@@ -94,19 +94,19 @@ func (suite *AlertTestSuite) TestListAlertLogs() {
 
 	require.Nil(t, alertErr)
 	require.NotNil(t, response)
-	id := response.AlertId
+	id := response.AlertID
 	require.NotNil(t, id)
 
-	require.True(t, waitFor(t, ListAlertLogsWaitAction{Id: id}), "Alert logs should contain alert created log.")
+	require.True(t, waitFor(t, listAlertLogsWaitAction{ID: id}), "Alert logs should contain alert created log.")
 	t.Log("[OK] listed alert logs successfully")
 }
 
-type ListAlertNotesWaitAction struct {
-	Id string
+type listAlertNotesWaitAction struct {
+	ID string
 }
 
-func (act ListAlertNotesWaitAction) check(t *testing.T) bool {
-	listNotesReq := alerts.ListAlertNotesRequest{Id: act.Id}
+func (act listAlertNotesWaitAction) check(t *testing.T) bool {
+	listNotesReq := alerts.ListAlertNotesRequest{ID: act.ID}
 	listNotesResponse, alertErr := cli.ListNotes(listNotesReq)
 
 	require.Nil(t, alertErr)
@@ -124,11 +124,11 @@ func (act ListAlertNotesWaitAction) check(t *testing.T) bool {
 	return false
 }
 
-func (suite *AlertTestSuite) TestAddNoteAndListNotes() {
+func (suite *alertTestSuite) TestAddNoteAndListNotes() {
 	t := suite.T()
 	suffix := time.Now().String()
 	id := createAlert(t, suffix)
-	addNoteReq := alerts.AddNoteAlertRequest{Id: id, Note: "Alert note", User: "actionuser"}
+	addNoteReq := alerts.AddNoteAlertRequest{ID: id, Note: "Alert note", User: "actionuser"}
 	addNoteResp, alertErr := cli.AddNote(addNoteReq)
 
 	require.Nil(t, alertErr)
@@ -137,23 +137,23 @@ func (suite *AlertTestSuite) TestAddNoteAndListNotes() {
 
 	t.Log("[OK] note added with to alert")
 
-	require.True(t, waitFor(t, ListAlertNotesWaitAction{Id: id}), "Alert notes should contain the recently added note.")
+	require.True(t, waitFor(t, listAlertNotesWaitAction{ID: id}), "Alert notes should contain the recently added note.")
 	t.Log("[OK] listed notes successfully")
 }
 
-func (suite *AlertTestSuite) TestAddTeam() {
+func (suite *alertTestSuite) TestAddTeam() {
 	t := suite.T()
 
 	suffix := time.Now().String()
 	id := createAlert(t, suffix)
-	addTeamReq := alerts.AddTeamAlertRequest{Id: id, Team: entityNames.Team, User: entityNames.Team, Note: "note1"}
+	addTeamReq := alerts.AddTeamAlertRequest{ID: id, Team: entityNames.Team, User: entityNames.Team, Note: "note1"}
 	addTeamResponse, alertErr := cli.AddTeam(addTeamReq)
 
 	require.Nil(t, alertErr)
 	require.NotNil(t, addTeamResponse)
 	require.Equal(t, 200, addTeamResponse.Code, "Response code should be 200")
 
-	getAlertReq := alerts.GetAlertRequest{Id: id}
+	getAlertReq := alerts.GetAlertRequest{ID: id}
 	getResp, alertErr := cli.Get(getAlertReq)
 
 	require.Nil(t, alertErr)
@@ -171,7 +171,7 @@ func (suite *AlertTestSuite) TestAddTeam() {
 	require.NotNil(t, addTeamResponse)
 	require.Equal(t, 200, addTeamResponse.Code, "Response code should be 200")
 
-	getAlertReq = alerts.GetAlertRequest{Id: id}
+	getAlertReq = alerts.GetAlertRequest{ID: id}
 	getResp, alertErr = cli.Get(getAlertReq)
 
 	require.Nil(t, alertErr)
@@ -180,19 +180,19 @@ func (suite *AlertTestSuite) TestAddTeam() {
 	t.Log("[OK] team added with alias successfully")
 }
 
-func (suite *AlertTestSuite) TestAssignOwner() {
+func (suite *alertTestSuite) TestAssignOwner() {
 	t := suite.T()
 
 	suffix := time.Now().String()
 	id := createAlert(t, suffix)
-	assignOwnerReq := alerts.AssignOwnerAlertRequest{Id: id, Owner: "owneruser", User: "actionuser"}
+	assignOwnerReq := alerts.AssignOwnerAlertRequest{ID: id, Owner: "owneruser", User: "actionuser"}
 	assignOwnerResponse, alertErr := cli.AssignOwner(assignOwnerReq)
 
 	require.Nil(t, alertErr)
 	require.NotNil(t, assignOwnerResponse)
 	require.Equal(t, 200, assignOwnerResponse.Code, "Response code should be 200")
 
-	getAlertReq := alerts.GetAlertRequest{Id: id}
+	getAlertReq := alerts.GetAlertRequest{ID: id}
 	getResp, alertErr := cli.Get(getAlertReq)
 
 	require.Nil(t, alertErr)
@@ -210,7 +210,7 @@ func (suite *AlertTestSuite) TestAssignOwner() {
 	require.NotNil(t, assignOwnerResponse)
 	require.Equal(t, 200, assignOwnerResponse.Code, "Response code should be 200")
 
-	getAlertReq = alerts.GetAlertRequest{Id: id}
+	getAlertReq = alerts.GetAlertRequest{ID: id}
 	getResp, alertErr = cli.Get(getAlertReq)
 
 	require.Nil(t, alertErr)
@@ -219,12 +219,12 @@ func (suite *AlertTestSuite) TestAssignOwner() {
 	t.Log("[OK] assigned with alias successfully")
 }
 
-type ExecuteActionWaitAction struct {
-	Id string
+type executeActionWaitAction struct {
+	ID string
 }
 
-func (act ExecuteActionWaitAction) check(t *testing.T) bool {
-	listLogsReq := alerts.ListAlertLogsRequest{Id: act.Id}
+func (act executeActionWaitAction) check(t *testing.T) bool {
+	listLogsReq := alerts.ListAlertLogsRequest{ID: act.ID}
 	listLogsResponse, alertErr := cli.ListLogs(listLogsReq)
 
 	require.Nil(t, alertErr)
@@ -244,12 +244,12 @@ func (act ExecuteActionWaitAction) check(t *testing.T) bool {
 	return false
 }
 
-func (suite *AlertTestSuite) TestExecuteAction() {
+func (suite *alertTestSuite) TestExecuteAction() {
 	t := suite.T()
 
 	suffix := time.Now().String()
 	id := createAlert(t, suffix)
-	execActionReq := alerts.ExecuteActionAlertRequest{Id: id,
+	execActionReq := alerts.ExecuteActionAlertRequest{ID: id,
 		Action: testCfg.Alert.Actions[0],
 		Note:   fmt.Sprintf("Action <b>%s</b> executed by the Go API", testCfg.Alert.Actions[0]),
 	}
@@ -260,7 +260,7 @@ func (suite *AlertTestSuite) TestExecuteAction() {
 	require.True(t, strings.Contains(execActionResponse.Result, "Initiated ["+testCfg.Alert.Actions[0]+"] action"), "result should contain")
 	require.Equal(t, 200, execActionResponse.Code, "Response code should be 200")
 
-	require.True(t, waitFor(t, ExecuteActionWaitAction{Id: id}), "Alert logs should contain action execution log.")
+	require.True(t, waitFor(t, executeActionWaitAction{ID: id}), "Alert logs should contain action execution log.")
 	t.Log("[OK] action " + testCfg.Alert.Actions[0] + " executed on alert")
 
 	//execute action with alias
@@ -275,16 +275,16 @@ func (suite *AlertTestSuite) TestExecuteAction() {
 	require.True(t, strings.Contains(execActionResponse.Result, "Initiated ["+testCfg.Alert.Actions[1]+"] action"), "result should contain")
 	require.Equal(t, 200, execActionResponse.Code, "Response code should be 200")
 
-	require.True(t, waitFor(t, ExecuteActionWaitAction{Id: id}), "Alert logs should contain action execution log.")
+	require.True(t, waitFor(t, executeActionWaitAction{ID: id}), "Alert logs should contain action execution log.")
 	t.Log("[OK] action " + testCfg.Alert.Actions[1] + " executed on alert")
 }
 
-func (suite *AlertTestSuite) TestTakeOwnership() {
+func (suite *alertTestSuite) TestTakeOwnership() {
 	t := suite.T()
 
 	suffix := time.Now().String()
 	id := createAlert(t, suffix)
-	takeOwnershipReq := alerts.TakeOwnershipAlertRequest{Id: id, User: "user1", Note: "ownership note", Source: "go api"}
+	takeOwnershipReq := alerts.TakeOwnershipAlertRequest{ID: id, User: "user1", Note: "ownership note", Source: "go api"}
 
 	takeOwnershipResp, alertErr := cli.TakeOwnership(takeOwnershipReq)
 
@@ -292,7 +292,7 @@ func (suite *AlertTestSuite) TestTakeOwnership() {
 	require.NotNil(t, takeOwnershipResp)
 	require.Equal(t, 200, takeOwnershipResp.Code, "Response code should be 200")
 
-	getAlertReq := alerts.GetAlertRequest{Id: id}
+	getAlertReq := alerts.GetAlertRequest{ID: id}
 	getResp, alertErr := cli.Get(getAlertReq)
 
 	require.Nil(t, alertErr)
@@ -303,7 +303,7 @@ func (suite *AlertTestSuite) TestTakeOwnership() {
 	//take ownership with alias
 	suffix = time.Now().String()
 	id = createAlert(t, suffix)
-	takeOwnershipReq = alerts.TakeOwnershipAlertRequest{Id: id, User: "user1", Note: "ownership note", Source: "go api"}
+	takeOwnershipReq = alerts.TakeOwnershipAlertRequest{ID: id, User: "user1", Note: "ownership note", Source: "go api"}
 
 	takeOwnershipResp, alertErr = cli.TakeOwnership(takeOwnershipReq)
 
@@ -311,7 +311,7 @@ func (suite *AlertTestSuite) TestTakeOwnership() {
 	require.NotNil(t, takeOwnershipResp)
 	require.Equal(t, 200, takeOwnershipResp.Code, "Response code should be 200")
 
-	getAlertReq = alerts.GetAlertRequest{Id: id}
+	getAlertReq = alerts.GetAlertRequest{ID: id}
 	getResp, alertErr = cli.Get(getAlertReq)
 
 	require.Nil(t, alertErr)
@@ -320,12 +320,12 @@ func (suite *AlertTestSuite) TestTakeOwnership() {
 	t.Log("[OK] take ownership successful")
 }
 
-func (suite *AlertTestSuite) TestAddRecipient() {
+func (suite *alertTestSuite) TestAddRecipient() {
 	t := suite.T()
 
 	suffix := time.Now().String()
 	id := createAlert(t, suffix)
-	addRecipientReq := alerts.AddRecipientAlertRequest{Id: id, User: "user1", Note: "add recipient note", Recipient: "newrecipient"}
+	addRecipientReq := alerts.AddRecipientAlertRequest{ID: id, User: "user1", Note: "add recipient note", Recipient: "newrecipient"}
 
 	addrecipientResp, alertErr := cli.AddRecipient(addRecipientReq)
 
@@ -333,7 +333,7 @@ func (suite *AlertTestSuite) TestAddRecipient() {
 	require.NotNil(t, addrecipientResp)
 	require.Equal(t, 200, addrecipientResp.Code, "Response code should be 200")
 
-	getAlertReq := alerts.GetAlertRequest{Id: id}
+	getAlertReq := alerts.GetAlertRequest{ID: id}
 	getResp, alertErr := cli.Get(getAlertReq)
 
 	require.Nil(t, alertErr)
@@ -351,7 +351,7 @@ func (suite *AlertTestSuite) TestAddRecipient() {
 	require.NotNil(t, addrecipientResp)
 	require.Equal(t, 200, addrecipientResp.Code, "Response code should be 200")
 
-	getAlertReq = alerts.GetAlertRequest{Id: id}
+	getAlertReq = alerts.GetAlertRequest{ID: id}
 	getResp, alertErr = cli.Get(getAlertReq)
 
 	require.Nil(t, alertErr)
@@ -360,12 +360,12 @@ func (suite *AlertTestSuite) TestAddRecipient() {
 	t.Log("[OK] add recipient with alias successful")
 }
 
-type ListRecipientsWaitAction struct {
-	Id string
+type listRecipientsWaitAction struct {
+	ID string
 }
 
-func (act ListRecipientsWaitAction) check(t *testing.T) bool {
-	listRecipientsReq := alerts.ListAlertRecipientsRequest{Id: act.Id}
+func (act listRecipientsWaitAction) check(t *testing.T) bool {
+	listRecipientsReq := alerts.ListAlertRecipientsRequest{ID: act.ID}
 	listRecipientsResp, alertErr := cli.ListRecipients(listRecipientsReq)
 	require.Nil(t, alertErr)
 	require.NotNil(t, listRecipientsResp)
@@ -381,12 +381,11 @@ func (act ListRecipientsWaitAction) check(t *testing.T) bool {
 		require.True(t, recp.StateChangedAt > 0, "recipient state changed at should be greater than 0")
 		require.NotNil(t, recp.Method)
 		return true
-	} else {
-		return false
 	}
+	return false
 }
 
-func (suite *AlertTestSuite) TestListAlertRecipients() {
+func (suite *alertTestSuite) TestListAlertRecipients() {
 	t := suite.T()
 
 	suffix := time.Now().String()
@@ -395,14 +394,14 @@ func (suite *AlertTestSuite) TestListAlertRecipients() {
 
 	require.Nil(t, alertErr)
 	require.NotNil(t, response)
-	id := response.AlertId
+	id := response.AlertID
 	require.NotNil(t, id)
 
-	require.True(t, waitFor(t, ListRecipientsWaitAction{Id: id}), "List recipients failed.")
+	require.True(t, waitFor(t, listRecipientsWaitAction{ID: id}), "List recipients failed.")
 	t.Log("[OK] listed alert recipients successfully")
 }
 
-func (suite *AlertTestSuite) TestAttachFile() {
+func (suite *alertTestSuite) TestAttachFile() {
 	t := suite.T()
 
 	suffix := time.Now().String()
@@ -411,7 +410,7 @@ func (suite *AlertTestSuite) TestAttachFile() {
 
 	require.Nil(t, alertErr)
 	require.NotNil(t, response)
-	id := response.AlertId
+	id := response.AlertID
 	require.NotNil(t, id)
 
 	fileName := "dummy.txt"
@@ -421,7 +420,7 @@ func (suite *AlertTestSuite) TestAttachFile() {
 	file.WriteString("dummytext")
 	defer file.Close()
 
-	attachFileReq := alerts.AttachFileAlertRequest{Id: id, Attachment: file, IndexFile: fileName, User: "someuser"}
+	attachFileReq := alerts.AttachFileAlertRequest{ID: id, Attachment: file, IndexFile: fileName, User: "someuser"}
 	attachFileResp, attachFileErr := cli.AttachFile(attachFileReq)
 
 	require.Nil(t, attachFileErr)
@@ -432,7 +431,7 @@ func (suite *AlertTestSuite) TestAttachFile() {
 	defer os.Remove("dummy.txt")
 }
 
-func (suite *AlertTestSuite) TestListAlerts() {
+func (suite *alertTestSuite) TestListAlerts() {
 	t := suite.T()
 	cnt := 10
 	var ids [10]string
@@ -454,7 +453,7 @@ func (suite *AlertTestSuite) TestListAlerts() {
 	require.Equal(t, cnt, len(alertList), "alert count comparison failed")
 
 	for i := 0; i < cnt; i++ {
-		require.Equal(t, ids[i], alertList[i].Id)
+		require.Equal(t, ids[i], alertList[i].ID)
 	}
 
 	listReq = alerts.ListAlertsRequest{CreatedAfter: alertList[0].CreatedAt}
@@ -475,7 +474,7 @@ func (suite *AlertTestSuite) TestListAlerts() {
 
 	require.Equal(t, 2, len(alertList), "alert count comparison failed")
 	for i := 0; i < 2; i++ {
-		require.Equal(t, ids[(cnt-1)-i], alertList[i].Id)
+		require.Equal(t, ids[(cnt-1)-i], alertList[i].ID)
 	}
 
 	t.Log("Listed Alerts successfully")

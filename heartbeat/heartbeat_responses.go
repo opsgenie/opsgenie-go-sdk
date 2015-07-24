@@ -1,34 +1,40 @@
 package heartbeat
 
+// AddHeartbeatResponse holds the result data of the AddHeartbeatRequest.
 type AddHeartbeatResponse struct {
-	Id     string `json:"id"`
+	ID     string `json:"id"`
 	Status string `json:"status"`
 	Code   int    `json:"code"`
 }
 
+// UpdateHeartbeatResponse holds the result data of the UpdateHeartbeatRequest.
 type UpdateHeartbeatResponse struct {
-	Id     string `json:"id"`
+	ID     string `json:"id"`
 	Status string `json:"status"`
 	Code   int    `json:"code"`
 }
 
+// EnableHeartbeatResponse holds the result data of the EnableHeartbeatRequest.
 type EnableHeartbeatResponse struct {
 	Status string `json:"status"`
 	Code   int    `json:"code"`
 }
 
+// DisableHeartbeatResponse holds the result data of the DisableHeartbeatRequest.
 type DisableHeartbeatResponse struct {
 	Status string `json:"status"`
 	Code   int    `json:"code"`
 }
 
+// DeleteHeartbeatResponse holds the result data of the DeleteHeartbeatRequest.
 type DeleteHeartbeatResponse struct {
 	Status string `json:"status"`
 	Code   int    `json:"code"`
 }
 
+// GetHeartbeatResponse holds the result data of the GetHeartbeatRequest.
 type GetHeartbeatResponse struct {
-	Id            string `json:"id"`
+	ID            string `json:"id"`
 	Name          string `json:"name"`
 	Status        string `json:"status"`
 	Description   string `json:"description"`
@@ -39,9 +45,10 @@ type GetHeartbeatResponse struct {
 	Expired       bool   `json:"expired"`
 }
 
+// ListHeartbeatsResponse holds the result data of the ListHeartbeatsRequest.
 type ListHeartbeatsResponse struct {
 	Heartbeats []struct {
-		Id            string `json:"id"`
+		ID            string `json:"id"`
 		Name          string `json:"name"`
 		Status        string `json:"status"`
 		Description   string `json:"description"`
@@ -53,6 +60,7 @@ type ListHeartbeatsResponse struct {
 	} `json:"heartbeats"`
 }
 
+// SendHeartbeatResponse holds the result data of the SendHeartbeatRequest.
 type SendHeartbeatResponse struct {
 	WillExpireAt uint64 `json:"willExpireAt"`
 	Status       string `json:"status"`

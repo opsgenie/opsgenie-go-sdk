@@ -1,7 +1,15 @@
+/*
+Copyright 2015 OpsGenie. All rights reserved.
+Use of this source code is governed by a Apache Software
+license that can be found in the LICENSE file.
+*/
+
+//Package heartbeat provides requests and response structures to achieve Heartbeat API actions.
 package heartbeat
 
+// AddHeartbeatRequest provides necessary parameter structure to Create an Heartbeat at OpsGenie.
 type AddHeartbeatRequest struct {
-	ApiKey       string `json:"apiKey,omitempty"`
+	APIKey       string `json:"apiKey,omitempty"`
 	Name         string `json:"name,omitempty"`
 	Interval     int    `json:"interval,omitempty"`
 	IntervalUnit string `json:"intervalUnit,omitempty"`
@@ -9,9 +17,10 @@ type AddHeartbeatRequest struct {
 	Enabled      *bool  `json:"enabled,omitempty"`
 }
 
+// UpdateHeartbeatRequest provides necessary parameter structure to Update an existing Heartbeat at OpsGenie.
 type UpdateHeartbeatRequest struct {
-	ApiKey       string `json:"apiKey,omitempty"`
-	Id           string `json:"id,omitempty"`
+	APIKey       string `json:"apiKey,omitempty"`
+	ID           string `json:"id,omitempty"`
 	Name         string `json:"name,omitempty"`
 	Interval     int    `json:"interval,omitempty"`
 	IntervalUnit string `json:"intervalUnit,omitempty"`
@@ -19,35 +28,41 @@ type UpdateHeartbeatRequest struct {
 	Enabled      *bool  `json:"enabled,omitempty"`
 }
 
+// EnableHeartbeatRequest provides necessary parameter structure to Enable an Heartbeat at OpsGenie.
 type EnableHeartbeatRequest struct {
-	ApiKey string `json:"apiKey,omitempty"`
-	Id     string `json:"id,omitempty"`
+	APIKey string `json:"apiKey,omitempty"`
+	ID     string `json:"id,omitempty"`
 	Name   string `json:"name,omitempty"`
 }
 
+// DisableHeartbeatRequest provides necessary parameter structure to Disable an Heartbeat at OpsGenie.
 type DisableHeartbeatRequest struct {
-	ApiKey string `json:"apiKey,omitempty"`
-	Id     string `json:"id,omitempty"`
+	APIKey string `json:"apiKey,omitempty"`
+	ID     string `json:"id,omitempty"`
 	Name   string `json:"name,omitempty"`
 }
 
+// DeleteHeartbeatRequest provides necessary parameter structure to Delete an Heartbeat from OpsGenie.
 type DeleteHeartbeatRequest struct {
-	ApiKey string `url:"apiKey,omitempty"`
-	Id     string `url:"id,omitempty"`
+	APIKey string `url:"apiKey,omitempty"`
+	ID     string `url:"id,omitempty"`
 	Name   string `url:"name,omitempty"`
 }
 
+// GetHeartbeatRequest provides necessary parameter structure to Retrieve an Heartbeat with details from OpsGenie.
 type GetHeartbeatRequest struct {
-	ApiKey string `url:"apiKey,omitempty"`
-	Id     string `url:"id,omitempty"`
+	APIKey string `url:"apiKey,omitempty"`
+	ID     string `url:"id,omitempty"`
 	Name   string `url:"name,omitempty"`
 }
 
+// ListHeartbeatsRequest provides necessary parameter structure to Retrieve Heartbeats from OpsGenie.
 type ListHeartbeatsRequest struct {
-	ApiKey string `url:"apiKey,omitempty"`
+	APIKey string `url:"apiKey,omitempty"`
 }
 
+// SendHeartbeatRequest provides necessary parameter structure to Send an Heartbeat Signal to OpsGenie.
 type SendHeartbeatRequest struct {
-	ApiKey string `json:"apiKey,omitempty"`
+	APIKey string `json:"apiKey,omitempty"`
 	Name   string `json:"name,omitempty"`
 }

@@ -1,3 +1,8 @@
+/*
+Copyright 2015 OpsGenie. All rights reserved.
+Use of this source code is governed by a Apache Software
+license that can be found in the LICENSE file.
+*/
 package main
 
 import (
@@ -11,7 +16,7 @@ import (
 
 func main() {
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(constants.API_KEY)
+	cli.SetAPIKey(constants.APIKey)
 
 	alertCli, cliErr := cli.Alert()
 
@@ -28,12 +33,12 @@ func main() {
 	}
 
 	fmt.Printf("message: %s\n", response.Message)
-	fmt.Printf("alert id: %s\n", response.AlertId)
+	fmt.Printf("alert id: %s\n", response.AlertID)
 	fmt.Printf("status: %s\n", response.Status)
 	fmt.Printf("code: %d\n", response.Code)
 
 	// acknowledge the alert
-	ackReq := alerts.AcknowledgeAlertRequest{Id: response.AlertId}
+	ackReq := alerts.AcknowledgeAlertRequest{ID: response.AlertID}
 	ackResponse, alertErr := alertCli.Acknowledge(ackReq)
 	if alertErr != nil {
 		panic(alertErr)

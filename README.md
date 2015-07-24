@@ -1,5 +1,4 @@
-# opsgenie-go-sdk *beta*
-
+# opsgenie-go-sdk
 ## Aim and Scope
 OpsGenie GO SDK aims to access OpsGenie Web API through HTTP calls
 from a client application purely written in Go language.
@@ -7,6 +6,8 @@ from a client application purely written in Go language.
 OpsGenie Go SDK covers *the Alert API*, *the Heartbeat API*,
 *the Integration API* and *the Policy API*. Future releases
 are subject to be delivered for packing more APIs soon.
+
+**Documentation:** [![](https://godoc.org/github.com/nathany/looper?status.svg)](http://godoc.org/github.com/opsgenie/opsgenie-go-sdk/client)
 
 For more information about OpsGenie Go SDK, please refer to [OpsGenie Go API](https://www.opsgenie.com/docs/api-and-client-libraries/opsgenie-go-api) document.
 
@@ -23,24 +24,48 @@ don't have a valid account yet. Create an API Integration and get your API key.
 
 ## Installation
 To download all packages in the repo with their dependencies, simply run
-`go get github.com/opsgenie/opsgenie-go-sdk/...`.
 
-## Running Tests
-
-OpsGenie Go SDK includes a set of acceptance tests. The acceptance tests will
-allow you to examine almost all functionalities of the provided SDK.
-Before running the test suit, you should edit the `client_at_test_cfg.yaml`
-file and place the correct values of your own. Please keep in mind that it's a
-`yaml` file and should conform the YAML file specifications (e.g. no tabs but
- whitespaces).
-
- `go test` command will run the tests and you will get pass if everything goes
- well.
+`go get github.com/opsgenie/opsgenie-go-sdk/...`
 
 ## Getting Started
+One can start using OpsGenie Go SDK by initializing client and making a request. Example shown below demonstrates how to initialize an OpsGenie Alert client and make a create alert request.
+```
+    package main
+
+    import (
+    	"fmt"
+
+    	alerts "github.com/opsgenie/opsgenie-go-sdk/alerts"
+    	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
+    )
+
+    func main() {
+    	cli := new(ogcli.OpsGenieClient)
+    	cli.SetApiKey("YOUR_API_KEY")
+
+    	alertCli, cliErr := cli.Alert()
+
+    	if cliErr != nil {
+    		panic(cliErr)
+    	}
+
+    	// create the alert
+    	req := alerts.CreateAlertRequest{Message: "Hello from OpsGenie Go Sdk"}
+    	response, alertErr := alertCli.Create(req)
+
+    	if alertErr != nil {
+    		panic(alertErr)
+    	}
+
+    	fmt.Printf("message: %s\n", response.Message)
+    	fmt.Printf("alert id: %s\n", response.AlertId)
+    	fmt.Printf("status: %s\n", response.Status)
+    	fmt.Printf("code: %d\n", response.Code)
+    }
+```
 There are many useful sample code snippets under `samples` directory for packages.
 
-##Handling Zero value problem with 'omitempty' option in Json
+## Handling Zero value problem with 'omitempty' option in Json
 
 Every golang type has a [zero value](http://golang.org/ref/spec#The_zero_value).
 AddHeartbeat and UpdateHeartbeat requests have a boolean "Enabled" field to determine a heartbeat is enabled or disabled.
@@ -65,3 +90,10 @@ about the Web API.
 * [Heartbeat API](https://www.opsgenie.com/docs/web-api/heartbeat-api)
 * [Integration API](https://www.opsgenie.com/docs/web-api/integration-api)
 * [Policy API](https://www.opsgenie.com/docs/web-api/policy-api)
+
+
+## Bug Reporting and Feature Requests
+
+If you like to report a bug, or a feature request; please open and issue.
+
+You can also follow the

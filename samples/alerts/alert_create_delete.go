@@ -11,7 +11,7 @@ import (
 
 func main() {
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(constants.API_KEY)
+	cli.SetAPIKey(constants.APIKey)
 
 	alertCli, cliErr := cli.Alert()
 
@@ -28,12 +28,12 @@ func main() {
 	}
 
 	fmt.Printf("message: %s\n", response.Message)
-	fmt.Printf("alert id: %s\n", response.AlertId)
+	fmt.Printf("alert id: %s\n", response.AlertID)
 	fmt.Printf("status: %s\n", response.Status)
 	fmt.Printf("code: %d\n", response.Code)
 
 	// delete the alert
-	delreq := alerts.DeleteAlertRequest{Id: response.AlertId, Source: constants.SOURCE}
+	delreq := alerts.DeleteAlertRequest{ID: response.AlertID, Source: constants.Source}
 	cloresponse, alertErr := alertCli.Delete(delreq)
 	if alertErr != nil {
 		panic(alertErr)

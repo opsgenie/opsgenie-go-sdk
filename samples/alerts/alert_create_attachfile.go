@@ -12,7 +12,7 @@ import (
 
 func main() {
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(constants.API_KEY)
+	cli.SetAPIKey(constants.APIKey)
 
 	alertCli, cliErr := cli.Alert()
 
@@ -29,17 +29,17 @@ func main() {
 	}
 
 	fmt.Printf("message: %s\n", response.Message)
-	fmt.Printf("alert id: %s\n", response.AlertId)
+	fmt.Printf("alert id: %s\n", response.AlertID)
 	fmt.Printf("status: %s\n", response.Status)
 	fmt.Printf("code: %d\n", response.Code)
 
-	file, err := os.OpenFile(constants.PATH_TO_FILE, os.O_RDWR, 0666)
+	file, err := os.OpenFile(constants.PathToFile, os.O_RDWR, 0666)
 	if err != nil {
 		panic(err)
 	}
 	defer file.Close()
 
-	attachFileReq := alerts.AttachFileAlertRequest{Id: response.AlertId, Attachment: file}
+	attachFileReq := alerts.AttachFileAlertRequest{ID: response.AlertID, Attachment: file}
 	attachFileResp, attachFileErr := alertCli.AttachFile(attachFileReq)
 
 	if attachFileErr != nil {

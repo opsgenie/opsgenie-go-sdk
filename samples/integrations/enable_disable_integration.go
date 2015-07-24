@@ -10,8 +10,7 @@ import (
 
 func main() {
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(constants.API_KEY)
-	cli.SetOpsGenieApiUrl("http://localhost:9000")
+	cli.SetAPIKey(constants.APIKey)
 
 	integrationCli, cliErr := cli.Integration()
 
@@ -19,22 +18,20 @@ func main() {
 		panic(cliErr)
 	}
 	//disable integration
-	disableReq := itg.DisableIntegrationRequest{Name: constants.INTEGRATION_NAME}
+	disableReq := itg.DisableIntegrationRequest{Name: constants.IntegrationName}
 	_, itgError := integrationCli.Disable(disableReq)
 
 	if itgError != nil {
 		panic(itgError)
-	} else {
-		fmt.Printf("Integration disabled successfuly\n")
 	}
+	fmt.Printf("Integration disabled successfuly\n")
 
 	//enable integration
-	enableReq := itg.EnableIntegrationRequest{Name: constants.INTEGRATION_NAME}
+	enableReq := itg.EnableIntegrationRequest{Name: constants.IntegrationName}
 	_, itgError = integrationCli.Enable(enableReq)
 
 	if itgError != nil {
 		panic(itgError)
-	} else {
-		fmt.Printf("Integration enabled successfuly\n")
 	}
+	fmt.Printf("Integration enabled successfuly\n")
 }

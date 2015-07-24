@@ -11,7 +11,7 @@ import (
 
 func main() {
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(constants.API_KEY)
+	cli.SetAPIKey(constants.APIKey)
 
 	alertCli, cliErr := cli.Alert()
 
@@ -20,7 +20,7 @@ func main() {
 	}
 
 	// create the alert
-	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test", 8), Note: "Created for testing purposes", User: constants.USER}
+	req := alerts.CreateAlertRequest{Message: samples.RandStringWithPrefix("Test", 8), Note: "Created for testing purposes", User: constants.User}
 	response, alertErr := alertCli.Create(req)
 
 	if alertErr != nil {
@@ -28,12 +28,11 @@ func main() {
 	}
 
 	fmt.Printf("message: %s\n", response.Message)
-	fmt.Printf("alert id: %s\n", response.AlertId)
+	fmt.Printf("alert id: %s\n", response.AlertID)
 	fmt.Printf("status: %s\n", response.Status)
 	fmt.Printf("code: %d\n", response.Code)
 
-	// close the alert
-	getLogsReq := alerts.ListAlertLogsRequest{Id: response.AlertId}
+	getLogsReq := alerts.ListAlertLogsRequest{ID: response.AlertID}
 	getLogsResponse, alertErr := alertCli.ListLogs(getLogsReq)
 	if alertErr != nil {
 		panic(alertErr)

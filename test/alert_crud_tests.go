@@ -10,20 +10,20 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
-type AlertTestSuite struct {
+type alertTestSuite struct {
 	suite.Suite
 }
 
-func (suite *AlertTestSuite) SetupTest() {
+func (suite *alertTestSuite) SetupTest() {
 	deleteAllAlerts(suite.T())
 }
 
-func (suite *AlertTestSuite) TestCreateAlert() {
+func (suite *alertTestSuite) TestCreateAlert() {
 	t := suite.T()
 	suffix := time.Now().String()
 	id := createAlert(t, suffix)
 	//get with id
-	getAlertReq := alerts.GetAlertRequest{Id: id}
+	getAlertReq := alerts.GetAlertRequest{ID: id}
 	getResp, alertErr := cli.Get(getAlertReq)
 
 	require.Nil(t, alertErr)
@@ -31,10 +31,10 @@ func (suite *AlertTestSuite) TestCreateAlert() {
 	assertAlert(t, id, getResp, suffix, make(map[string]interface{}))
 
 	t.Log("[OK] get alert with id successful")
-	tinyId := getResp.TinyId
+	tinyID := getResp.TinyID
 
 	//get with tinyid
-	getAlertReq = alerts.GetAlertRequest{TinyId: tinyId}
+	getAlertReq = alerts.GetAlertRequest{TinyID: tinyID}
 	getResp, alertErr = cli.Get(getAlertReq)
 
 	require.Nil(t, alertErr)
@@ -56,18 +56,18 @@ func (suite *AlertTestSuite) TestCreateAlert() {
 	t.Log("[OK] get alert with alias successful")
 }
 
-func (suite *AlertTestSuite) TestDeleteAlert() {
+func (suite *alertTestSuite) TestDeleteAlert() {
 	t := suite.T()
 	suffix := time.Now().String()
 	id := createAlert(t, suffix)
-	delreq := alerts.DeleteAlertRequest{Id: id, Source: "Go API Test"}
+	delreq := alerts.DeleteAlertRequest{ID: id, Source: "Go API Test"}
 	delResp, alertErr := cli.Delete(delreq)
 
 	require.Nil(t, alertErr)
 	require.NotNil(t, delResp)
 	require.Equal(t, 200, delResp.Code, "Response Code should be 200")
 
-	getAlertReq := alerts.GetAlertRequest{Id: id}
+	getAlertReq := alerts.GetAlertRequest{ID: id}
 	getResp, alertErr := cli.Get(getAlertReq)
 
 	require.NotNil(t, alertErr)
@@ -94,18 +94,18 @@ func (suite *AlertTestSuite) TestDeleteAlert() {
 	t.Log("[OK] alert deleted")
 }
 
-func (suite *AlertTestSuite) TestCloseAlert() {
+func (suite *alertTestSuite) TestCloseAlert() {
 	t := suite.T()
 	suffix := time.Now().String()
 	id := createAlert(t, suffix)
-	closeReq := alerts.CloseAlertRequest{Id: id, Source: "Go API Test", Note: "closing the alert"}
+	closeReq := alerts.CloseAlertRequest{ID: id, Source: "Go API Test", Note: "closing the alert"}
 	closeResp, alertErr := cli.Close(closeReq)
 
 	require.Nil(t, alertErr)
 	require.NotNil(t, closeResp)
 	require.Equal(t, 200, closeResp.Code, "Response Code should be 200")
 
-	getAlertReq := alerts.GetAlertRequest{Id: id}
+	getAlertReq := alerts.GetAlertRequest{ID: id}
 	getResp, alertErr := cli.Get(getAlertReq)
 
 	require.Nil(t, alertErr)
@@ -123,7 +123,7 @@ func (suite *AlertTestSuite) TestCloseAlert() {
 	require.NotNil(t, closeResp)
 	require.Equal(t, 200, closeResp.Code, "Response Code should be 200")
 
-	getAlertReq = alerts.GetAlertRequest{Id: id}
+	getAlertReq = alerts.GetAlertRequest{ID: id}
 	getResp, alertErr = cli.Get(getAlertReq)
 
 	require.Nil(t, alertErr)
@@ -132,19 +132,19 @@ func (suite *AlertTestSuite) TestCloseAlert() {
 	t.Log("[OK] alert closed")
 }
 
-func (suite *AlertTestSuite) TestAcknowledgeAlert() {
+func (suite *alertTestSuite) TestAcknowledgeAlert() {
 	t := suite.T()
 	suffix := time.Now().String()
 	id := createAlert(t, suffix)
 	owner := "owneruser"
-	ackReq := alerts.AcknowledgeAlertRequest{Id: id, User: owner}
+	ackReq := alerts.AcknowledgeAlertRequest{ID: id, User: owner}
 	ackResponse, alertErr := cli.Acknowledge(ackReq)
 
 	require.Nil(t, alertErr)
 	require.NotNil(t, ackResponse)
 	require.Equal(t, 200, ackResponse.Code, "Response Code should be 200")
 
-	getAlertReq := alerts.GetAlertRequest{Id: id}
+	getAlertReq := alerts.GetAlertRequest{ID: id}
 	getResp, alertErr := cli.Get(getAlertReq)
 
 	require.Nil(t, alertErr)
@@ -162,7 +162,7 @@ func (suite *AlertTestSuite) TestAcknowledgeAlert() {
 	require.NotNil(t, ackResponse)
 	require.Equal(t, 200, ackResponse.Code, "Response Code should be 200")
 
-	getAlertReq = alerts.GetAlertRequest{Id: id}
+	getAlertReq = alerts.GetAlertRequest{ID: id}
 	getResp, alertErr = cli.Get(getAlertReq)
 
 	require.Nil(t, alertErr)
@@ -172,7 +172,7 @@ func (suite *AlertTestSuite) TestAcknowledgeAlert() {
 }
 
 func assertAlert(t *testing.T, id string, response *alerts.GetAlertResponse, suffix string, overwrite map[string]interface{}) {
-	require.Equal(t, id, response.Id, "Alert Id comparison failed")
+	require.Equal(t, id, response.ID, "Alert Id comparison failed")
 	require.Equal(t, "message"+suffix, response.Message, "Message comparison failed")
 	require.Equal(t, "description"+suffix, response.Description, "Description comparison failed")
 	require.Equal(t, "source"+suffix, response.Source, "Source comparison failed")
@@ -243,7 +243,7 @@ func createAlert(t *testing.T, suffix string) string {
 
 	require.Nil(t, alertErr)
 	require.NotNil(t, response)
-	id := response.AlertId
+	id := response.AlertID
 	require.NotNil(t, id)
 	return id
 }
@@ -258,16 +258,15 @@ func deleteAllAlerts(t *testing.T) {
 		alertList := listResp.Alerts
 		if len(alertList) == 0 {
 			break
-		} else {
-			for i := 0; i < len(alertList); i++ {
-				alert := alertList[i]
-				delreq := alerts.DeleteAlertRequest{Id: alert.Id}
-				delResp, alertErr := cli.Delete(delreq)
+		}
+		for i := 0; i < len(alertList); i++ {
+			alert := alertList[i]
+			delreq := alerts.DeleteAlertRequest{ID: alert.ID}
+			delResp, alertErr := cli.Delete(delreq)
 
-				require.Nil(t, alertErr)
-				require.NotNil(t, delResp)
-				require.Equal(t, 200, delResp.Code, "Response Code should be 200")
-			}
+			require.Nil(t, alertErr)
+			require.NotNil(t, delResp)
+			require.Equal(t, 200, delResp.Code, "Response Code should be 200")
 		}
 	}
 }

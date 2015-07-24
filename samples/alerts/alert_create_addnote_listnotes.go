@@ -11,7 +11,7 @@ import (
 
 func main() {
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(constants.API_KEY)
+	cli.SetAPIKey(constants.APIKey)
 
 	alertCli, cliErr := cli.Alert()
 
@@ -28,14 +28,14 @@ func main() {
 	}
 
 	fmt.Printf("message: %s\n", response.Message)
-	fmt.Printf("alert id: %s\n", response.AlertId)
+	fmt.Printf("alert id: %s\n", response.AlertID)
 	fmt.Printf("status: %s\n", response.Status)
 	fmt.Printf("code: %d\n", response.Code)
 
 	addnotereq := alerts.AddNoteAlertRequest{}
 	// add alert ten notes
 	for i := 0; i < 10; i++ {
-		addnotereq.Id = response.AlertId
+		addnotereq.ID = response.AlertID
 		addnotereq.Note = samples.RandString(45)
 		addnoteresp, alertErr := alertCli.AddNote(addnotereq)
 		if alertErr != nil {
@@ -43,7 +43,7 @@ func main() {
 		}
 		fmt.Printf("[Add note] %s %d\n", addnoteresp.Status, addnoteresp.Code)
 	}
-	listNotesReq := alerts.ListAlertNotesRequest{Id: response.AlertId}
+	listNotesReq := alerts.ListAlertNotesRequest{IF: response.AlertID}
 	listNotesResponse, alertErr := alertCli.ListNotes(listNotesReq)
 	if alertErr != nil {
 		panic(alertErr)

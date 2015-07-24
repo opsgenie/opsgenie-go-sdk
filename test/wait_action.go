@@ -5,11 +5,11 @@ import (
 	"time"
 )
 
-type WaitAction interface {
+type waitAction interface {
 	check(t *testing.T) bool
 }
 
-func waitFor(t *testing.T, action WaitAction) bool {
+func waitFor(t *testing.T, action waitAction) bool {
 	totalSleepMillis := int64(10000)
 	currentTimeInMillis := time.Now().UnixNano() / 1000000
 	for ((time.Now().UnixNano() / 1000000) - currentTimeInMillis) < totalSleepMillis {

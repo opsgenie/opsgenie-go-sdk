@@ -11,7 +11,7 @@ import (
 
 func main() {
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(constants.API_KEY)
+	cli.SetAPIKey(constants.APIKey)
 
 	hbCli, cliErr := cli.Heartbeat()
 
@@ -29,12 +29,12 @@ func main() {
 
 	fmt.Printf("Heartbeat created\n")
 	fmt.Printf("-----------------\n")
-	fmt.Printf("id: %s\n", response.Id)
+	fmt.Printf("id: %s\n", response.ID)
 	fmt.Printf("status: %s\n", response.Status)
 	fmt.Printf("code: %d\n", response.Code)
 
 	// enable the hb
-	enableReq := hb.EnableHeartbeatRequest{Id: response.Id}
+	enableReq := hb.EnableHeartbeatRequest{ID: response.ID}
 	enableResp, enableErr := hbCli.Enable(enableReq)
 	if enableErr != nil {
 		panic(enableErr)

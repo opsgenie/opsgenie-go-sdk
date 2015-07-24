@@ -11,7 +11,7 @@ import (
 
 func main() {
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(constants.API_KEY)
+	cli.SetAPIKey(constants.APIKey)
 
 	alertCli, cliErr := cli.Alert()
 
@@ -28,12 +28,12 @@ func main() {
 	}
 
 	fmt.Printf("message: %s\n", response.Message)
-	fmt.Printf("alert id: %s\n", response.AlertId)
+	fmt.Printf("alert id: %s\n", response.AlertID)
 	fmt.Printf("status: %s\n", response.Status)
 	fmt.Printf("code: %d\n", response.Code)
 
 	// add recipient
-	addRecipientReq := alerts.AddRecipientAlertRequest{Id: response.AlertId, Recipient: "recipient"}
+	addRecipientReq := alerts.AddRecipientAlertRequest{ID: response.AlertID, Recipient: "recipient"}
 	addRecipientResponse, alertErr := alertCli.AddRecipient(addRecipientReq)
 
 	if alertErr != nil {

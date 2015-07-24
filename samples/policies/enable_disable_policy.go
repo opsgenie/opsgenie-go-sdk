@@ -10,7 +10,7 @@ import (
 
 func main() {
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(constants.API_KEY)
+	cli.SetAPIKey(constants.APIKey)
 
 	policyCli, cliErr := cli.Policy()
 
@@ -18,22 +18,20 @@ func main() {
 		panic(cliErr)
 	}
 	//disable policy
-	disableReq := policy.DisablePolicyRequest{Name: constants.POLICY_NAME}
+	disableReq := policy.DisablePolicyRequest{Name: constants.PolicyName}
 	_, itgError := policyCli.Disable(disableReq)
 
 	if itgError != nil {
 		panic(itgError)
-	} else {
-		fmt.Printf("Policy disabled successfuly\n")
 	}
+	fmt.Printf("Policy disabled successfuly\n")
 
 	//enable policy
-	enableReq := policy.EnablePolicyRequest{Name: constants.POLICY_NAME}
+	enableReq := policy.EnablePolicyRequest{Name: constants.PolicyName}
 	_, itgError = policyCli.Enable(enableReq)
 
 	if itgError != nil {
 		panic(itgError)
-	} else {
-		fmt.Printf("Policy enabled successfuly\n")
 	}
+	fmt.Printf("Policy enabled successfuly\n")
 }

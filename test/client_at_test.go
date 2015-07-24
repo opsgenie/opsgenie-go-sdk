@@ -1,3 +1,10 @@
+/*
+Copyright 2015 OpsGenie. All rights reserved.
+Use of this source code is governed by a Apache Software
+license that can be found in the LICENSE file.
+
+Package test contains all opsgenie-go-sdk tests.
+*/
 package test
 
 import (
@@ -18,13 +25,13 @@ import (
 
 type ClientTestConfig struct {
 	Alert struct {
-		ApiKey  string   `yaml:"apiKey"`
+		APIKey  string   `yaml:"apiKey"`
 		User    string   `yaml:"user"`
 		Team    string   `yaml:"team"`
 		Actions []string `yaml:"actions"`
 	} `yaml:"alert"`
 
-	OpsGenieApiUrl string `yaml:"opsgenie.api.url"`
+	OpsGenieAPIURL string `yaml:"opsgenie.api.url"`
 }
 
 type EntityNames struct {
@@ -35,7 +42,7 @@ type EntityNames struct {
 
 // common globals
 var cli *ogcli.OpsGenieAlertClient
-var CONFIG_FILE_NAME string = "client_at_test_cfg.yaml"
+var configFileName = "client_at_test_cfg.yaml"
 var testCfg ClientTestConfig
 var hbCli *ogcli.OpsGenieHeartbeatClient
 var itgCli *ogcli.OpsGenieIntegrationClient
@@ -48,7 +55,7 @@ func TestEnableDisableIntegration(t *testing.T) {
 
 	require.Nil(t, disableErr)
 	require.NotNil(t, disableResp)
-//	require.Equal(t, 200, disableResp.Code, "Response Code should be 200")
+	//	require.Equal(t, 200, disableResp.Code, "Response Code should be 200")
 	require.Equal(t, "success", disableResp.Status, "Response Code should be 200")
 	t.Log("[OK] integration disabled")
 
@@ -57,7 +64,7 @@ func TestEnableDisableIntegration(t *testing.T) {
 
 	require.Nil(t, enableErr)
 	require.NotNil(t, enableResp)
-//	require.Equal(t, 200, enableResp.Code, "Response Code should be 200")
+	//	require.Equal(t, 200, enableResp.Code, "Response Code should be 200")
 	require.Equal(t, "success", enableResp.Status, "Response Code should be 200")
 	t.Log("[OK] integration enabled")
 }
@@ -77,22 +84,22 @@ func TestEnableDisablePolicy(t *testing.T) {
 
 	require.Nil(t, enableErr)
 	require.NotNil(t, enableResp)
-//	require.Equal(t, 200, enableResp.Code, "Response Code should be 200")
+	//	require.Equal(t, 200, enableResp.Code, "Response Code should be 200")
 	require.Equal(t, "success", enableResp.Status, "Response Code should be 200")
 	t.Log("[OK] policy enabled")
 }
 
 func TestAlertClientSuite(t *testing.T) {
-	suite.Run(t, new(AlertTestSuite))
+	suite.Run(t, new(alertTestSuite))
 }
 
 func TestHeartbeatClientSuite(t *testing.T) {
-	suite.Run(t, new(HeartbeatTestSuite))
+	suite.Run(t, new(heartbeatTestSuite))
 }
 
 // utility function
 func readSettingsFromConfigFile() error {
-	cfgData, err := ioutil.ReadFile(CONFIG_FILE_NAME)
+	cfgData, err := ioutil.ReadFile(configFileName)
 	if err != nil {
 		return errors.New("Can not read from the configuration file: " + err.Error())
 	}
@@ -113,10 +120,10 @@ func TestMain(m *testing.M) {
 
 	// create an opsgenie client
 	opsGenieClient := new(ogcli.OpsGenieClient)
-	opsGenieClient.SetApiKey(testCfg.Alert.ApiKey)
-	opsGenieClient.SetOpsGenieApiUrl(testCfg.OpsGenieApiUrl)
+	opsGenieClient.SetAPIKey(testCfg.Alert.APIKey)
+	opsGenieClient.SetOpsGenieAPIUrl(testCfg.OpsGenieAPIURL)
 
-	req := goreq.Request{Method: "POST", Uri: opsGenieClient.GetOpsGenieApiUrl() + "/v1/json/sdkSetup", Body: map[string]string{"apiKey": opsGenieClient.GetApiKey()}}
+	req := goreq.Request{Method: "POST", Uri: opsGenieClient.OpsGenieAPIUrl() + "/v1/json/sdkSetup", Body: map[string]string{"apiKey": opsGenieClient.APIKey()}}
 	resp, err := req.Do()
 	if err != nil {
 		fmt.Printf("Could not send request to create test team, integration, policy; %s\n", err.Error())

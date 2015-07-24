@@ -12,7 +12,7 @@ import (
 func main() {
 
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(constants.API_KEY)
+	cli.SetAPIKey(constants.APIKey)
 
 	alertCli, cliErr := cli.Alert()
 
@@ -29,12 +29,12 @@ func main() {
 	}
 
 	fmt.Printf("message: %s\n", response.Message)
-	fmt.Printf("alert id: %s\n", response.AlertId)
+	fmt.Printf("alert id: %s\n", response.AlertID)
 	fmt.Printf("status: %s\n", response.Status)
 	fmt.Printf("code: %d\n", response.Code)
 
 	// close the alert
-	cloreq := alerts.CloseAlertRequest{Id: response.AlertId, Notify: constants.NOTIFY_ARR}
+	cloreq := alerts.CloseAlertRequest{ID: response.AlertID, Notify: constants.NotifyArr}
 	cloresponse, alertErr := alertCli.Close(cloreq)
 	if alertErr != nil {
 		panic(alertErr)

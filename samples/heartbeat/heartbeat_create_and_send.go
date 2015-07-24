@@ -11,7 +11,7 @@ import (
 
 func main() {
 	cli := new(ogcli.OpsGenieClient)
-	cli.SetApiKey(constants.API_KEY)
+	cli.SetAPIKey(constants.APIKey)
 
 	hbCli, cliErr := cli.Heartbeat()
 
@@ -30,7 +30,7 @@ func main() {
 
 	fmt.Printf("Heartbeat added\n")
 	fmt.Printf("---------------\n")
-	fmt.Printf("id: %s\n", response.Id)
+	fmt.Printf("id: %s\n", response.ID)
 	fmt.Printf("status: %s\n", response.Status)
 	fmt.Printf("code: %d\n", response.Code)
 
