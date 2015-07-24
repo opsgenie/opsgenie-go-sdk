@@ -95,5 +95,3 @@ about the Web API.
 ## Bug Reporting and Feature Requests
 
 If you like to report a bug, or a feature request; please open and issue.
-
-You can also follow the
