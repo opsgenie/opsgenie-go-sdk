@@ -32,14 +32,12 @@ func (cli *OpsGeniePolicyClient) Enable(req policy.EnablePolicyRequest) (*policy
 	}
 	defer resp.Body.Close()
 
-	// try to parse the returning JSON into the response
 	var enablePolicyResp policy.EnablePolicyResponse
 	if err = resp.Body.FromJsonTo(&enablePolicyResp); err != nil {
 		message := "Server response can not be parsed, " + err.Error()
 		logging.Logger().Warn(message)
 		return nil, errors.New(message)
 	}
-	// parsed successfuly with no errors
 	return &enablePolicyResp, nil
 }
 
@@ -53,13 +51,11 @@ func (cli *OpsGeniePolicyClient) Disable(req policy.DisablePolicyRequest) (*poli
 	}
 	defer resp.Body.Close()
 
-	// try to parse the returning JSON into the response
 	var disablePolicyResp policy.DisablePolicyResponse
 	if err = resp.Body.FromJsonTo(&disablePolicyResp); err != nil {
 		message := "Server response can not be parsed, " + err.Error()
 		logging.Logger().Warn(message)
 		return nil, errors.New(message)
 	}
-	// parsed successfuly with no errors
 	return &disablePolicyResp, nil
 }
