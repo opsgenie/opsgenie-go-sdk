@@ -53,6 +53,17 @@ type AddTeamAlertRequest struct {
 	Source string `json:"source,omitempty"`
 }
 
+// AddTagsAlertRequest provides necessary parameter structure to Add Tags to an alert at OpsGenie.
+type AddTagsAlertRequest struct {
+	APIKey string   `json:"apiKey,omitempty"`
+	ID     string   `json:"id,omitempty"`
+	Alias  string   `json:"alias,omitempty"`
+	Tags   []string `json:"tags,omitempty"`
+	User   string   `json:"user,omitempty"`
+	Note   string   `json:"note,omitempty"`
+	Source string   `json:"source,omitempty"`
+}
+
 // AssignOwnerAlertRequest provides necessary parameter structure to Assign a User as Owner to an alert at OpsGenie.
 type AssignOwnerAlertRequest struct {
 	APIKey string `json:"apiKey,omitempty"`

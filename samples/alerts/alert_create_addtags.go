@@ -32,14 +32,14 @@ func main() {
 	fmt.Printf("status: %s\n", response.Status)
 	fmt.Printf("code: %d\n", response.Code)
 
-	// add team to the alert
-	addTeamReq := alerts.AddTeamAlertRequest{ID: response.AlertID, Team: constants.TeamName}
-	addTeamResponse, alertErr := alertCli.AddTeam(addTeamReq)
+	// add tags to the alert
+	addTagsReq := alerts.AddTagsAlertRequest{ID: response.AlertID, Tags: []string{"tag1", "tag2"}}
+	addTagsResponse, alertErr := alertCli.AddTags(addTagsReq)
 
 	if alertErr != nil {
 		panic(alertErr)
 	}
 
-	fmt.Printf("status: %s\n", addTeamResponse.Status)
-	fmt.Printf("code: %d\n", addTeamResponse.Code)
+	fmt.Printf("status: %s\n", addTagsResponse.Status)
+	fmt.Printf("code: %d\n", addTagsResponse.Code)
 }

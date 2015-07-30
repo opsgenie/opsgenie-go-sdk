@@ -146,7 +146,7 @@ func (suite *alertTestSuite) TestAddTeam() {
 
 	suffix := time.Now().String()
 	id := createAlert(t, suffix)
-	addTeamReq := alerts.AddTeamAlertRequest{ID: id, Team: entityNames.Team, User: entityNames.Team, Note: "note1"}
+	addTeamReq := alerts.AddTeamAlertRequest{ID: id, Team: entityNames.Team, User: "somebody", Note: "note1"}
 	addTeamResponse, alertErr := cli.AddTeam(addTeamReq)
 
 	require.Nil(t, alertErr)
@@ -178,6 +178,46 @@ func (suite *alertTestSuite) TestAddTeam() {
 	require.NotNil(t, getResp)
 	assertAlert(t, id, getResp, suffix, map[string]interface{}{"teams": []string{entityNames.Team}})
 	t.Log("[OK] team added with alias successfully")
+}
+
+func (suite *alertTestSuite) TestAddTags() {
+	t := suite.T()
+
+	suffix := time.Now().String()
+	id := createAlert(t, suffix)
+	addTagsReq := alerts.AddTagsAlertRequest{ID: id, Tags: []string{"newlyAddedTag1", "newlyAddedTag2"}, User: "somebody", Note: "note1"}
+	addTagsResp, alertErr := cli.AddTags(addTagsReq)
+
+	require.Nil(t, alertErr)
+	require.NotNil(t, addTagsResp)
+	require.Equal(t, 200, addTagsResp.Code, "Response code should be 200")
+
+	getAlertReq := alerts.GetAlertRequest{ID: id}
+	getResp, alertErr := cli.Get(getAlertReq)
+
+	require.Nil(t, alertErr)
+	require.NotNil(t, getResp)
+	assertAlert(t, id, getResp, suffix, map[string]interface{}{"tags": []string{"newlyAddedTag1", "newlyAddedTag2", "tag1", "tag2"}})
+	t.Log("[OK] tags added with id successfully")
+
+	//Add tags with alias
+	suffix = time.Now().String()
+	id = createAlert(t, suffix)
+	addTagsReq = alerts.AddTagsAlertRequest{Alias: "alert" + suffix, Tags: []string{"newlyAddedTag1"}}
+	addTagsResp, alertErr = cli.AddTags(addTagsReq)
+
+	require.Nil(t, alertErr)
+	require.NotNil(t, addTagsResp)
+	require.Equal(t, 200, addTagsResp.Code, "Response code should be 200")
+
+	getAlertReq = alerts.GetAlertRequest{ID: id}
+	getResp, alertErr = cli.Get(getAlertReq)
+
+	require.Nil(t, alertErr)
+	require.NotNil(t, getResp)
+	assertAlert(t, id, getResp, suffix, map[string]interface{}{"tags": []string{"newlyAddedTag1", "tag1", "tag2"}})
+
+	t.Log("[OK] tags added with alias successfully")
 }
 
 func (suite *alertTestSuite) TestAssignOwner() {

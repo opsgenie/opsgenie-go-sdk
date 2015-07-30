@@ -1,6 +1,7 @@
 alert:
-    apiKey: apiKey
+    apiKey: 8c652e54-725f-407f-b37d-ec6b9e6c614d
     user: username
     actions:
         - ping
         - pong
+opsgenie.api.url: http://localhost:9000

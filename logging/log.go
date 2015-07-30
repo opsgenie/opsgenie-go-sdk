@@ -2,9 +2,9 @@
 Copyright 2015 OpsGenie. All rights reserved.
 Use of this source code is governed by a Apache Software
 license that can be found in the LICENSE file.
-
-Package logging provides log interface.
 */
+
+//Package logging provides log interface.
 package logging
 
 import (

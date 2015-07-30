@@ -4,34 +4,33 @@ Use of this source code is governed by a Apache Software
 license that can be found in the LICENSE file.
 */
 
-/*
-Package client provides clients for using the OpsGenie Web API. Also prepares and sends requests.
-API user first creates a OpsGenieClient instance.
 
-cli := new(ogcli.OpsGenieClient)
-
-Following that he/she can set APIKey and some configurations for HTTP communication layer by setting
-a proxy definition and/or transport layer options.
-
-cli.SetAPIKey(constants.APIKey)
-
-Then create the client of the API type that he/she wants to use.
-
-alertCli, cliErr := cli.Alert()
-
-if cliErr != nil {
-panic(cliErr)
-}
-
-The most fundamental and general use case is being able to access the
-OpsGenie Web API by coding a Go program.
-The program -by mean of a client application- can send OpsGenie Web API
-the requests using the 'client' package in a higher level. For the programmer
-of the client application, that reduces the number of LoCs.
-Besides it will result a less error-prone application and reduce
-the complexity by hiding the low-level networking, error-handling and
-byte-processing calls.
-*/
+//Package client provides clients for using the OpsGenie Web API. Also prepares and sends requests.
+//API user first creates a OpsGenieClient instance.
+//
+//cli := new(ogcli.OpsGenieClient)
+//
+//Following that he/she can set APIKey and some configurations for HTTP communication layer by setting
+//a proxy definition and/or transport layer options.
+//
+//cli.SetAPIKey(constants.APIKey)
+//
+//Then create the client of the API type that he/she wants to use.
+//
+//alertCli, cliErr := cli.Alert()
+//
+//if cliErr != nil {
+//panic(cliErr)
+//}
+//
+//The most fundamental and general use case is being able to access the
+//OpsGenie Web API by coding a Go program.
+//The program -by mean of a client application- can send OpsGenie Web API
+//the requests using the 'client' package in a higher level. For the programmer
+//of the client application, that reduces the number of LoCs.
+//Besides it will result a less error-prone application and reduce
+//the complexity by hiding the low-level networking, error-handling and
+//byte-processing calls.
 package client
 
 import (
@@ -283,12 +282,12 @@ func (cli *OpsGenieClient) sendRequest(req goreq.Request) (*goreq.Response, erro
 // errorMessage is an internal method to return formatted error message according to HTTP status code of the response.
 func errorMessage(httpStatusCode int, responseBody string) error {
 	if httpStatusCode >= 400 && httpStatusCode < 500 {
-		message := fmt.Sprintf("Client error occurred; Response Code: %d, Response Body: "+responseBody, httpStatusCode)
+		message := fmt.Sprintf("Client error occurred; Response Code: %d, Response Body: %s", httpStatusCode, responseBody)
 		logging.Logger().Warn(message)
 		return errors.New(message)
 	}
 	if httpStatusCode >= 500 {
-		message := fmt.Sprintf("Server error occurred; Response Code: %d, Response Body: "+responseBody, httpStatusCode)
+		message := fmt.Sprintf("Server error occurred; Response Code: %d, Response Body: %s", httpStatusCode, responseBody)
 		logging.Logger().Info(message)
 		return errors.New(message)
 	}

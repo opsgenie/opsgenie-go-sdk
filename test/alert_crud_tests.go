@@ -189,7 +189,12 @@ func assertAlert(t *testing.T, id string, response *alerts.GetAlertResponse, suf
 		require.Equal(t, "open", response.Status, "Status comparison failed")
 	}
 	require.Equal(t, testCfg.Alert.Actions, response.Actions, "Action comparison failed")
-	require.Equal(t, []string{"tag1", "tag2", "tag3"}, response.Tags, "Tags comparison failed")
+
+	if val, contains := overwrite["tags"]; contains {
+		require.Equal(t, val, response.Tags, "tags comparison failed")
+	} else {
+		require.Equal(t, []string{"tag1", "tag2"}, response.Tags, "Tags comparison failed")
+	}
 	if val, contains := overwrite["recipients"]; contains {
 		require.Equal(t, val, response.Recipients, "recipients comparison failed")
 	} else {
@@ -235,7 +240,7 @@ func createAlert(t *testing.T, suffix string) string {
 		Note:        "Created for testing purposes" + suffix,
 		User:        "user1",
 		Actions:     testCfg.Alert.Actions,
-		Tags:        []string{"tag1", "tag2", "tag3"},
+		Tags:        []string{"tag1", "tag2"},
 		Recipients:  []string{"user1"},
 		Details:     map[string]string{"prop1": "val1", "prop2": "val2"},
 	}

@@ -35,6 +35,7 @@ const (
 	addTeamAlertURL         = "/v1/json/alert/team"
 	addRecipientAlertURL    = "/v1/json/alert/recipient"
 	addNoteAlertURL         = "/v1/json/alert/note"
+	addTagsAlertURL         = "/v1/json/alert/tags"
 	executeActionAlertURL   = "/v1/json/alert/executeAction"
 	attachFileAlertURL      = "/v1/json/alert/attach"
 )
@@ -347,6 +348,26 @@ func (cli *OpsGenieAlertClient) AddNote(req alerts.AddNoteAlertRequest) (*alerts
 		return nil, errors.New(message)
 	}
 	return &addNoteAlertResp, nil
+}
+
+// AddTags method adds tags to an alert at OpsGenie.
+func (cli *OpsGenieAlertClient) AddTags(req alerts.AddTagsAlertRequest) (*alerts.AddTagsAlertResponse, error) {
+	req.APIKey = cli.apiKey
+	resp, err := cli.sendRequest(cli.buildPostRequest(addTagsAlertURL, req))
+
+	if resp == nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var addTagsAlertResp alerts.AddTagsAlertResponse
+
+	if err = resp.Body.FromJsonTo(&addTagsAlertResp); err != nil {
+		message := "Server response can not be parsed, " + err.Error()
+		logging.Logger().Warn(message)
+		return nil, errors.New(message)
+	}
+	return &addTagsAlertResp, nil
 }
 
 // ExecuteAction method executes a custom action on an alert at OpsGenie.

@@ -116,6 +116,12 @@ type AddNoteAlertResponse struct {
 	Code   int    `json:"code"`
 }
 
+// AddTagsAlertResponse holds the result data of the AddTagsAlertRequest.
+type AddTagsAlertResponse struct {
+	Status string `json:"status"`
+	Code   int    `json:"code"`
+}
+
 // ExecuteActionAlertResponse holds the result data of the ExecuteActionAlertRequest.
 type ExecuteActionAlertResponse struct {
 	Result string `json:"result"`
