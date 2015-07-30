@@ -4,7 +4,6 @@ Use of this source code is governed by a Apache Software
 license that can be found in the LICENSE file.
 */
 
-
 //Package client provides clients for using the OpsGenie Web API. Also prepares and sends requests.
 //API user first creates a OpsGenieClient instance.
 //
@@ -49,8 +48,8 @@ import (
 var endpointURL = "https://api.opsgenie.com"
 
 const (
-	defaultConnectionTimeout time.Duration = 50 * time.Second
-	defaultRequestTimeout    time.Duration = 100 * time.Second
+	defaultConnectionTimeout time.Duration = 30 * time.Second
+	defaultRequestTimeout    time.Duration = 60 * time.Second
 	defaultMaxRetryAttempts  int           = 5
 	timeSleepBetweenRequests time.Duration = 500 * time.Millisecond
 )
