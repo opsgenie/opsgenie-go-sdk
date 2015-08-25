@@ -41,7 +41,7 @@ One can start using OpsGenie Go SDK by initializing client and making a request.
 
     func main() {
     	cli := new(ogcli.OpsGenieClient)
-    	cli.SetApiKey("YOUR_API_KEY")
+    	cli.SetAPIKey("YOUR_API_KEY")
 
     	alertCli, cliErr := cli.Alert()
 
