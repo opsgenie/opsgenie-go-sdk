@@ -36,5 +36,6 @@ func main() {
 		fmt.Printf("Created at: %d\n", alert.CreatedAt)
 		fmt.Printf("Updated at: %d\n", alert.UpdatedAt)
 		fmt.Printf("Tiny id: %s\n", alert.TinyID)
+		fmt.Printf("Owner: %s\n", alert.Owner)
 	}
 }

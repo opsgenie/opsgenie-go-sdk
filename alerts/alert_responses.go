@@ -32,6 +32,7 @@ type ListAlertsResponse struct {
 		CreatedAt    uint64 `json:"createdAt"`
 		UpdatedAt    uint64 `json:"updatedAt"`
 		TinyID       string `json:"tinyId"`
+		Owner        string `json:"owner"`
 	} `json:"alerts"`
 }
 
