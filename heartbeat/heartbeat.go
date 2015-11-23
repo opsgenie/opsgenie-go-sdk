@@ -20,7 +20,6 @@ type AddHeartbeatRequest struct {
 // UpdateHeartbeatRequest provides necessary parameter structure to Update an existing Heartbeat at OpsGenie.
 type UpdateHeartbeatRequest struct {
 	APIKey       string `json:"apiKey,omitempty"`
-	ID           string `json:"id,omitempty"`
 	Name         string `json:"name,omitempty"`
 	Interval     int    `json:"interval,omitempty"`
 	IntervalUnit string `json:"intervalUnit,omitempty"`
@@ -31,28 +30,24 @@ type UpdateHeartbeatRequest struct {
 // EnableHeartbeatRequest provides necessary parameter structure to Enable an Heartbeat at OpsGenie.
 type EnableHeartbeatRequest struct {
 	APIKey string `json:"apiKey,omitempty"`
-	ID     string `json:"id,omitempty"`
 	Name   string `json:"name,omitempty"`
 }
 
 // DisableHeartbeatRequest provides necessary parameter structure to Disable an Heartbeat at OpsGenie.
 type DisableHeartbeatRequest struct {
 	APIKey string `json:"apiKey,omitempty"`
-	ID     string `json:"id,omitempty"`
 	Name   string `json:"name,omitempty"`
 }
 
 // DeleteHeartbeatRequest provides necessary parameter structure to Delete an Heartbeat from OpsGenie.
 type DeleteHeartbeatRequest struct {
 	APIKey string `url:"apiKey,omitempty"`
-	ID     string `url:"id,omitempty"`
 	Name   string `url:"name,omitempty"`
 }
 
 // GetHeartbeatRequest provides necessary parameter structure to Retrieve an Heartbeat with details from OpsGenie.
 type GetHeartbeatRequest struct {
 	APIKey string `url:"apiKey,omitempty"`
-	ID     string `url:"id,omitempty"`
 	Name   string `url:"name,omitempty"`
 }
 

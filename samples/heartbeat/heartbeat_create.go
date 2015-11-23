@@ -27,7 +27,7 @@ func main() {
 		panic(hbErr)
 	}
 
-	fmt.Printf("id: %s\n", response.ID)
+	fmt.Printf("name: %s\n", response.Name)
 	fmt.Printf("status: %s\n", response.Status)
 	fmt.Printf("code: %d\n", response.Code)
 }

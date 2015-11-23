@@ -29,12 +29,12 @@ func main() {
 
 	fmt.Printf("Heartbeat created\n")
 	fmt.Printf("-----------------\n")
-	fmt.Printf("id: %s\n", response.ID)
+	fmt.Printf("name: %s\n", response.Name)
 	fmt.Printf("status: %s\n", response.Status)
 	fmt.Printf("code: %d\n", response.Code)
 
 	// enable the hb
-	getReq := hb.GetHeartbeatRequest{ID: response.ID}
+	getReq := hb.GetHeartbeatRequest{Name: response.Name}
 	getResp, getErr := hbCli.Get(getReq)
 	if getErr != nil {
 		panic(getErr)
@@ -42,7 +42,6 @@ func main() {
 
 	fmt.Printf("Heartbeat details\n")
 	fmt.Printf("-----------------\n")
-	fmt.Printf("Id: %s\n", getResp.ID)
 	fmt.Printf("Name: %s\n", getResp.Name)
 	fmt.Printf("Status: %s\n", getResp.Status)
 	fmt.Printf("Description: %s\n", getResp.Description)

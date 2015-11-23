@@ -2,14 +2,14 @@ package heartbeat
 
 // AddHeartbeatResponse holds the result data of the AddHeartbeatRequest.
 type AddHeartbeatResponse struct {
-	ID     string `json:"id"`
+	Name     string `json:"name"`
 	Status string `json:"status"`
 	Code   int    `json:"code"`
 }
 
 // UpdateHeartbeatResponse holds the result data of the UpdateHeartbeatRequest.
 type UpdateHeartbeatResponse struct {
-	ID     string `json:"id"`
+	Name     string `json:"name"`
 	Status string `json:"status"`
 	Code   int    `json:"code"`
 }
@@ -34,7 +34,15 @@ type DeleteHeartbeatResponse struct {
 
 // GetHeartbeatResponse holds the result data of the GetHeartbeatRequest.
 type GetHeartbeatResponse struct {
-	ID            string `json:"id"`
+	Heartbeat
+}
+
+// ListHeartbeatsResponse holds the result data of the ListHeartbeatsRequest.
+type ListHeartbeatsResponse struct {
+	Heartbeats []Heartbeat `json:"heartbeats"`
+}
+
+type Heartbeat struct {
 	Name          string `json:"name"`
 	Status        string `json:"status"`
 	Description   string `json:"description"`
@@ -43,21 +51,6 @@ type GetHeartbeatResponse struct {
 	Interval      int    `json:"interval"`
 	IntervalUnit  string `json:"intervalUnit"`
 	Expired       bool   `json:"expired"`
-}
-
-// ListHeartbeatsResponse holds the result data of the ListHeartbeatsRequest.
-type ListHeartbeatsResponse struct {
-	Heartbeats []struct {
-		ID            string `json:"id"`
-		Name          string `json:"name"`
-		Status        string `json:"status"`
-		Description   string `json:"description"`
-		Enabled       bool   `json:"enabled"`
-		LastHeartbeat uint64 `json:"lastHeartBeat"`
-		Interval      int    `json:"interval"`
-		IntervalUnit  string `json:"intervalUnit"`
-		Expired       bool   `json:"expired"`
-	} `json:"heartbeats"`
 }
 
 // SendHeartbeatResponse holds the result data of the SendHeartbeatRequest.

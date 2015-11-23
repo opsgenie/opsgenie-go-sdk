@@ -29,12 +29,12 @@ func main() {
 
 	fmt.Printf("Heartbeat created\n")
 	fmt.Printf("-----------------\n")
-	fmt.Printf("id: %s\n", response.ID)
+	fmt.Printf("name: %s\n", response.Name)
 	fmt.Printf("status: %s\n", response.Status)
 	fmt.Printf("code: %d\n", response.Code)
 
 	// enable the hb
-	disableReq := hb.DisableHeartbeatRequest{ID: response.ID}
+	disableReq := hb.DisableHeartbeatRequest{Name: response.Name}
 	disableResp, disableErr := hbCli.Disable(disableReq)
 	if disableErr != nil {
 		panic(disableErr)

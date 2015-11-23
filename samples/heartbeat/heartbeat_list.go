@@ -29,7 +29,7 @@ func main() {
 
 	fmt.Printf("Heartbeat created\n")
 	fmt.Printf("-----------------\n")
-	fmt.Printf("id: %s\n", response.ID)
+	fmt.Printf("name: %s\n", response.Name)
 	fmt.Printf("status: %s\n", response.Status)
 	fmt.Printf("code: %d\n", response.Code)
 
@@ -44,7 +44,6 @@ func main() {
 	fmt.Printf("-----------------\n")
 	beats := listResp.Heartbeats
 	for _, beat := range beats {
-		fmt.Printf("Id: %s\n", beat.ID)
 		fmt.Printf("Name: %s\n", beat.Name)
 		fmt.Printf("Status %s\n", beat.Status)
 		fmt.Printf("Description: %s\n", beat.Description)
