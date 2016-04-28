@@ -10,7 +10,7 @@ package teams
 // Member defines the structure for each team members definition
 type Member struct {
 	User string `json:"user,omitempty"`
-	role string `json:"role,omitempty"`
+	Role string `json:"role,omitempty"`
 }
 
 // CreateTeamRequest provides necessary parameter structure for creating team
