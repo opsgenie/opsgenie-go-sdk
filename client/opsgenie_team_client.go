@@ -2,20 +2,20 @@ package client
 
 import (
 	"bytes"
-	"crypto/tls"
+	//"crypto/tls"
 	"errors"
 	"fmt"
-	"io"
-	"io/ioutil"
-	"mime/multipart"
-	"net"
-	"net/http"
+	//"io"
+	//"io/ioutil"
+	//"mime/multipart"
+	//"net"
+	//"net/http"
 	"net/url"
-	"os"
-	"path/filepath"
-	"time"
+	//"os"
+	//"path/filepath"
+	//"time"
 
-	"github.com/opsgenie/opsgenie-go-sdk/alerts"
+	"github.com/sciffer/opsgenie-go-sdk/team"
 	"github.com/opsgenie/opsgenie-go-sdk/logging"
 )
 
