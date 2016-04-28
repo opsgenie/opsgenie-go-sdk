@@ -51,7 +51,7 @@ func (cli *OpsGenieTeamClient) Create(req team.CreateTeamRequest) (*team.CreateT
 		logging.Logger().Warn(message)
 		return nil, errors.New(message)
 	}
-	return &creatTeamResp, nil
+	return &createTeamResp, nil
 }
 /*
 // Close method closes an alert at OpsGenie.
