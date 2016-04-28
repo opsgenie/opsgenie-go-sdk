@@ -5,7 +5,7 @@ license that can be found in the LICENSE file.
 */
 
 //Package team provides requests and response structures to achieve Team API actions.
-package teams
+package team
 
 // Member defines the structure for each team members definition
 type Member struct {

@@ -1,4 +1,4 @@
-package teams
+package team
 
 // Create team response structure
 type CreateTeamResponse struct {
