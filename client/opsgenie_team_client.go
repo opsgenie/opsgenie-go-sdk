@@ -1,16 +1,16 @@
 package client
 
 import (
-	"bytes"
+	//"bytes"
 	//"crypto/tls"
 	"errors"
-	"fmt"
+	//"fmt"
 	//"io"
 	//"io/ioutil"
 	//"mime/multipart"
 	//"net"
 	//"net/http"
-	"net/url"
+	//"net/url"
 	//"os"
 	//"path/filepath"
 	//"time"
@@ -51,7 +51,7 @@ func (cli *OpsGenieTeamClient) Create(req team.CreateTeamRequest) (*team.CreateT
 		logging.Logger().Warn(message)
 		return nil, errors.New(message)
 	}
-	return &createAlertResp, nil
+	return &creatTeamResp, nil
 }
 /*
 // Close method closes an alert at OpsGenie.
