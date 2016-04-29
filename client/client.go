@@ -192,6 +192,34 @@ func (cli *OpsGenieClient) Policy() (*OpsGeniePolicyClient, error) {
 	return policyClient, nil
 }
 
+// Team instantiates a new OpsGenieTeamClient.
+func (cli *OpsGenieClient) Team() (*OpsGenieTeamClient, error) {
+	cli.makeHTTPTransportSettings()
+
+	teamClient := new(OpsGenieTeamClient)
+	teamClient.SetOpsGenieClient(*cli)
+
+	if cli.opsGenieAPIURL == "" {
+		teamClient.SetOpsGenieAPIUrl(endpointURL)
+	}
+
+	return teamClient, nil
+}
+
+// Escalation instantiates a new OpsGenieEscalationClient.
+func (cli *OpsGenieClient) Escalation() (*OpsGenieEscalationClient, error) {
+	cli.makeHTTPTransportSettings()
+
+	escalationClient := new(OpsGenieEscalationClient)
+	escalationClient.SetOpsGenieClient(*cli)
+
+	if cli.opsGenieAPIURL == "" {
+		escalationClient.SetOpsGenieAPIUrl(endpointURL)
+	}
+
+	return escalationClient, nil
+}
+
 // buildCommonRequestProps is an internal method to set common properties of requests that will send to OpsGenie.
 func (cli *OpsGenieClient) buildCommonRequestProps() goreq.Request {
 	if cli.httpTransportSettings == nil {
