@@ -60,6 +60,6 @@ type GetScheduleRequest struct {
 }
 
 // ListScheduleRequest provides necessary parameter structure for listing Schedules
-type ListScheduleRequest struct {
+type ListSchedulesRequest struct {
 	APIKey string `json:"apiKey,omitempty"`
 }

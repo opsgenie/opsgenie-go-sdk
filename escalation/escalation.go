@@ -45,6 +45,6 @@ type GetEscalationRequest struct {
 }
 
 // ListEscalationRequest provides necessary parameter structure for listing escalations
-type ListEscalationRequest struct {
+type ListEscalationsRequest struct {
 	APIKey string `json:"apiKey,omitempty"`
 }
