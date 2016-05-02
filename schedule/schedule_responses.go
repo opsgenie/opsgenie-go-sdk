@@ -35,6 +35,7 @@ type RotationInfo struct {
         Name string `json:"name,omitempty"`
         RotationLength int `json:"rotationLength,omitempty"`
         Restrictions []Restriction `json:"restrictions,omitempty"`
+}
 
 // Get escalation structure
 type GetScheduleResponse struct {

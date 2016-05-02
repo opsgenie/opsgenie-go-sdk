@@ -27,7 +27,7 @@ type UpdateEscalationRequest struct {
 	APIKey string `json:"apiKey,omitempty"`
 	Id     string `json:"id,omitempty"`
         Name   string `json:"name,omitempty"`
-        Rules []Member `json:"rules,omitempty"`
+        Rules []Rule `json:"rules,omitempty"`
 }
 
 // DeleteEscalationRequest provides necessary parameter structure for deleting an escalation
