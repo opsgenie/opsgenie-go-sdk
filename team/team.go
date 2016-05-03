@@ -44,7 +44,7 @@ type GetTeamRequest struct {
 
 // ListTeamsRequest provides necessary parameter structure for listing teams
 type ListTeamsRequest struct {
-	apiKey string `json:"apiKey,omitempty"`
+	APIKey string `json:"apiKey,omitempty"`
 }
 
 // ListTeamLogsRequest provides necessary parameter structure for listing team logs

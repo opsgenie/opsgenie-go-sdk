@@ -56,8 +56,8 @@ func (cli *OpsGenieTeamClient) Create(req team.CreateTeamRequest) (*team.CreateT
 
 // Update method updates a team at OpsGenie.
 func (cli *OpsGenieTeamClient) Update(req team.UpdateTeamRequest) (*team.UpdateTeamResponse, error) {
-	req.APIKey = cli.apiKey
-	resp, err := cli.sendRequest(cli.buildPostRequest(teamURL, req))
+	//req.APIKey = cli.apiKey
+	resp, err := cli.sendRequest(cli.buildPostRequest(teamURL, cli))
 
 	if resp == nil {
 		return nil, err
