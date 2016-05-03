@@ -117,7 +117,7 @@ func (cli *OpsGenieTeamClient) Get(req team.GetTeamRequest) (*team.GetTeamRespon
 // List method retrieves teams from OpsGenie.
 func (cli *OpsGenieTeamClient) List(req team.ListTeamsRequest) (*team.ListTeamsResponse, error) {
 	req.APIKey = cli.apiKey
-	resp, err := cli.sendRequest(cli.buildGetRequest(teamURL,req))
+	resp, err := cli.sendRequest(cli.buildGetRequest(teamURL+"?apiKey="+req.APIKey,nil))
 	if resp == nil {
 		return nil, errors.New(err.Error())
 	}
