@@ -96,7 +96,16 @@ func (cli *OpsGenieEscalationClient) Delete(req escalation.DeleteEscalationReque
 // Get method retrieves specified escalation details from OpsGenie.
 func (cli *OpsGenieEscalationClient) Get(req escalation.GetEscalationRequest) (*escalation.GetEscalationResponse, error) {
 	req.APIKey = cli.apiKey
-	resp, err := cli.sendRequest(cli.buildGetRequest(escalationURL, req))
+        params := "?apiKey="+req.APIKey
+        switch {
+        case req.Id != "":
+                params = params + "&id=" + req.Id
+        case req.Name != "":
+                params = params + "&name=" + req.Name
+        default:
+                return nil, errors.New("Error: Missing Id or Name in schedule get request")
+        }
+	resp, err := cli.sendRequest(cli.buildGetRequest(escalationURL + params, nil))
 
 	if resp == nil {
 		return nil, err
