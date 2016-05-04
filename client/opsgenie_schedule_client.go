@@ -4,7 +4,7 @@ import (
 	//"bytes"
 	//"crypto/tls"
 	"errors"
-	//"fmt"
+	"fmt"
 	//"io"
 	//"io/ioutil"
 	//"mime/multipart"
@@ -96,20 +96,29 @@ func (cli *OpsGenieScheduleClient) Delete(req schedule.DeleteScheduleRequest) (*
 // Get method retrieves specified schedule details from OpsGenie.
 func (cli *OpsGenieScheduleClient) Get(req schedule.GetScheduleRequest) (*schedule.GetScheduleResponse, error) {
 	req.APIKey = cli.apiKey
-	resp, err := cli.sendRequest(cli.buildGetRequest(scheduleURL, req))
-
+	params := "?apiKey="+req.APIKey
+	switch {
+	case req.Id != "":
+		params = params + "&id=" + req.Id
+	case req.Name != "":
+		params = params + "&name=" + req.Name
+	default:
+		return nil, errors.New("Error: Missing Id or Name in schedule get request")
+	}
+	resp, err := cli.sendRequest(cli.buildGetRequest(scheduleURL + params, nil))
 	if resp == nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
-
 	var getScheduleResp schedule.GetScheduleResponse
 
 	if err = resp.Body.FromJsonTo(&getScheduleResp); err != nil {
+		fmt.Println("Error parsing json")
 		message := "Server response can not be parsed, " + err.Error()
 		logging.Logger().Warn(message)
 		return nil, errors.New(message)
 	}
+	fmt.Printf("%+v", getScheduleResp)
 	return &getScheduleResp, nil
 }
 
@@ -130,5 +139,6 @@ func (cli *OpsGenieScheduleClient) List(req schedule.ListSchedulesRequest) (*sch
 		logging.Logger().Warn(message)
 		return nil, errors.New(message)
 	}
+	
 	return &listSchedulesResp, nil
 }
