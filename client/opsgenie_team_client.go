@@ -1,21 +1,9 @@
 package client
 
 import (
-	//"bytes"
-	//"crypto/tls"
 	"errors"
-	//"fmt"
-	//"io"
-	//"io/ioutil"
-	//"mime/multipart"
-	//"net"
-	//"net/http"
-	//"net/url"
-	//"os"
-	//"path/filepath"
-	//"time"
 
-	"github.com/sciffer/opsgenie-go-sdk/team"
+	"github.com/opsgenie/opsgenie-go-sdk/team"
 	"github.com/opsgenie/opsgenie-go-sdk/logging"
 )
 
@@ -56,8 +44,8 @@ func (cli *OpsGenieTeamClient) Create(req team.CreateTeamRequest) (*team.CreateT
 
 // Update method updates a team at OpsGenie.
 func (cli *OpsGenieTeamClient) Update(req team.UpdateTeamRequest) (*team.UpdateTeamResponse, error) {
-	//req.APIKey = cli.apiKey
-	resp, err := cli.sendRequest(cli.buildPostRequest(teamURL, cli))
+	req.APIKey = cli.apiKey
+	resp, err := cli.sendRequest(cli.buildPostRequest(teamURL, req))
 
 	if resp == nil {
 		return nil, err
@@ -117,7 +105,7 @@ func (cli *OpsGenieTeamClient) Get(req team.GetTeamRequest) (*team.GetTeamRespon
 // List method retrieves teams from OpsGenie.
 func (cli *OpsGenieTeamClient) List(req team.ListTeamsRequest) (*team.ListTeamsResponse, error) {
 	req.APIKey = cli.apiKey
-	resp, err := cli.sendRequest(cli.buildGetRequest(teamURL+"?apiKey="+req.APIKey,nil))
+	resp, err := cli.sendRequest(cli.buildGetRequest(teamURL,req))
 	if resp == nil {
 		return nil, errors.New(err.Error())
 	}

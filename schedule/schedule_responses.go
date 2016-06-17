@@ -1,19 +1,19 @@
 package schedule
 
-// Create escalation response structure
+// Create schedule response structure
 type CreateScheduleResponse struct {
 	Id string `json:"id"`
 	Status string `json:"status"`
 	Code int `json:"code"`
 }
 
-// Update escalation response structure
+// Update schedule response structure
 type UpdateScheduleResponse struct {
 	Status string `json:"status"`
         Code int `json:"code"`
 }
 
-// Delete escalation response structure
+// Delete schedule response structure
 type DeleteScheduleResponse struct {
 	Status string `json:"status"`
         Code int `json:"code"`
@@ -37,15 +37,15 @@ type RotationInfo struct {
         Restrictions []Restriction `json:"restrictions,omitempty"`
 }
 
-// Get escalation structure
+// Get schedule structure
 type GetScheduleResponse struct {
 	Id string `json:"id,omitempty"`
 	Name string `json:"name,omitempty"`
 	Team string `json:"team,omitempty"`
-	Rules []RotationInfo `json:"members,omitempty"`
+	Rules []RotationInfo `json:"rules,omitempty"`
 }
 
-// List escalations response structure
+// List schedule response structure
 type ListSchedulesResponse struct {
 	Schedules []GetScheduleResponse `json:"schedules,omitempty"`
 }

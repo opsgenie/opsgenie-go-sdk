@@ -30,29 +30,29 @@ type UpdateTeamRequest struct {
 
 // DeleteTeamRequest provides necessary parameter structure for deleting a team
 type DeleteTeamRequest struct {
-	APIKey string `json:"apiKey,omitempty"`
-	Id     string `json:"id,omitempty"`
-        Name   string `json:"name,omitempty"`
+	APIKey string `url:"apiKey,omitempty"`
+	Id     string `url:"id,omitempty"`
+        Name   string `url:"name,omitempty"`
 }
 
 // GetTeamRequest provides necessary parameter structure for requesting team information
 type GetTeamRequest struct {
-	APIKey string `json:"apiKey,omitempty"`
-	Id     string `json:"id,omitempty"`
-        Name   string `json:"name,omitempty"`
+	APIKey string `url:"apiKey,omitempty"`
+	Id     string `url:"id,omitempty"`
+        Name   string `url:"name,omitempty"`
 }
 
 // ListTeamsRequest provides necessary parameter structure for listing teams
 type ListTeamsRequest struct {
-	APIKey string `json:"apiKey,omitempty"`
+	APIKey string `url:"apiKey,omitempty"`
 }
 
 // ListTeamLogsRequest provides necessary parameter structure for listing team logs
 type ListTeamLogsRequest struct {
-	APIKey string `json:"apiKey,omitempty"`
-	Id     string `json:"id,omitempty"`
-        Name   string `json:"name,omitempty"`
-	Limit  int `json:"limit,omitempty"`
-	Order  string `json:"order,omitempty"`
-	LastKey string `json:"lastkey,omitempty"`
+	APIKey string `url:"apiKey,omitempty"`
+	Id     string `url:"id,omitempty"`
+        Name   string `url:"name,omitempty"`
+	Limit  int `url:"limit,omitempty"`
+	Order  string `url:"order,omitempty"`
+	LastKey string `url:"lastkey,omitempty"`
 }

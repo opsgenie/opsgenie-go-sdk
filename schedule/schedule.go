@@ -31,7 +31,7 @@ type CreateScheduleRequest struct {
 	APIKey string `json:"apiKey,omitempty"`
 	Name   string `json:"name,omitempty"`
 	Timezone string `json:"timezone,omitempty"`
-	Enabled bool `json:"enabled,omitempty"`
+	Enabled *bool `json:"enabled,omitempty"`
         Rotations []Rotation `json:"rotations,omitempty"`
 }
 
@@ -41,25 +41,25 @@ type UpdateScheduleRequest struct {
 	APIKey string `json:"apiKey,omitempty"`
 	Name   string `json:"name,omitempty"`
 	Timezone string `json:"timezone,omitempty"`
-	Enabled bool `json:"enabled,omitempty"`
+	Enabled *bool  `json:"enabled,omitempty"`
         Rotations []Rotation `json:"rotations,omitempty"`
 }
 
 // DeleteScheduleRequest provides necessary parameter structure for deleting an Schedule
 type DeleteScheduleRequest struct {
-	APIKey string `json:"apiKey,omitempty"`
-	Id     string `json:"id,omitempty"`
-        Name   string `json:"name,omitempty"`
+	APIKey string `url:"apiKey,omitempty"`
+	Id     string `url:"id,omitempty"`
+        Name   string `url:"name,omitempty"`
 }
 
 // GetScheduleRequest provides necessary parameter structure for requesting Schedule information
 type GetScheduleRequest struct {
-	APIKey string `json:"apiKey,omitempty"`
-	Id     string `json:"id,omitempty"`
-        Name   string `json:"name,omitempty"`
+	APIKey string `url:"apiKey,omitempty"`
+	Id     string `url:"id,omitempty"`
+        Name   string `url:"name,omitempty"`
 }
 
 // ListScheduleRequest provides necessary parameter structure for listing Schedules
 type ListSchedulesRequest struct {
-	APIKey string `json:"apiKey,omitempty"`
+	APIKey string `url:"apiKey,omitempty"`
 }

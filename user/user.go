@@ -13,7 +13,7 @@ type CreateUserRequest struct {
 	Username string `json:"username,omitempty"`
 	Fullname string `json:"fullname,omitempty"`
 	Role string `json:"role,omitempty"`
-	Local string `json:"local,omitempty"`
+	Locale string `json:"locale,omitempty"`
 	Timezone string `json:"timezone,omitempty"`
 }
 
@@ -23,25 +23,25 @@ type UpdateUserRequest struct {
 	APIKey string `json:"apiKey,omitempty"`
 	Fullname string `json:"fullname,omitempty"`
 	Role string `json:"role,omitempty"`
-	Local string `json:"local,omitempty"`
+	Locale string `json:"locale,omitempty"`
 	Timezone string `json:"timezone,omitempty"`
 }
 
 // DeleteUserRequest provides necessary parameter structure for deleting an User
 type DeleteUserRequest struct {
-	APIKey string `json:"apiKey,omitempty"`
-	Id string `json:"id,omitempty"`
-	Username string `json:"username,omitempty"`
+	APIKey string `url:"apiKey,omitempty"`
+	Id string `url:"id,omitempty"`
+	Username string `url:"username,omitempty"`
 }
 
 // GetUserRequest provides necessary parameter structure for requesting User information
 type GetUserRequest struct {
-	APIKey string `json:"apiKey,omitempty"`
-	Id string `json:"id,omitempty"`
-	Username string `json:"username,omitempty"`
+	APIKey string `url:"apiKey,omitempty"`
+	Id string `url:"id,omitempty"`
+	Username string `url:"username,omitempty"`
 }
 
 // ListUserRequest provides necessary parameter structure for listing Users
 type ListUsersRequest struct {
-	APIKey string `json:"apiKey,omitempty"`
+	APIKey string `url:"apiKey,omitempty"`
 }

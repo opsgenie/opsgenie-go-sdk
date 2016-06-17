@@ -1,19 +1,19 @@
 package user
 
-// Create escalation response structure
+// Create user response structure
 type CreateUserResponse struct {
 	Id string `json:"id"`
 	Status string `json:"status"`
 	Code int `json:"code"`
 }
 
-// Update escalation response structure
+// Update user response structure
 type UpdateUserResponse struct {
 	Status string `json:"status"`
         Code int `json:"code"`
 }
 
-// Delete escalation response structure
+// Delete user response structure
 type DeleteUserResponse struct {
 	Status string `json:"status"`
         Code int `json:"code"`
@@ -25,13 +25,13 @@ type Contact struct {
 	Method string `json:"method,omitempty"`
 }
 
-// Get escalation structure
+// Get user structure
 type GetUserResponse struct {
 	Id string `json:"id,omitempty"`
 	Username string `json:"username,omitempty"`
 	Fullname string `json:"fullname,omitempty"`
 	Timezone string `json:"timezone,omitempty"`
-	Local string `json:"local,omitempty"`
+	Locale string `json:"locale,omitempty"`
 	State string `json:"state,omitempty"`
 	Escalations []string `json:"escalations,omitempty"`
 	Schedules []string `json:"schedules,omitempty"`
@@ -40,7 +40,7 @@ type GetUserResponse struct {
 	Contacts []Contact `json:"contacts,omitempty"`
 }
 
-// List escalations response structure
+// List user response structure
 type ListUsersResponse struct {
 	Users []GetUserResponse `json:"users,omitempty"`
 }

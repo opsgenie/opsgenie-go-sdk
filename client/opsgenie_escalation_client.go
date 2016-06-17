@@ -1,21 +1,8 @@
 package client
 
 import (
-	//"bytes"
-	//"crypto/tls"
 	"errors"
-	//"fmt"
-	//"io"
-	//"io/ioutil"
-	//"mime/multipart"
-	//"net"
-	//"net/http"
-	//"net/url"
-	//"os"
-	//"path/filepath"
-	//"time"
-
-	"github.com/sciffer/opsgenie-go-sdk/escalation"
+	"github.com/opsgenie/opsgenie-go-sdk/escalation"
 	"github.com/opsgenie/opsgenie-go-sdk/logging"
 )
 
@@ -96,16 +83,7 @@ func (cli *OpsGenieEscalationClient) Delete(req escalation.DeleteEscalationReque
 // Get method retrieves specified escalation details from OpsGenie.
 func (cli *OpsGenieEscalationClient) Get(req escalation.GetEscalationRequest) (*escalation.GetEscalationResponse, error) {
 	req.APIKey = cli.apiKey
-        params := "?apiKey="+req.APIKey
-        switch {
-        case req.Id != "":
-                params = params + "&id=" + req.Id
-        case req.Name != "":
-                params = params + "&name=" + req.Name
-        default:
-                return nil, errors.New("Error: Missing Id or Name in schedule get request")
-        }
-	resp, err := cli.sendRequest(cli.buildGetRequest(escalationURL + params, nil))
+	resp, err := cli.sendRequest(cli.buildGetRequest(escalationURL, req))
 
 	if resp == nil {
 		return nil, err

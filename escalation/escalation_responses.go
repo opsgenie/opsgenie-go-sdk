@@ -24,7 +24,7 @@ type GetEscalationResponse struct {
 	Id string `json:"id,omitempty"`
 	Name string `json:"name,omitempty"`
 	Team string `json:"team,omitempty"`
-	Rules []Rule `json:"members,omitempty"`
+	Rules []Rule `json:"rules,omitempty"`
 }
 
 

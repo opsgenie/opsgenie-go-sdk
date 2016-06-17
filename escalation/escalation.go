@@ -4,12 +4,12 @@ Use of this source code is governed by a Apache Software
 license that can be found in the LICENSE file.
 */
 
-//Package team provides requests and response structures to achieve Team API actions.
+//Package escalation provides requests and response structures to achieve Escalation API actions.
 package escalation
 
-// Member defines the structure for each team members definition
+// Rule defines the structure for each escalation rule definition
 type Rule struct {
-	Delay int `json:"delay,omitempty"`
+	Delay int `json:"delay"`
 	Notify string `json:"notify,omitempty"`
 	NotifyType string `json:"notifyType,omitempty"`
 	NotifyCondition string `json:"notifyCondition,omitempty"`
@@ -32,19 +32,19 @@ type UpdateEscalationRequest struct {
 
 // DeleteEscalationRequest provides necessary parameter structure for deleting an escalation
 type DeleteEscalationRequest struct {
-	APIKey string `json:"apiKey,omitempty"`
-	Id     string `json:"id,omitempty"`
-        Name   string `json:"name,omitempty"`
+	APIKey	string `url:"apiKey,omitempty"`
+	ID      string `url:"id,omitempty"`
+	Name	string `url:"name,omitempty"`
 }
 
 // GetEscalationRequest provides necessary parameter structure for requesting escalation information
 type GetEscalationRequest struct {
-	APIKey string `json:"apiKey,omitempty"`
-	Id     string `json:"id,omitempty"`
-        Name   string `json:"name,omitempty"`
+	APIKey string `url:"apiKey,omitempty"`
+	Id     string `url:"id,omitempty"`
+        Name   string `url:"name,omitempty"`
 }
 
 // ListEscalationRequest provides necessary parameter structure for listing escalations
 type ListEscalationsRequest struct {
-	APIKey string `json:"apiKey,omitempty"`
+	APIKey string `url:"apiKey,omitempty"`
 }
