@@ -122,3 +122,24 @@ func (cli *OpsGenieScheduleClient) List(req schedule.ListSchedulesRequest) (*sch
 	
 	return &listSchedulesResp, nil
 }
+
+// WhoIsOnCall method retrieves current oncall participants of a specific schedule from OpsGenie
+func (cli *OpsGenieScheduleClient) WhoIsOnCall(req schedule.WhoIsOnCallRequest) (*schedule.WhoIsOnCallResponse, error) {
+	req.APIKey = cli.apiKey
+	resp, err := cli.sendRequest(cli.buildGetRequest(scheduleURL + "/whoIsOnCall" , req))
+	if resp == nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	
+	var getWhoIsOnCallResp schedule.WhoIsOnCallResponse
+
+	if err = resp.Body.FromJsonTo(&getWhoIsOnCallResp); err != nil {
+		fmt.Println("Error parsing json")
+		message := "Server response can not be parsed, " + err.Error()
+		logging.Logger().Warn(message)
+		return nil, errors.New(message)
+	}
+	
+	return &getWhoIsOnCallResp, nil
+}
