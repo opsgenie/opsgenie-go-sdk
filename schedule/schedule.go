@@ -67,8 +67,8 @@ type ListSchedulesRequest struct {
 type WhoIsOnCallRequest struct {
 	APIKey   string `url:"apiKey,omitempty"`
 	Id       string `url:"id,omitempty"`
-        Name     string `url:"name,omitempty"`
-        Timezone string `url:"timezone,omitempty"`
-        Time     string `url:"time,omitempty"`
-        Flat     string `url:"flat,omitempty"`
+	Name     string `url:"name,omitempty"`
+	Timezone string `url:"timezone,omitempty"`
+	Time     string `url:"time,omitempty"`
+	Flat     string `url:"flat,omitempty"`
 }
