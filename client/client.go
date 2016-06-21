@@ -277,7 +277,6 @@ func (cli *OpsGenieClient) buildGetRequest(uri string, request interface{}) gore
 	} else {
 		req.Uri = uri 
 	}
-	fmt.Println(req.Uri)
 	logging.Logger().Info("Executing OpsGenie request to ["+uri+"] with parameters: ")
 	return req
 }
