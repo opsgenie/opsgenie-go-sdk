@@ -183,6 +183,19 @@ type ListAlertsRequest struct {
 	Order         string `url:"order,omitempty"`
 }
 
+// CountAlertRequest counts the alerts at OpsGenie.
+type CountAlertRequest struct {
+	APIKey        string `url:"apiKey,omitempty"`
+	CreatedAfter  uint64 `url:"createdAfter,omitempty"`
+	CreatedBefore uint64 `url:"createdBefore,omitempty"`
+	UpdatedAfter  uint64 `url:"updatedAfter,omitempty"`
+	UpdatedBefore uint64 `url:"updatedBefore,omitempty"`
+	Limit         uint64 `url:"limit,omitempty"`
+	Status        string `url:"status,omitempty"`
+	Tags          []string `json:"tags,omitempty"`
+	TagsOperator  string `url:"tagsoperator,omitempty"`
+}
+
 // RenotifyAlertRequest provides necessary parameter structure to Re-notify recipients at OpsGenie.
 type RenotifyAlertRequest struct {
 	APIKey     string   `json:"apiKey,omitempty"`

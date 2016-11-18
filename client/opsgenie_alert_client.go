@@ -38,6 +38,7 @@ const (
 	addTagsAlertURL         = "/v1/json/alert/tags"
 	executeActionAlertURL   = "/v1/json/alert/executeAction"
 	attachFileAlertURL      = "/v1/json/alert/attach"
+	countAlertURL          = "/v1/json/alert/count"
 )
 
 // OpsGenieAlertClient is the data type to make Alert API requests.
@@ -69,6 +70,27 @@ func (cli *OpsGenieAlertClient) Create(req alerts.CreateAlertRequest) (*alerts.C
 	}
 	return &createAlertResp, nil
 }
+
+// Count method counts alerts at OpsGenie.
+func (cli *OpsGenieAlertClient) Count(req alerts.CountAlertRequest) (*alerts.CountAlertResponse, error) {
+	req.APIKey = cli.apiKey
+	resp, err := cli.sendRequest(cli.buildGetRequest(countAlertURL, req))
+
+	if resp == nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var countAlertResp alerts.CountAlertResponse
+
+	if err = resp.Body.FromJsonTo(&countAlertResp); err != nil {
+		message := "Server response can not be parsed, " + err.Error()
+		logging.Logger().Warn(message)
+		return nil, errors.New(message)
+	}
+	return &countAlertResp, nil
+}
+
 
 // Close method closes an alert at OpsGenie.
 func (cli *OpsGenieAlertClient) Close(req alerts.CloseAlertRequest) (*alerts.CloseAlertResponse, error) {
