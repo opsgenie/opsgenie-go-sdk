@@ -8,7 +8,7 @@ license that can be found in the LICENSE file.
 package constants
 
 //Variable represents OpsGenie apiKey.
-var APIKey = "YOUR API KEY HERE"
+var APIKey = "YOUR OPSGENIE APIKEY HERE"
 //Variable represents an OpsGenie Team.
 var TeamName = "YOUR TEAM NAME HERE"
 //Variable represents an Owner of the OpsGenie Alert.
@@ -29,3 +29,7 @@ var User = "YOUR USERNAME HERE"
 var PolicyName = "YOUR POLICY NAME HERE"
 //Variable represents an OpsGenie Integration.
 var IntegrationName = "YOUR INTEGRATION NAME HERE"
+//Variable represents the name of the escalation.
+var EscalationName = "YOUR ESCALATION NAME HERE"
+//Variable represents the end date for snooze.
+var EndDate = "YOUR END DATE HERE"

@@ -216,3 +216,69 @@ type TakeOwnershipAlertRequest struct {
 	Note   string `json:"note,omitempty"`
 	Source string `json:"source,omitempty"`
 }
+
+// UnAcknowledgeAlertRequest provides necessary parameter structure to Unacknowledge an alert at OpsGenie.
+type UnAcknowledgeAlertRequest struct {
+	APIKey string `json:"apiKey,omitempty"`
+	ID     string `json:"id,omitempty"`
+	Alias  string `json:"alias,omitempty"`
+	User   string `json:"user,omitempty"`
+	Note   string `json:"note,omitempty"`
+	Source string `json:"source,omitempty"`
+}
+
+// SnoozeAlertRequest provides necessary parameter structure to Snooze an alert at OpsGenie.
+type SnoozeAlertRequest struct {
+	APIKey 	string `json:"apiKey,omitempty"`
+	ID     	string `json:"id,omitempty"`
+	Alias  	string `json:"alias,omitempty"`
+	EndDate string `json:"endDate,omitempty"`
+	User   	string `json:"user,omitempty"`
+	Note  	string `json:"note,omitempty"`
+	Source 	string `json:"source,omitempty"`
+}
+
+// RemoveTagsAlertRequest provides necessary parameter structure to Remove Tags from an alert at OpsGenie.
+type RemoveTagsAlertRequest struct {
+	APIKey string   `url:"apiKey,omitempty"`
+	ID     string   `url:"id,omitempty"`
+	Alias  string   `url:"alias,omitempty"`
+	Tags   []string	`url:"tags,omitempty"`
+	User   string   `url:"user,omitempty"`
+	Note   string   `url:"note,omitempty"`
+	Source string   `url:"source,omitempty"`
+}
+
+// AddDetailsAlertRequest provides necessary parameter structure to Add Details to an alert at OpsGenie.
+type AddDetailsAlertRequest struct {
+	APIKey 	string   		`json:"apiKey,omitempty"`
+	ID     	string   		`json:"id,omitempty"`
+	Alias  	string   		`json:"alias,omitempty"`
+	Details	map[string]string	`json:"details,omitempty"`
+	User   	string   		`json:"user,omitempty"`
+	Note   	string   		`json:"note,omitempty"`
+	Source 	string   		`json:"source,omitempty"`
+}
+
+// RemoveDetailsAlertRequest provides necessary parameter structure to Remove Details from an alert at OpsGenie.
+type RemoveDetailsAlertRequest struct {
+	APIKey 	string   	`url:"apiKey,omitempty"`
+	ID     	string   	`url:"id,omitempty"`
+	Alias  	string   	`url:"alias,omitempty"`
+	Keys	[]string	`url:"keys,omitempty"`
+	User   	string   	`url:"user,omitempty"`
+	Note   	string   	`url:"note,omitempty"`
+	Source 	string   	`url:"source,omitempty"`
+}
+
+// EscalateToNextAlertRequest provides necessary parameter structure to Escalate To Next for and alert at OpsGenie.
+type EscalateToNextAlertRequest struct {
+	APIKey 		string  `json:"apiKey,omitempty"`
+	ID     		string  `json:"id,omitempty"`
+	Alias  		string  `json:"alias,omitempty"`
+	EscalationID	string	`json:"escalationId,omitempty"`
+	EscalationName	string	`json:"escalationName,omitempty"`
+	User   		string  `json:"user,omitempty"`
+	Note   		string  `json:"note,omitempty"`
+	Source 		string  `json:"source,omitempty"`
+}
