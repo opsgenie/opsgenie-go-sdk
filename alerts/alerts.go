@@ -172,15 +172,18 @@ type ListAlertRecipientsRequest struct {
 
 // ListAlertsRequest provides necessary parameter structure to Retrieve alerts from OpsGenie.
 type ListAlertsRequest struct {
-	APIKey        string `url:"apiKey,omitempty"`
-	CreatedAfter  uint64 `url:"createdAfter,omitempty"`
-	CreatedBefore uint64 `url:"createdBefore,omitempty"`
-	UpdatedAfter  uint64 `url:"updatedAfter,omitempty"`
-	UpdatedBefore uint64 `url:"updatedBefore,omitempty"`
-	Limit         uint64 `url:"limit,omitempty"`
-	Status        string `url:"status,omitempty"`
-	SortBy        string `url:"sortBy,omitempty"`
-	Order         string `url:"order,omitempty"`
+	APIKey        string 	`url:"apiKey,omitempty"`
+	CreatedAfter  uint64 	`url:"createdAfter,omitempty"`
+	CreatedBefore uint64 	`url:"createdBefore,omitempty"`
+	UpdatedAfter  uint64 	`url:"updatedAfter,omitempty"`
+	UpdatedBefore uint64 	`url:"updatedBefore,omitempty"`
+	Limit         uint64 	`url:"limit,omitempty"`
+	Status        string 	`url:"status,omitempty"`
+	SortBy        string 	`url:"sortBy,omitempty"`
+	Order         string 	`url:"order,omitempty"`
+	Teams         []string  `url:"teams,omitempty"`
+	Tags          []string  `url:"tags,omitempty"`
+	TagsOperator  string 	`url:"tagsOperator,omitempty"`
 }
 
 // CountAlertRequest counts the alerts at OpsGenie.
@@ -192,8 +195,8 @@ type CountAlertRequest struct {
 	UpdatedBefore uint64 `url:"updatedBefore,omitempty"`
 	Limit         uint64 `url:"limit,omitempty"`
 	Status        string `url:"status,omitempty"`
-	Tags          []string `json:"tags,omitempty"`
-	TagsOperator  string `url:"tagsoperator,omitempty"`
+	Tags          []string `url:"tags,omitempty"`
+	TagsOperator  string `url:"tagsOperator,omitempty"`
 }
 
 // RenotifyAlertRequest provides necessary parameter structure to Re-notify recipients at OpsGenie.
@@ -229,13 +232,14 @@ type UnAcknowledgeAlertRequest struct {
 
 // SnoozeAlertRequest provides necessary parameter structure to Snooze an alert at OpsGenie.
 type SnoozeAlertRequest struct {
-	APIKey 	string `json:"apiKey,omitempty"`
-	ID     	string `json:"id,omitempty"`
-	Alias  	string `json:"alias,omitempty"`
-	EndDate string `json:"endDate,omitempty"`
-	User   	string `json:"user,omitempty"`
-	Note  	string `json:"note,omitempty"`
-	Source 	string `json:"source,omitempty"`
+	APIKey 		string `json:"apiKey,omitempty"`
+	ID     		string `json:"id,omitempty"`
+	Alias  		string `json:"alias,omitempty"`
+	EndDate 	string `json:"endDate,omitempty"`
+	User   		string `json:"user,omitempty"`
+	Note  		string `json:"note,omitempty"`
+	Source 		string `json:"source,omitempty"`
+	TimeZone	string `json:"timezone,omitempty"`
 }
 
 // RemoveTagsAlertRequest provides necessary parameter structure to Remove Tags from an alert at OpsGenie.
