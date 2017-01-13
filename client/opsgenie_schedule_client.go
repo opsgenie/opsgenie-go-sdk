@@ -4,12 +4,13 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/opsgenie/opsgenie-go-sdk/schedule"
 	"github.com/opsgenie/opsgenie-go-sdk/logging"
+	"github.com/opsgenie/opsgenie-go-sdk/schedule"
 )
 
 const (
-	scheduleURL          = "/v1/json/schedule"
+	scheduleURL         = "/v1/json/schedule"
+	timelineScheduleURL = "/v1/json/schedule/timeline"
 )
 
 // OpsGenieScheduleClient is the data type to make Schedule API requests.
@@ -119,6 +120,28 @@ func (cli *OpsGenieScheduleClient) List(req schedule.ListSchedulesRequest) (*sch
 		logging.Logger().Warn(message)
 		return nil, errors.New(message)
 	}
-	
+
 	return &listSchedulesResp, nil
+}
+
+// GetTimeline method retrieves Timeline schedules from OpsGenie.
+func (cli *OpsGenieScheduleClient) GetTimeline(req schedule.GetTimelineScheduleRequest) (*schedule.GetTimelineScheduleResponse, error) {
+	req.APIKey = cli.apiKey
+	resp, err := cli.sendRequest(cli.buildGetRequest(timelineScheduleURL, req))
+
+	if resp == nil {
+		return nil, errors.New(err.Error())
+	}
+
+	defer resp.Body.Close()
+
+	var timelineSchedulesResp schedule.GetTimelineScheduleResponse
+
+	if err = resp.Body.FromJsonTo(&timelineSchedulesResp); err != nil {
+		message := "Server response can not be parsed, " + err.Error()
+		logging.Logger().Warn(message)
+		return nil, errors.New(message)
+	}
+	// fmt.Printf("%+v", timelineSchedulesResp)
+	return &timelineSchedulesResp, nil
 }
