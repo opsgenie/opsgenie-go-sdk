@@ -1,9 +1,5 @@
 package schedule
 
-import (
-	"github.com/opsgenie/opsgenie-go-sdk/utils"
-)
-
 // Create schedule response structure
 type CreateScheduleResponse struct {
 	Id     string `json:"id"`
@@ -107,4 +103,23 @@ type Recipients struct {
 	Name        string `json:"name,omitempty"`
 	Id          string `json:"id,omitempty"`
 	Type        string `json:"type,omitempty"`
+}
+
+// WhoIsOnCallParticipant
+type WhoIsOnCallParticipant struct {
+	Name string `json:"name"`
+	Type string `json:"type"`
+	Forwarded bool `json:"forwarded,omitempty"`
+	Participants []*WhoIsOnCallParticipant `json:"participants,omitempty"`
+	NortifyType string `json:"notifyType,omitempty"`
+}
+
+// WhoIsOnCall response structure
+type WhoIsOnCallResponse struct {
+	Id string `json:"id"`
+	Name string `json:"name"`
+	Type string `json:"type"`
+	Participants []WhoIsOnCallParticipant `json:"participants,omitempty"`
+	Recipients []string `json:"recipients,omitempty"`
+	IsEnabled bool `json:"isEnabled,omitempty"`
 }

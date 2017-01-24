@@ -62,6 +62,15 @@ type GetScheduleRequest struct {
 // ListScheduleRequest provides necessary parameter structure for listing Schedules
 type ListSchedulesRequest struct {
 	APIKey string `url:"apiKey,omitempty"`
+
+// WhoIsOnCallRequest provides necessary parameter structure for requesting who is on call for a specific schedule
+type WhoIsOnCallRequest struct {
+	APIKey   string `url:"apiKey,omitempty"`
+	Id       string `url:"id,omitempty"`
+	Name     string `url:"name,omitempty"`
+	Timezone string `url:"timezone,omitempty"`
+	Time     string `url:"time,omitempty"`
+	Flat     string `url:"flat,omitempty"`
 }
 
 // GetScheduleTimelineRequest provides necessary parameter structure for requesting Schedule Timeline information
