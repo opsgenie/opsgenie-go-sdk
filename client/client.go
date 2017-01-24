@@ -150,6 +150,20 @@ func (cli *OpsGenieClient) Alert() (*OpsGenieAlertClient, error) {
 	return alertClient, nil
 }
 
+// Alert instantiates a new OpsGenieContactClient.
+func (cli *OpsGenieClient) Contact() (*OpsGenieContactClient, error) {
+	cli.makeHTTPTransportSettings()
+
+	contactClient := new(OpsGenieContactClient)
+	contactClient.SetOpsGenieClient(*cli)
+
+	if cli.opsGenieAPIURL == "" {
+		contactClient.SetOpsGenieAPIUrl(endpointURL)
+	}
+
+	return contactClient, nil
+}
+
 // Heartbeat instantiates a new OpsGenieHeartbeatClient.
 func (cli *OpsGenieClient) Heartbeat() (*OpsGenieHeartbeatClient, error) {
 	cli.makeHTTPTransportSettings()
