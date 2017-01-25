@@ -248,6 +248,20 @@ func (cli *OpsGenieClient) Schedule() (*OpsGenieScheduleClient, error) {
 	return scheduleClient, nil
 }
 
+// ScheduleOverride instantiates a new OpsGenieScheduleOverrideClient.
+func (cli *OpsGenieClient) ScheduleOverride() (*OpsGenieScheduleOverrideClient, error) {
+	cli.makeHTTPTransportSettings()
+
+	scheduleOverrideClient := new(OpsGenieScheduleOverrideClient)
+	scheduleOverrideClient.SetOpsGenieClient(*cli)
+
+	if cli.opsGenieAPIURL == "" {
+		scheduleOverrideClient.SetOpsGenieAPIUrl(endpointURL)
+	}
+
+	return scheduleOverrideClient, nil
+}
+
 // User instantiates a new OpsGenieUserClient.
 func (cli *OpsGenieClient) User() (*OpsGenieUserClient, error) {
 	cli.makeHTTPTransportSettings()
@@ -291,7 +305,7 @@ func (cli *OpsGenieClient) buildGetRequest(uri string, request interface{}) gore
 	} else {
 		req.Uri = uri
 	}
-	logging.Logger().Info("Executing OpsGenie request to ["+uri+"] with parameters: ")
+	logging.Logger().Info("Executing OpsGenie request to [" + uri + "] with parameters: ")
 	return req
 }
 
