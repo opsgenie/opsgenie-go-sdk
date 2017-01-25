@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	contactURL          = "/v1/json/client"
+	contactURL          = "/v1/json/user/contact"
 )
 
 // OpsGenieContactClient is the data type to make Contact API requests.

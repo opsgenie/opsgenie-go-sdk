@@ -9,30 +9,30 @@ package contact
 
 // CreateContactRequest provides necessary parameter structure for creating contact
 type CreateContactRequest struct {
-	APIKey string `json:"apiKey,omitempty"`
-	Method string `json:"method,omitempty"`
-	To string `json:"to,omitempty"`
-	Username string `json:"username,omitempty"`
+	APIKey 		string `json:"apiKey,omitempty"`
+	Method 		string `json:"method,omitempty"`
+	To 		string `json:"to,omitempty"`
+	Username 	string `json:"username,omitempty"`
 }
 
 // UpdateContactRequest provides necessary parameter structure for updating a contact
 type UpdateContactRequest struct {
-	APIKey string `json:"apiKey,omitempty"`
-	Id     string `json:"id,omitempty"`
-	To string `json:"to,omitempty"`
-	Username string `json:"username,omitempty"`
+	APIKey 		string `json:"apiKey,omitempty"`
+	Id     		string `json:"id,omitempty"`
+	To 		string `json:"to,omitempty"`
+	Username 	string `json:"username,omitempty"`
 }
 
 // DeleteContactRequest provides necessary parameter structure for deleting a contact
 type DeleteContactRequest struct {
-	APIKey string `url:"apiKey,omitempty"`
-	Id     string `url:"id,omitempty"`
-	Username string `json:"username,omitempty"`
+	APIKey 		string `url:"apiKey,omitempty"`
+	Id     		string `url:"id,omitempty"`
+	Username 	string `url:"username,omitempty"`
 }
 
 // GetContactRequest provides necessary parameter structure for requesting contact information
 type GetContactRequest struct {
-	APIKey string `url:"apiKey,omitempty"`
-	Id     string `url:"id,omitempty"`
-	Username string `json:"username,omitempty"`
+	APIKey 		string `url:"apiKey,omitempty"`
+	Id     		string `url:"id,omitempty"`
+	Username 	string `url:"username,omitempty"`
 }

@@ -36,4 +36,5 @@ func main() {
 	fmt.Printf("Role: %v\n", response.Role)
 	fmt.Printf("Groups: %v\n", response.Groups)
 	fmt.Printf("Contacts: %v\n", response.Contacts)
+	fmt.Printf("SkypeUserName: %s\n", response.SkypeUsername)
 }

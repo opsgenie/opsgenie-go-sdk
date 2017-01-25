@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/opsgenie/opsgenie-go-sdk/logging"
-	"github.com/opsgenie/opsgenie-go-sdk/schedule/override"
+	"github.com/opsgenie/opsgenie-go-sdk/scheduleoverride"
 )
 
 const (

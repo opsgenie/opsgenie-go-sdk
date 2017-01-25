@@ -66,9 +66,9 @@ type TimelineScheduleResponse struct {
 }
 
 type TimelineTimelineResponse struct {
-	StartTime     timestamp.Timestamp           `json:"startTime,omitempty"`
-	EndTime       timestamp.Timestamp           `json:"endTime,omitempty"`
-	FinalSchedule TimelineFinalScheduleResponse `json:"finalSchedule,omitempty"`
+	StartTime     uint64           			`json:"startTime,omitempty"`
+	EndTime       uint64           			`json:"endTime,omitempty"`
+	FinalSchedule TimelineFinalScheduleResponse 	`json:"finalSchedule,omitempty"`
 }
 
 type TimelineFinalScheduleResponse struct {
@@ -84,14 +84,14 @@ type TimelineRotation struct {
 }
 
 type Periods struct {
-	StartTime           timestamp.Timestamp   `json:"startTime,omitempty"`
-	EndTime             timestamp.Timestamp   `json:"endTime,omitempty"`
+	StartTime           uint64		  `json:"startTime,omitempty"`
+	EndTime             uint64 		  `json:"endTime,omitempty"`
 	Type                string                `json:"type,omitempty"`
-	FlattenedRecipients []FlattenedRecipients `json:"flattenedRecipients,omitempty"`
+	FromUsers 	    []FromUsers 	  `json:"fromUsers,omitempty"`
 	Recipients          []Recipients          `json:"recipients,omitempty"`
 }
 
-type FlattenedRecipients struct {
+type FromUsers struct {
 	DisplayName string `json:"displayName,omitempty"`
 	Name        string `json:"name,omitempty"`
 	Id          string `json:"id,omitempty"`
@@ -111,7 +111,7 @@ type WhoIsOnCallParticipant struct {
 	Type string `json:"type"`
 	Forwarded bool `json:"forwarded,omitempty"`
 	Participants []*WhoIsOnCallParticipant `json:"participants,omitempty"`
-	NortifyType string `json:"notifyType,omitempty"`
+	NotifyType string `json:"notifyType,omitempty"`
 }
 
 // WhoIsOnCall response structure

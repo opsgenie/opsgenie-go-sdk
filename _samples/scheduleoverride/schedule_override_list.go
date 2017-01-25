@@ -6,7 +6,7 @@ import (
 	"github.com/opsgenie/opsgenie-go-sdk/_samples/constants"
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	sch "github.com/opsgenie/opsgenie-go-sdk/schedule"
-	"github.com/opsgenie/opsgenie-go-sdk/schedule/override"
+	"github.com/opsgenie/opsgenie-go-sdk/scheduleoverride"
 )
 
 func main() {

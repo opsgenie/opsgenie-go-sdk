@@ -18,7 +18,7 @@ func main() {
 		panic(cliErr)
 	}
 
-	req := user.CreateUserRequest{Username: "", Fullname: "", Role: "", Locale: "", Timezone: ""}
+	req := user.CreateUserRequest{Username: "", Fullname: "", Role: "", Locale: "", Timezone: "", SkypeUsername: ""}
 	response, userErr := userCli.Create(req)
 
 	if userErr != nil {

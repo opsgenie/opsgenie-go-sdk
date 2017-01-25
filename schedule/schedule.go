@@ -10,9 +10,9 @@ package schedule
 // Restrictions defines the structure for each rotation restrictions
 type Restriction struct {
 	StartDay 	string `json:"startDay,omitempty"`
-	StartTime string `json:"startTime,omitempty"`
+	StartTime	string `json:"startTime,omitempty"`
 	EndDay 		string `json:"endDay,omitempty"`
-	EndTime 	string `json:"endTime,omitempty"`
+	EndTime		string `json:"endTime,omitempty"`
 }
 
 // Rotation defines the structure for each rotation definition
@@ -32,7 +32,7 @@ type CreateScheduleRequest struct {
 	Name   		string 			`json:"name,omitempty"`
 	Timezone 	string 			`json:"timezone,omitempty"`
 	Enabled 	*bool 			`json:"enabled,omitempty"`
-  Rotations []Rotation	`json:"rotations,omitempty"`
+  	Rotations []Rotation	`json:"rotations,omitempty"`
 }
 
 // UpdateScheduleRequest provides necessary parameter structure for updating an Schedule
@@ -42,27 +42,27 @@ type UpdateScheduleRequest struct {
 	Name   		string 			`json:"name,omitempty"`
 	Timezone 	string 			`json:"timezone,omitempty"`
 	Enabled 	*bool  			`json:"enabled,omitempty"`
-  Rotations []Rotation	`json:"rotations,omitempty"`
+  	Rotations 	[]Rotation		`json:"rotations,omitempty"`
 }
 
 // DeleteScheduleRequest provides necessary parameter structure for deleting an Schedule
 type DeleteScheduleRequest struct {
 	APIKey string `url:"apiKey,omitempty"`
 	Id     string `url:"id,omitempty"`
-  Name   string `url:"name,omitempty"`
+	Name   string `url:"name,omitempty"`
 }
 
 // GetScheduleRequest provides necessary parameter structure for requesting Schedule information
 type GetScheduleRequest struct {
 	APIKey string `url:"apiKey,omitempty"`
 	Id     string `url:"id,omitempty"`
-  Name   string `url:"name,omitempty"`
+  	Name   string `url:"name,omitempty"`
 }
 
 // ListScheduleRequest provides necessary parameter structure for listing Schedules
 type ListSchedulesRequest struct {
 	APIKey string `url:"apiKey,omitempty"`
-
+}
 // WhoIsOnCallRequest provides necessary parameter structure for requesting who is on call for a specific schedule
 type WhoIsOnCallRequest struct {
 	APIKey   string `url:"apiKey,omitempty"`
@@ -75,10 +75,10 @@ type WhoIsOnCallRequest struct {
 
 // GetScheduleTimelineRequest provides necessary parameter structure for requesting Schedule Timeline information
 type GetTimelineScheduleRequest struct {
-	APIKey 				string 	`url:"apiKey,omitempty"`
-	Id     				string 	`url:"id,omitempty"`
-  Name   				string 	`url:"name,omitempty"`
-  Interval  		int 		`url:"interval,omitempty"`
-  IntervalUnit	string 	`url:"intervalUnit,omitempty"`
-	Date					string 	`url:"date,omitempty"`
+	APIKey 		string 	`url:"apiKey,omitempty"`
+	Id     		string 	`url:"id,omitempty"`
+	Name   		string 	`url:"name,omitempty"`
+	Interval  	int 	`url:"interval,omitempty"`
+	IntervalUnit	string 	`url:"intervalUnit,omitempty"`
+	Date		string 	`url:"date,omitempty"`
 }

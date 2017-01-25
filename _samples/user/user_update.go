@@ -18,7 +18,7 @@ func main() {
 		panic(cliErr)
 	}
 
-	req := user.UpdateUserRequest{Id: "", Fullname: "", Role: "", Locale: "", Timezone: ""}
+	req := user.UpdateUserRequest{Id: "", Fullname: "", Role: "", Locale: "", Timezone: "", SkypeUsername: ""}
 	response, userErr := userCli.Update(req)
 
 	if userErr != nil {
