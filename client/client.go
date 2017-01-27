@@ -178,6 +178,20 @@ func (cli *OpsGenieClient) Heartbeat() (*OpsGenieHeartbeatClient, error) {
 	return heartbeatClient, nil
 }
 
+// Group instantiates a new OpsGenieGroupClient.
+func (cli *OpsGenieClient) Group() (*OpsGenieGroupClient, error) {
+	cli.makeHTTPTransportSettings()
+
+	groupClient := new(OpsGenieGroupClient)
+	groupClient.SetOpsGenieClient(*cli)
+
+	if cli.opsGenieAPIURL == "" {
+		groupClient.SetOpsGenieAPIUrl(endpointURL)
+	}
+
+	return groupClient, nil
+}
+
 // Integration instantiates a new OpsGenieIntegrationClient.
 func (cli *OpsGenieClient) Integration() (*OpsGenieIntegrationClient, error) {
 	cli.makeHTTPTransportSettings()
