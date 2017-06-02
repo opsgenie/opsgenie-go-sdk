@@ -46,6 +46,7 @@ import (
 
 // endpointURL is the base URL of OpsGenie Web API.
 var endpointURL = "https://api.opsgenie.com"
+var authHeader = "GenieKey "
 
 const (
 	defaultConnectionTimeout time.Duration = 30 * time.Second
@@ -298,6 +299,7 @@ func (cli *OpsGenieClient) buildGetRequest(uri string, request interface{}) gore
 	req := cli.buildCommonRequestProps()
 	req.Method = "GET"
 	req.ContentType = "application/x-www-form-urlencoded; charset=UTF-8"
+	req.AddHeader("Authorization", authHeader + cli.apiKey)
 	uri = cli.OpsGenieAPIUrl() + uri
 	if request != nil {
 		v, _ := goquery.Values(request)
@@ -305,6 +307,7 @@ func (cli *OpsGenieClient) buildGetRequest(uri string, request interface{}) gore
 	} else {
 		req.Uri = uri
 	}
+
 	logging.Logger().Info("Executing OpsGenie request to [" + uri + "] with parameters: ")
 	return req
 }
@@ -319,6 +322,12 @@ func (cli *OpsGenieClient) buildPostRequest(uri string, request interface{}) gor
 	j, _ := json.Marshal(request)
 	logging.Logger().Info("Executing OpsGenie request to ["+req.Uri+"] with content parameters: ", string(j))
 
+	return req
+}
+
+func (cli *OpsGenieClient) buildPatchRequest(uri string, request interface{}) goreq.Request {
+	req := cli.buildPostRequest(uri, request)
+	req.Method = "PATCH"
 	return req
 }
 
@@ -386,7 +395,7 @@ func errorMessage(httpStatusCode int, responseBody string) error {
 // TODO version information must be read from a MANIFEST file
 func init() {
 	userAgentParam.sdkName = "opsgenie-go-sdk"
-	userAgentParam.version = "1.0.0"
+	userAgentParam.version = "1.5.0"
 	userAgentParam.os = runtime.GOOS
 	userAgentParam.goVersion = runtime.Version()
 	userAgentParam.timezone = time.Local.String()

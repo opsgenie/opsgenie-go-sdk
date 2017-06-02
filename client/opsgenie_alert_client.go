@@ -155,6 +155,7 @@ func (cli *OpsGenieAlertClient) Get(req alerts.GetAlertRequest) (*alerts.GetAler
 		logging.Logger().Warn(message)
 		return nil, errors.New(message)
 	}
+
 	return &getAlertResp, nil
 }
 
