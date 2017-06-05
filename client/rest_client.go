@@ -45,7 +45,7 @@ func (cli *RestClient) sendGetRequest(req Request, response Response) error {
 	if err != nil {
 		return err
 	}
-	cli.setResponseMeta(*httpResponse, response)
+	cli.setResponseMeta(httpResponse, response)
 	return nil
 }
 
@@ -67,7 +67,7 @@ func (cli *RestClient) sendPatchRequest(req Request, response Response) error {
 	if err != nil {
 		return err
 	}
-	cli.setResponseMeta(*httpResponse, response)
+	cli.setResponseMeta(httpResponse, response)
 	return nil
 }
 
@@ -104,7 +104,7 @@ func (cli *RestClient) sendPostRequest(req Request, response Response) error {
 		return err
 	}
 
-	cli.setResponseMeta(*httpResponse, response)
+	cli.setResponseMeta(httpResponse, response)
 
 	return nil
 }
@@ -133,7 +133,7 @@ func (cli *RestClient) sendDeleteRequest(req Request, response Response) error {
 		return err
 	}
 
-	cli.setResponseMeta(*httpResponse, response)
+	cli.setResponseMeta(httpResponse, response)
 
 	return nil
 }
@@ -158,7 +158,7 @@ func (cli *RestClient) setApiKey(req *goreq.Request, fromRequest string) {
 	req.AddHeader("Authorization", "GenieKey "+apiKey)
 }
 
-func (cli *RestClient) setResponseMeta(httpResponse goreq.Response, response Response) {
+func (cli *RestClient) setResponseMeta(httpResponse *goreq.Response, response Response) {
 	requestID := httpResponse.Header.Get("X-Request-ID")
 	response.SetRequestID(requestID)
 
@@ -166,7 +166,7 @@ func (cli *RestClient) setResponseMeta(httpResponse goreq.Response, response Res
 	response.SetRateLimitState(rateLimitState)
 
 	responseTime, err := strconv.ParseFloat(httpResponse.Header.Get("X-Response-Time"), 32)
-	if err != nil {
+	if err == nil {
 		response.SetResponseTime(float32(responseTime))
 	}
 }

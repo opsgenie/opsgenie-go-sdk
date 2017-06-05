@@ -33,7 +33,23 @@ func main() {
 		panic(hbErr)
 	}
 
+	fmt.Printf("Heartbeat added\n")
+	fmt.Printf("---------------\n")
 	fmt.Printf("name: %s\n", response.Name)
 	fmt.Printf("status: %s\n", response.Status)
 	fmt.Printf("code: %d\n", response.Code)
+
+	// send heart beat request
+	pingRequest := hb.PingHeartbeatRequest{Name: response.Name}
+	pingResponse, sendErr := hbCli.Ping(pingRequest)
+
+	if sendErr != nil {
+		panic(sendErr)
+	}
+
+	fmt.Println()
+	fmt.Printf("Heartbeat request sent\n")
+	fmt.Printf("----------------------\n")
+	fmt.Printf("RequestId: %s\n", pingResponse.RequestID)
+	fmt.Printf("Response Time: %f\n", pingResponse.ResponseTime)
 }

@@ -19,9 +19,14 @@ func main() {
 		panic(cliErr)
 	}
 
-	hbName := samples.RandStringWithPrefix("Test", 4)
 	// create the hb
-	req := hb.AddHeartbeatRequest{Name: hbName}
+	enabled := true
+	req := hb.AddHeartbeatRequest{
+		Name: samples.RandStringWithPrefix("Test", 4),
+		IntervalUnit:"minutes",
+		Enabled: &enabled,
+		Interval:5,
+		Description:"Heartbeat description"}
 	response, hbErr := hbCli.Add(req)
 
 	if hbErr != nil {
@@ -35,13 +40,14 @@ func main() {
 	fmt.Printf("code: %d\n", response.Code)
 
 	// send heart beat request
-	sendReq := hb.SendHeartbeatRequest{Name: hbName}
+	sendReq := hb.SendHeartbeatRequest{Name: response.Name}
 	sendResp, sendErr := hbCli.Send(sendReq)
 
 	if sendErr != nil {
 		panic(sendErr)
 	}
 
+	fmt.Println()
 	fmt.Printf("Heartbeat request sent\n")
 	fmt.Printf("----------------------\n")
 	fmt.Printf("Heartbeat: %d\n", sendResp.Heartbeat)

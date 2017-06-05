@@ -9,7 +9,7 @@ type SavedSearchMeta struct {
 
 type CreateSavedSearchResponse struct {
 	alertsv2.ResponseMeta
-	SavedSearches SavedSearchMeta `json:"data"`
+	SavedSearch SavedSearchMeta `json:"data"`
 }
 
 type ListSavedSearchResponse struct {

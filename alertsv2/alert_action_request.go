@@ -1,6 +1,9 @@
 package alertsv2
 
-import "net/url"
+import (
+	"net/url"
+	"time"
+)
 
 type AlertActionRequest struct {
 	*Identifier
@@ -47,7 +50,10 @@ func (r *UnacknowledgeRequest) GetApiKey() string {
 	return r.ApiKey
 }
 
-type SnoozeRequest AlertActionRequest
+type SnoozeRequest struct {
+	AlertActionRequest
+	EndTime time.Time `json:"endTime"`
+}
 
 func (r *SnoozeRequest) GenerateUrl() (string, url.Values, error) {
 	path, params, err := r.Identifier.GenerateUrl()

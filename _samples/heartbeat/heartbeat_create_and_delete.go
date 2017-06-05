@@ -20,7 +20,14 @@ func main() {
 	}
 
 	// create the hb
-	req := hb.AddHeartbeatRequest{Name: samples.RandStringWithPrefix("Test", 4)}
+	enabled := true
+	req := hb.AddHeartbeatRequest{
+		Name: samples.RandStringWithPrefix("Test", 4),
+		IntervalUnit:"minutes",
+		Enabled: &enabled,
+		Interval:5,
+		Description:"Heartbeat description"}
+
 	response, hbErr := hbCli.Add(req)
 
 	if hbErr != nil {
@@ -40,6 +47,7 @@ func main() {
 		panic(deleteErr)
 	}
 
+	fmt.Println()
 	fmt.Printf("Heartbeat deleted\n")
 	fmt.Printf("-----------------\n")
 	fmt.Printf("Status: %s\n", deleteResp.Status)
