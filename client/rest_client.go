@@ -8,10 +8,12 @@ import (
 	"strconv"
 )
 
+// OpsGenieRestClient is the data type to make requests.
 type RestClient struct {
 	OpsGenieClient
 }
 
+// SetOpsGenieClient sets the embedded OpsGenieClient type of the OpsGenieAlertClient.
 func (cli *RestClient) SetOpsGenieClient(ogCli OpsGenieClient) {
 	cli.OpsGenieClient = ogCli
 }
@@ -47,13 +49,13 @@ func (cli *RestClient) sendGetRequest(req Request, response Response) error {
 	return nil
 }
 
-func (cli *RestClient) sendPatchRequest(req Request, response Response) error  {
+func (cli *RestClient) sendPatchRequest(req Request, response Response) error {
 	path, params, err := req.GenerateUrl()
 	if err != nil {
 		return err
 	}
 
-	request := cli.buildPatchRequest(cli.generateFullPathWithParams(path, params), nil)
+	request := cli.buildPatchRequest(cli.generateFullPathWithParams(path, params), req)
 	cli.setApiKey(&request, req.GetApiKey())
 	httpResponse, err := cli.sendRequest(request)
 	if err != nil {
@@ -114,6 +116,7 @@ func (cli *RestClient) sendDeleteRequest(req Request, response Response) error {
 	}
 
 	path = cli.generateFullPathWithParams(path, params)
+
 
 	httpRequest := cli.buildDeleteRequest(path, nil)
 	cli.setApiKey(&httpRequest, req.GetApiKey())
@@ -197,6 +200,7 @@ func (rm *ResponseMeta) SetRateLimitState(state string) {
 	rm.RateLimitState = state
 }
 
+// Response for async processing requests
 type AsyncRequestResponse struct {
 	ResponseMeta
 	RequestID string `json:"requestId"`

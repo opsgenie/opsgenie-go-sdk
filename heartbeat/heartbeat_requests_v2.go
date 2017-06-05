@@ -1,21 +1,22 @@
 package heartbeat
 
-type AddHeartbeatRequestV2 struct {
-	Name         string `json:"name"`
-	Interval     int    `json:"interval"`
-	IntervalUnit string `json:"intervalUnit"`
-	Enabled      bool  `json:"enabled"`
-	Description  string `json:"description,omitempty"`
-}
-
-type UpdateHeartbeatRequestV2 struct {
-	Interval     int    `json:"interval,omitempty"`
-	IntervalUnit string `json:"intervalUnit,omitempty"`
-	Enabled      bool  `json:"enabled,omitempty"`
-	Description  string `json:"description,omitempty"`
-}
-
+import (
+	"net/url"
+	"errors"
+)
 
 type PingHeartbeatRequest struct {
-	Name   string `json:"name"`
+	Name   string
+	APIKey string
+}
+
+func (r *PingHeartbeatRequest) GetApiKey() string {
+	return r.APIKey
+}
+
+func (r *PingHeartbeatRequest) GenerateUrl() (string, url.Values, error) {
+	if r.Name == "" {
+		return "", nil, errors.New("Name should be provided")
+	}
+	return "/v2/heartbeats/" + r.Name + "/ping", nil, nil;
 }

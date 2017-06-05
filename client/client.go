@@ -46,7 +46,6 @@ import (
 
 // endpointURL is the base URL of OpsGenie Web API.
 var endpointURL = "https://api.opsgenie.com"
-var authHeader = "GenieKey "
 
 const (
 	defaultConnectionTimeout time.Duration = 30 * time.Second
@@ -299,7 +298,6 @@ func (cli *OpsGenieClient) buildGetRequest(uri string, request interface{}) gore
 	req := cli.buildCommonRequestProps()
 	req.Method = "GET"
 	req.ContentType = "application/x-www-form-urlencoded; charset=UTF-8"
-	req.AddHeader("Authorization", authHeader + cli.apiKey)
 	uri = cli.OpsGenieAPIUrl() + uri
 	if request != nil {
 		v, _ := goquery.Values(request)
