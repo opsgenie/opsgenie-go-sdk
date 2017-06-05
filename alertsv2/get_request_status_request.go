@@ -5,16 +5,16 @@ import (
 	"errors"
 )
 
-type GetRequestStatusRequest struct {
+type GetAsyncRequestStatusRequest struct {
 	RequestID string `json:"requestId,omitempty"`
 	ApiKey    string
 }
 
-func (r *GetRequestStatusRequest) GetApiKey() string {
+func (r *GetAsyncRequestStatusRequest) GetApiKey() string {
 	return r.ApiKey
 }
 
-func (r *GetRequestStatusRequest) GenerateUrl() (string, url.Values, error) {
+func (r *GetAsyncRequestStatusRequest) GenerateUrl() (string, url.Values, error) {
 	if r.RequestID != "" {
 		return "/v2/alerts/requests/" + r.RequestID, nil, nil
 	}

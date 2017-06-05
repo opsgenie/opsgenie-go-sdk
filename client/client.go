@@ -137,10 +137,25 @@ func (cli *OpsGenieClient) makeHTTPTransportSettings() {
 }
 
 // Alert instantiates a new OpsGenieAlertClient.
+// Deprecated: Please use AlertV2() method
 func (cli *OpsGenieClient) Alert() (*OpsGenieAlertClient, error) {
 	cli.makeHTTPTransportSettings()
 
 	alertClient := new(OpsGenieAlertClient)
+	alertClient.SetOpsGenieClient(*cli)
+
+	if cli.opsGenieAPIURL == "" {
+		alertClient.SetOpsGenieAPIUrl(endpointURL)
+	}
+
+	return alertClient, nil
+}
+
+// AlertV2 instantiates a new OpsGenieAlertV2Client.
+func (cli *OpsGenieClient) AlertV2() (*OpsGenieAlertV2Client, error) {
+	cli.makeHTTPTransportSettings()
+
+	alertClient := new(OpsGenieAlertV2Client)
 	alertClient.SetOpsGenieClient(*cli)
 
 	if cli.opsGenieAPIURL == "" {

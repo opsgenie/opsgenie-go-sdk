@@ -12,7 +12,7 @@ type RequestStatus struct {
 	Alias         string `json:"alias,omitempty"`
 }
 
-type GetRequestStatusResponse struct {
+type GetAsyncRequestStatusResponse struct {
 	ResponseMeta
 	Status       RequestStatus `json:"data"`
 }
