@@ -29,38 +29,60 @@ To download all packages in the repo with their dependencies, simply run
 
 ## Getting Started
 One can start using OpsGenie Go SDK by initializing client and making a request. Example shown below demonstrates how to initialize an OpsGenie Alert client and make a create alert request.
-```
-    package main
+```go
+package main
 
-    import (
-    	"fmt"
+import (
+	"github.com/opsgenie/opsgenie-go-sdk/alertsv2"
+	"fmt"
+	"github.com/opsgenie/opsgenie-go-sdk/_samples/constants"
+	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
+)
 
-    	alerts "github.com/opsgenie/opsgenie-go-sdk/alerts"
-    	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
-    )
+func main() {
+	cli := new(ogcli.OpsGenieClient)
+	cli.SetAPIKey(constants.APIKey)
 
-    func main() {
-    	cli := new(ogcli.OpsGenieClient)
-    	cli.SetAPIKey("YOUR_API_KEY")
+	alertCli, _ := cli.AlertV2()
 
-    	alertCli, cliErr := cli.Alert()
+	teams := []alertsv2.TeamRecipient{
+		&alertsv2.Team{Name: "teamId"},
+		&alertsv2.Team{ID: "teamId"},
+	}
 
-    	if cliErr != nil {
-    		panic(cliErr)
-    	}
+	visibleTo := []alertsv2.Recipient{
+		&alertsv2.Team{ID: "teamId"},
+		&alertsv2.Team{Name: "teamName"},
+		&alertsv2.User{ID: "userId"},
+		&alertsv2.User{Username: "user@opsgenie.com"},
+	}
 
-    	// create the alert
-    	req := alerts.CreateAlertRequest{Message: "Hello from OpsGenie Go Sdk"}
-    	response, alertErr := alertCli.Create(req)
+	request := alertsv2.CreateAlertRequest{
+			Message:     "message",
+			Alias:       "alias",
+			Description: "alert description",
+			Teams:       teams,
+			VisibleTo:   visibleTo,
+			Actions:     []string{"action1", "action2"},
+			Tags:        []string{"tag1", "tag2"},
+			Details: map[string]string{
+				"key":  "value",
+				"key2": "value2",
+			},
+			Entity:   "entity",
+			Source:   "source",
+			Priority: alertsv2.P1,
+			User:     "user@opsgenie.com",
+			Note:     "alert note",
+		}
 
-    	if alertErr != nil {
-    		panic(alertErr)
-    	}
-
-    	fmt.Printf("message: %s\n", response.Message)
-    	fmt.Printf("alert id: %s\n", response.AlertId)
-    	fmt.Printf("status: %s\n", response.Status)
-    	fmt.Printf("code: %d\n", response.Code)
+	response, err := alertCli.Create(request)
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		fmt.Println("Create request ID: " + response.RequestID)
+	}
+}
     }
 ```
 There are many useful sample code snippets under `samples` directory for packages.
@@ -84,12 +106,12 @@ We used pointers just for booleans, if you want to set a string's value to empty
 ## The Web API
 
 Please follow the links below for more information and details
-about the Web API.
+about the REST API.
 
-* [Alert API](https://www.opsgenie.com/docs/web-api/alert-api)
-* [Heartbeat API](https://www.opsgenie.com/docs/web-api/heartbeat-api)
-* [Integration API](https://www.opsgenie.com/docs/web-api/integration-api)
-* [Policy API](https://www.opsgenie.com/docs/web-api/policy-api)
+* [Alert API](https://www.opsgenie.com/docs/rest-api/alert-api)
+* [Heartbeat API](https://www.opsgenie.com/docs/rest-api/heartbeat-api)
+* [Integration API](https://www.opsgenie.com/docs/rest-api/integration-api)
+* [Policy API](hhttps://www.opsgenie.com/docs/rest-api/policy-api)
 
 
 ## Bug Reporting and Feature Requests
