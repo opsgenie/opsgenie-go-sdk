@@ -20,7 +20,13 @@ func main() {
 	}
 
 	// create the hb
-	req := hb.AddHeartbeatRequest{Name: samples.RandStringWithPrefix("Test", 4)}
+	enabled := true
+	req := hb.AddHeartbeatRequest{
+		Name: samples.RandStringWithPrefix("Test", 4),
+		IntervalUnit:"minutes",
+		Enabled: &enabled,
+		Interval:5,
+		Description:"Heartbeat description"}
 	response, hbErr := hbCli.Add(req)
 
 	if hbErr != nil {
@@ -41,6 +47,7 @@ func main() {
 		panic(updateErr)
 	}
 
+	fmt.Println()
 	fmt.Printf("Heartbeat updated\n")
 	fmt.Printf("-----------------\n")
 	fmt.Printf("name: %s\n", updateResp.Name)
@@ -53,6 +60,7 @@ func main() {
 		panic(getErr)
 	}
 
+	fmt.Println()
 	fmt.Printf("Heartbeat details\n")
 	fmt.Printf("-----------------\n")
 	fmt.Printf("Name: %s\n", getResp.Name)
