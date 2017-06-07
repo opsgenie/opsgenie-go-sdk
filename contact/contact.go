@@ -30,18 +30,18 @@ type DeleteContactRequest struct {
 	Username string `url:"username,omitempty"`
 }
 
-// DisableContactRequest provides necessary parameter structure for disablinga contact
+// DisableContactRequest provides necessary parameter structure for disabling contact
 type DisableContactRequest struct {
-	APIKey   string `url:"apiKey,omitempty"`
-	Id       string `url:"id,omitempty"`
-	Username string `url:"username,omitempty"`
+	APIKey   string `json:"apiKey,omitempty"`
+	Id       string `json:"id,omitempty"`
+	Username string `json:"username,omitempty"`
 }
 
 // EnableContactRequest provides necessary parameter structure for enabling a contact
 type EnableContactRequest struct {
-	APIKey   string `url:"apiKey,omitempty"`
-	Id       string `url:"id,omitempty"`
-	Username string `url:"username,omitempty"`
+	APIKey   string `json:"apiKey,omitempty"`
+	Id       string `json:"id,omitempty"`
+	Username string `json:"username,omitempty"`
 }
 
 // GetContactRequest provides necessary parameter structure for requesting contact information

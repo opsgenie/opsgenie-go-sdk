@@ -64,7 +64,7 @@ func (cli *OpsGenieContactClient) Delete(req contact.DeleteContactRequest) (*con
 // Disable method disables a contact at OpsGenie.
 func (cli *OpsGenieContactClient) Disable(req contact.DisableContactRequest) (*contact.DisableContactResponse, error) {
 	req.APIKey = cli.apiKey
-	resp, err := cli.sendRequest(cli.buildPostRequest(contactURL, req))
+	resp, err := cli.sendRequest(cli.buildPostRequest(contactURL + "/disable", req))
 
 	if resp == nil {
 		return nil, err
@@ -84,7 +84,7 @@ func (cli *OpsGenieContactClient) Disable(req contact.DisableContactRequest) (*c
 // Enable method enables a contact at OpsGenie.
 func (cli *OpsGenieContactClient) Enable(req contact.EnableContactRequest) (*contact.EnableContactResponse, error) {
 	req.APIKey = cli.apiKey
-	resp, err := cli.sendRequest(cli.buildPostRequest(contactURL, req))
+	resp, err := cli.sendRequest(cli.buildPostRequest(contactURL + "/enable", req))
 
 	if resp == nil {
 		return nil, err
