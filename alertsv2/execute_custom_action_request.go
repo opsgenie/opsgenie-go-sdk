@@ -1,6 +1,9 @@
 package alertsv2
 
-import "net/url"
+import (
+	"net/url"
+	"errors"
+)
 
 type ExecuteCustomActionRequest struct {
 	*Identifier
@@ -13,6 +16,9 @@ type ExecuteCustomActionRequest struct {
 
 func (r *ExecuteCustomActionRequest) GenerateUrl() (string, url.Values, error) {
 	path, params, err := r.Identifier.GenerateUrl()
+	if r.ActionName == "" {
+		return "", nil, errors.New("ActionName should be provided")
+	}
 	return path + "/actions/" + r.ActionName, params, err;
 }
 
