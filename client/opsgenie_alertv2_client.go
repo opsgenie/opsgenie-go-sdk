@@ -171,7 +171,7 @@ func (cli *OpsGenieAlertV2Client) CreateSavedSearch(req savedsearches.CreateSave
 }
 
 // Retrieves the SavedSearch
-func (cli *OpsGenieAlertV2Client) GetSavedSearch(req alertsv2.GetSavedSearchRequest) (*savedsearches.GetSavedSearchResponse, error) {
+func (cli *OpsGenieAlertV2Client) GetSavedSearch(req savedsearches.GetSavedSearchRequest) (*savedsearches.GetSavedSearchResponse, error) {
 	var response savedsearches.GetSavedSearchResponse
 
 	err := cli.sendGetRequest(&req, &response)
@@ -182,7 +182,7 @@ func (cli *OpsGenieAlertV2Client) GetSavedSearch(req alertsv2.GetSavedSearchRequ
 }
 
 // Updates the SavedSearch
-func (cli *OpsGenieAlertV2Client) UpdateSavedSearch(req alertsv2.UpdateSavedSearchRequest) (*savedsearches.UpdateSavedSearchResponse, error) {
+func (cli *OpsGenieAlertV2Client) UpdateSavedSearch(req savedsearches.UpdateSavedSearchRequest) (*savedsearches.UpdateSavedSearchResponse, error) {
 	var response savedsearches.UpdateSavedSearchResponse
 	err := cli.sendPatchRequest(&req, &response)
 	if err != nil {
@@ -193,7 +193,7 @@ func (cli *OpsGenieAlertV2Client) UpdateSavedSearch(req alertsv2.UpdateSavedSear
 }
 
 // Deletes the SavedSearch
-func (cli *OpsGenieAlertV2Client) DeleteSavedSearch(req alertsv2.DeleteSavedSearchRequest) (*savedsearches.DeleteSavedSearchResponse, error) {
+func (cli *OpsGenieAlertV2Client) DeleteSavedSearch(req savedsearches.DeleteSavedSearchRequest) (*savedsearches.DeleteSavedSearchResponse, error) {
 	var response savedsearches.DeleteSavedSearchResponse
 	err := cli.sendDeleteRequest(&req, &response)
 	if err != nil {

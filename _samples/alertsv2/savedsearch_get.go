@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/opsgenie/opsgenie-go-sdk/_samples/constants"
-	"github.com/opsgenie/opsgenie-go-sdk/alertsv2"
 	"fmt"
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
+	"github.com/opsgenie/opsgenie-go-sdk/alertsv2/savedsearches"
 )
 
 func main() {
@@ -13,7 +13,7 @@ func main() {
 
 	alertCli, _ := cli.AlertV2()
 
-	request := alertsv2.GetSavedSearchRequest{
+	request := savedsearches.GetSavedSearchRequest{
 		Name: "list-blue-team-alerts",
 	}
 

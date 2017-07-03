@@ -5,6 +5,7 @@ import (
 	"github.com/opsgenie/opsgenie-go-sdk/alertsv2"
 	"fmt"
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
+	"github.com/opsgenie/opsgenie-go-sdk/alertsv2/savedsearches"
 )
 
 func main() {
@@ -13,7 +14,7 @@ func main() {
 
 	alertCli, _ := cli.AlertV2()
 
-	request := alertsv2.UpdateSavedSearchRequest{
+	request := savedsearches.UpdateSavedSearchRequest{
 		Name:  "list-blue-team-alerts",
 		Owner: alertsv2.User{Username: "user@opsgenie.com", },
 		Teams: []alertsv2.Team{

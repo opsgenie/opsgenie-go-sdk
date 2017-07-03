@@ -1,8 +1,9 @@
-package alertsv2
+package savedsearches
 
 import (
 	"net/url"
 	"errors"
+	"github.com/opsgenie/opsgenie-go-sdk/alertsv2"
 )
 
 type UpdateSavedSearchRequest struct {
@@ -10,9 +11,9 @@ type UpdateSavedSearchRequest struct {
 	Name        string `json:"-"`
 	NewName     string `json:"name,omitempty"`
 	Query       string `json:"query,omitempty"`
-	Owner       User `json:"owner,omitempty"`
+	Owner       alertsv2.User `json:"owner,omitempty"`
 	Description string `json:"description,omitempty"`
-	Teams       []Team `json:"teams,omitempty"`
+	Teams       []alertsv2.Team `json:"teams,omitempty"`
 	ApiKey      string `json:"-"`
 }
 

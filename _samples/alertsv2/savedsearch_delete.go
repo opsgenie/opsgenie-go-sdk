@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/opsgenie/opsgenie-go-sdk/_samples/constants"
-	"github.com/opsgenie/opsgenie-go-sdk/alertsv2"
 	"fmt"
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
+	"github.com/opsgenie/opsgenie-go-sdk/alertsv2/savedsearches"
 )
 
 func main() {
@@ -13,18 +13,15 @@ func main() {
 
 	alertCli, _ := cli.AlertV2()
 
-	request := alertsv2.DeleteSavedSearchRequest{
+	request := savedsearches.DeleteSavedSearchRequest{
 		Name: "list-blue-team-alerts",
 	}
 
-	response, err := alertCli.DeleteSavedSearch(request)
+	_, err := alertCli.DeleteSavedSearch(request)
 
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
-		savedSearch := response.SavedSearch
-
-		fmt.Println("Name: " + savedSearch.Name)
-		fmt.Println("Query: " + savedSearch.Query)
+		fmt.Println("Deleted")
 	}
 }
