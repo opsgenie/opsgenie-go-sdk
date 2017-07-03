@@ -192,6 +192,17 @@ func (cli *OpsGenieAlertV2Client) UpdateSavedSearch(req alertsv2.UpdateSavedSear
 	return &response, nil
 }
 
+// Deletes the SavedSearch
+func (cli *OpsGenieAlertV2Client) DeleteSavedSearch(req alertsv2.DeleteSavedSearchRequest) (*savedsearches.DeleteSavedSearchResponse, error) {
+	var response savedsearches.DeleteSavedSearchResponse
+	err := cli.sendDeleteRequest(&req, &response)
+	if err != nil {
+		return nil, err
+	}
+
+	return &response, nil
+}
+
 // Retrieves list of saved searches
 func (cli *OpsGenieAlertV2Client) ListSavedSearches(req alertsv2.LisSavedSearchRequest) (*savedsearches.ListSavedSearchResponse, error) {
 	var response savedsearches.ListSavedSearchResponse

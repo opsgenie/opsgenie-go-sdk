@@ -21,3 +21,8 @@ type UpdateSavedSearchResponse struct {
 	alertsv2.ResponseMeta
 	SavedSearch SavedSearchMeta `json:"data"`
 }
+
+type DeleteSavedSearchResponse struct {
+	alertsv2.ResponseMeta
+	SavedSearch SavedSearchMeta `json:"data"`
+}
