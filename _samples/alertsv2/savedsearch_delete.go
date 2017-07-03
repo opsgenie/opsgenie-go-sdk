@@ -13,18 +13,15 @@ func main() {
 
 	alertCli, _ := cli.AlertV2()
 
-	request := savedsearches.GetSavedSearchRequest{
+	request := savedsearches.DeleteSavedSearchRequest{
 		Name: "list-blue-team-alerts",
 	}
 
-	response, err := alertCli.GetSavedSearch(request)
+	_, err := alertCli.DeleteSavedSearch(request)
 
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
-		savedSearch := response.SavedSearch
-
-		fmt.Println("Name: " + savedSearch.Name)
-		fmt.Println("Query: " + savedSearch.Query)
+		fmt.Println("Deleted")
 	}
 }

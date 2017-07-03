@@ -1,4 +1,4 @@
-package alertsv2
+package savedsearches
 
 import (
 	"net/url"
