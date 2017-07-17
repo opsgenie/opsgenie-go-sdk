@@ -38,10 +38,16 @@ import (
 	"fmt"
 	"runtime"
 	"time"
+	"os"
+	"mime/multipart"
+	"bytes"
+	"io"
 
 	"github.com/franela/goreq"
 	goquery "github.com/google/go-querystring/query"
 	"github.com/opsgenie/opsgenie-go-sdk/logging"
+	"github.com/opsgenie/opsgenie-go-sdk/alertsv2"
+	"path/filepath"
 )
 
 // endpointURL is the base URL of OpsGenie Web API.
@@ -52,6 +58,9 @@ const (
 	defaultRequestTimeout    time.Duration = 60 * time.Second
 	defaultMaxRetryAttempts  int           = 5
 	timeSleepBetweenRequests time.Duration = 500 * time.Millisecond
+	fileParamName string = "file"
+	userParamName string = "user"
+	indexFileParamName string = "indexFile"
 )
 
 // RequestHeaderUserAgent contains User-Agent values tool/version (OS;GO_Version;language).
@@ -336,6 +345,99 @@ func (cli *OpsGenieClient) buildPostRequest(uri string, request interface{}) gor
 	logging.Logger().Info("Executing OpsGenie request to ["+req.Uri+"] with content parameters: ", string(j))
 
 	return req
+}
+
+func (cli *OpsGenieClient) buildCreateAttachmentRequest(uri string, request alertsv2.AddAlertAttachmentRequest) (*goreq.Request, error) {
+	req := cli.buildCommonRequestProps()
+
+	file, err := os.Open(request.AttachmentFilePath)
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer file.Close()
+
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+	part, err := writer.CreateFormFile(fileParamName, filepath.Base(request.AttachmentFilePath))
+
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = io.Copy(part, file)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if request.User != "" {
+		_ = writer.WriteField(userParamName, request.User)
+	}
+
+	if request.IndexFile != "" {
+		_ = writer.WriteField(indexFileParamName, request.IndexFile)
+	}
+
+	err = writer.Close()
+
+	if err != nil {
+		return nil, err
+	}
+
+	req.Method = "POST"
+	req.Uri = cli.OpsGenieAPIUrl() + uri
+	req.Body = body
+	req.ContentType = writer.FormDataContentType()
+
+	j, _ := json.Marshal(request)
+	logging.Logger().Info("Executing OpsGenie request to ["+req.Uri+"] with content parameters: ", string(j))
+
+	return &req, nil
+}
+
+func (cli *OpsGenieClient) buildCreateAttachmentRequestWithBytes(uri string, request alertsv2.AddAlertAttachmentRequest) (*goreq.Request, error) {
+	req := cli.buildCommonRequestProps()
+
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+	part, err := writer.CreateFormFile(fileParamName, request.AttachmentFileName)
+
+	if err != nil {
+		return nil, err
+	}
+
+	byteReader := bytes.NewReader(request.AttachmentFileContent)
+	_, err = io.Copy(part, byteReader)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if request.User != "" {
+		_ = writer.WriteField(userParamName, request.User)
+	}
+
+	if request.IndexFile != "" {
+		_ = writer.WriteField(indexFileParamName, request.IndexFile)
+	}
+
+	err = writer.Close()
+
+	if err != nil {
+		return nil, err
+	}
+
+	req.Method = "POST"
+	req.Uri = cli.OpsGenieAPIUrl() + uri
+	req.Body = body
+	req.ContentType = writer.FormDataContentType()
+
+	j, _ := json.Marshal(request)
+	logging.Logger().Info("Executing OpsGenie request to ["+req.Uri+"] with content parameters: ", string(j))
+
+	return &req, nil
 }
 
 func (cli *OpsGenieClient) buildPatchRequest(uri string, request interface{}) goreq.Request {
