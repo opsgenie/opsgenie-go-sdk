@@ -3,6 +3,8 @@ package client
 import (
 	"github.com/opsgenie/opsgenie-go-sdk/alertsv2"
 	"github.com/opsgenie/opsgenie-go-sdk/alertsv2/savedsearches"
+	"errors"
+	"github.com/franela/goreq"
 )
 
 // OpsGenieAlertClient is the data type to make Alert API requests.
@@ -221,4 +223,96 @@ func (cli *OpsGenieAlertV2Client) GetAsyncRequestStatus(req alertsv2.GetAsyncReq
 		return nil, err
 	}
 	return &response, nil
+}
+
+// adds the attachment file to specified alert
+func (cli *OpsGenieAlertV2Client) AttachFile(req alertsv2.AddAlertAttachmentRequest) (*alertsv2.AddAlertAttachmentResponse, error) {
+	var response alertsv2.AddAlertAttachmentResponse
+
+	if req.AttachmentFilePath == "" && req.AttachmentFileContent == nil {
+		return nil, errors.New("File path or content must be provided.")
+	}
+
+	if req.AttachmentFilePath == "" && req.AttachmentFileContent != nil && req.AttachmentFileName == ""{
+		return nil, errors.New("File name must be provided if only file content is given.")
+	}
+
+	err := cli.sendCreateAttachmentRequest(req, &response)
+	if err != nil {
+		return nil, err
+	}
+	return &response, nil
+}
+
+// retrieves the specified attachment with a download link
+func (cli *OpsGenieAlertV2Client) GetAttachmentFile(req alertsv2.GetAlertAttachmentRequest) (*alertsv2.GetAlertAttachmentResponse, error) {
+	var response alertsv2.GetAlertAttachmentResponse
+
+	err := cli.sendGetRequest(&req, &response)
+	if err != nil {
+		return nil, err
+	}
+	return &response, nil
+}
+
+// returns a list of attachment meta information for the specified alert
+func (cli *OpsGenieAlertV2Client) ListAlertAttachments(req alertsv2.ListAlertAttachmentRequest) (*alertsv2.ListAlertAttachmentsResponse, error) {
+	var response alertsv2.ListAlertAttachmentsResponse
+
+	err := cli.sendGetRequest(&req, &response)
+	if err != nil {
+		return nil, err
+	}
+	return &response, nil
+}
+
+// deletes the specified alert attachment
+func (cli *OpsGenieAlertV2Client) DeleteAttachment(req alertsv2.DeleteAlertAttachmentRequest) (*alertsv2.DeleteAlertAttachmentResponse, error) {
+	var response alertsv2.DeleteAlertAttachmentResponse
+
+	err := cli.sendDeleteRequest(&req, &response)
+	if err != nil {
+		return nil, err
+	}
+	return &response, nil
+}
+
+func (cli *RestClient) sendCreateAttachmentRequest(req alertsv2.AddAlertAttachmentRequest, response Response) error {
+	path, params, err := req.GenerateUrl()
+
+	if err != nil {
+		return err
+	}
+
+	path = cli.generateFullPathWithParams(path, params)
+
+	var httpRequest *goreq.Request
+
+	if req.AttachmentFilePath == "" {
+		httpRequest, err = cli.buildCreateAttachmentRequestWithBytes(path, req)
+	} else {
+		httpRequest, err = cli.buildCreateAttachmentRequest(path, req)
+	}
+
+	if err != nil {
+		return err
+	}
+
+	cli.setApiKey(httpRequest, req.GetApiKey())
+	httpResponse, err := cli.sendRequest(*httpRequest)
+
+	if err != nil {
+		return err
+	}
+
+	defer httpResponse.Body.Close()
+
+	err = cli.writeBody(httpResponse, &response)
+	if err != nil {
+		return err
+	}
+
+	cli.setResponseMeta(httpResponse, response)
+
+	return nil
 }
