@@ -6,7 +6,6 @@ import (
 	"errors"
 	"net/url"
 	"strconv"
-	"github.com/opsgenie/opsgenie-go-sdk/alertsv2"
 )
 
 // OpsGenieRestClient is the data type to make requests.
@@ -93,46 +92,6 @@ func (cli *RestClient) sendPostRequest(req Request, response Response) error {
 	httpRequest := cli.buildPostRequest(path, req)
 	cli.setApiKey(&httpRequest, req.GetApiKey())
 	httpResponse, err := cli.sendRequest(httpRequest)
-
-	if err != nil {
-		return err
-	}
-
-	defer httpResponse.Body.Close()
-
-	err = cli.writeBody(httpResponse, &response)
-	if err != nil {
-		return err
-	}
-
-	cli.setResponseMeta(httpResponse, response)
-
-	return nil
-}
-
-func (cli *RestClient) sendCreateAttachmentRequest(req alertsv2.AddAlertAttachmentRequest, response Response) error {
-	path, params, err := req.GenerateUrl()
-
-	if err != nil {
-		return err
-	}
-
-	path = cli.generateFullPathWithParams(path, params)
-
-	var httpRequest *goreq.Request
-
-	if req.AttachmentFilePath == "" {
-		httpRequest, err = cli.buildCreateAttachmentRequestWithBytes(path, req)
-	} else {
-		httpRequest, err = cli.buildCreateAttachmentRequest(path, req)
-	}
-
-	if err != nil {
-		return err
-	}
-
-	cli.setApiKey(httpRequest, req.GetApiKey())
-	httpResponse, err := cli.sendRequest(*httpRequest)
 
 	if err != nil {
 		return err

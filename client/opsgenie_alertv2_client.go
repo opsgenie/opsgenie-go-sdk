@@ -4,6 +4,7 @@ import (
 	"github.com/opsgenie/opsgenie-go-sdk/alertsv2"
 	"github.com/opsgenie/opsgenie-go-sdk/alertsv2/savedsearches"
 	"errors"
+	"github.com/franela/goreq"
 )
 
 // OpsGenieAlertClient is the data type to make Alert API requests.
@@ -274,4 +275,44 @@ func (cli *OpsGenieAlertV2Client) DeleteAttachment(req alertsv2.DeleteAlertAttac
 		return nil, err
 	}
 	return &response, nil
+}
+
+func (cli *RestClient) sendCreateAttachmentRequest(req alertsv2.AddAlertAttachmentRequest, response Response) error {
+	path, params, err := req.GenerateUrl()
+
+	if err != nil {
+		return err
+	}
+
+	path = cli.generateFullPathWithParams(path, params)
+
+	var httpRequest *goreq.Request
+
+	if req.AttachmentFilePath == "" {
+		httpRequest, err = cli.buildCreateAttachmentRequestWithBytes(path, req)
+	} else {
+		httpRequest, err = cli.buildCreateAttachmentRequest(path, req)
+	}
+
+	if err != nil {
+		return err
+	}
+
+	cli.setApiKey(httpRequest, req.GetApiKey())
+	httpResponse, err := cli.sendRequest(*httpRequest)
+
+	if err != nil {
+		return err
+	}
+
+	defer httpResponse.Body.Close()
+
+	err = cli.writeBody(httpResponse, &response)
+	if err != nil {
+		return err
+	}
+
+	cli.setResponseMeta(httpResponse, response)
+
+	return nil
 }
