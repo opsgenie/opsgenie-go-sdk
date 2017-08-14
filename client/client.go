@@ -287,6 +287,7 @@ func (cli *OpsGenieClient) ScheduleOverride() (*OpsGenieScheduleOverrideClient, 
 }
 
 // User instantiates a new OpsGenieUserClient.
+// Deprecated: Please use UserV2() method
 func (cli *OpsGenieClient) User() (*OpsGenieUserClient, error) {
 	cli.makeHTTPTransportSettings()
 
@@ -298,6 +299,34 @@ func (cli *OpsGenieClient) User() (*OpsGenieUserClient, error) {
 	}
 
 	return userClient, nil
+}
+
+// UserV2 instantiates a new OpsGenieUserV2Client.
+func (cli *OpsGenieClient) UserV2() (*OpsGenieUserV2Client, error) {
+	cli.makeHTTPTransportSettings()
+
+	userClient := new(OpsGenieUserV2Client)
+	userClient.SetOpsGenieClient(*cli)
+
+	if cli.opsGenieAPIURL == "" {
+		userClient.SetOpsGenieAPIUrl(endpointURL)
+	}
+
+	return userClient, nil
+}
+
+// NotificationV2 instantiates a new OpsGenieNotificationV2Client
+func (cli *OpsGenieClient) NotificationV2() (*OpsGenieNotificationV2Client, error) {
+	cli.makeHTTPTransportSettings()
+
+	notificationClient := new(OpsGenieNotificationV2Client)
+	notificationClient.SetOpsGenieClient(*cli)
+
+	if cli.opsGenieAPIURL == "" {
+		notificationClient.SetOpsGenieAPIUrl(endpointURL)
+	}
+
+	return notificationClient, nil
 }
 
 // buildCommonRequestProps is an internal method to set common properties of requests that will send to OpsGenie.
