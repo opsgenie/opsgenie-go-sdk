@@ -351,9 +351,17 @@ func (cli *OpsGenieClient) buildPostRequest(uri string, request interface{}) gor
 	return req
 }
 
+// buildPatchRequest is an internal method to prepare a "PATCH" request that will send to OpsGenie.
 func (cli *OpsGenieClient) buildPatchRequest(uri string, request interface{}) goreq.Request {
 	req := cli.buildPostRequest(uri, request)
 	req.Method = "PATCH"
+	return req
+}
+
+// buildPutRequest is an internal method to prepare a "PUT" request that will send to OpsGenie.
+func (cli *OpsGenieClient) buildPutRequest(uri string, request interface{}) goreq.Request {
+	req := cli.buildPostRequest(uri, request)
+	req.Method = "PUT"
 	return req
 }
 

@@ -30,6 +30,15 @@ func (cli *OpsGeniePolicyV1Client) Get(req policyv1.GetPolicyRequest) (*policyv1
 	return &response, nil
 }
 
+func (cli *OpsGeniePolicyV1Client) Update(req policyv1.UpdatePolicyRequest) (*policyv1.UpdatePolicyResponse, error) {
+	var response policyv1.UpdatePolicyResponse
+	err := cli.sendPutRequest(&req, &response)
+	if err != nil {
+		return nil, err
+	}
+	return &response, nil
+}
+
 func (cli *OpsGeniePolicyV1Client) List(req policyv1.ListPolicyRequest) (*policyv1.ListPolicyResponse, error) {
 	var response policyv1.ListPolicyResponse
 	err := cli.sendGetRequest(&req, &response)
