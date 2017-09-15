@@ -221,6 +221,19 @@ func (cli *OpsGenieClient) Policy() (*OpsGeniePolicyClient, error) {
 	return policyClient, nil
 }
 
+func (cli *OpsGenieClient) PolicyV1() (*OpsGeniePolicyV1Client, error) {
+	cli.makeHTTPTransportSettings()
+
+	policyV1Client := new(OpsGeniePolicyV1Client)
+	policyV1Client.SetOpsGenieClient(*cli)
+
+	if cli.opsGenieAPIURL == "" {
+		policyV1Client.SetOpsGenieAPIUrl(endpointURL)
+	}
+
+	return policyV1Client, nil
+}
+
 // Team instantiates a new OpsGenieTeamClient.
 func (cli *OpsGenieClient) Team() (*OpsGenieTeamClient, error) {
 	cli.makeHTTPTransportSettings()
