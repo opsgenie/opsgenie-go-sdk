@@ -58,6 +58,16 @@ func (cli *OpsGeniePolicyV1Client) Disable(req policyv1.DisablePolicyRequest) (*
 	return &response, nil
 }
 
+func (cli *OpsGeniePolicyV1Client) Enable(req policyv1.EnablePolicyRequest) (*policyv1.EnablePolicyResponse, error) {
+	var response policyv1.EnablePolicyResponse
+	req.StatusAction = policyv1.EnableAction
+	err := cli.sendPostRequest(&req, &response)
+	if err != nil {
+		return nil, err
+	}
+	return &response, nil
+}
+
 func (cli *OpsGeniePolicyV1Client) List(req policyv1.ListPolicyRequest) (*policyv1.ListPolicyResponse, error) {
 	var response policyv1.ListPolicyResponse
 	err := cli.sendGetRequest(&req, &response)

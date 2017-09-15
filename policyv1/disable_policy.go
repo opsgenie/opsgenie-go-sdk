@@ -11,7 +11,7 @@ func (r *DisablePolicyRequest) GetApiKey() string {
 	return r.ApiKey
 }
 
-// DisablePolicyResponse is a response of deleting policy
+// DisablePolicyResponse is a response of disabling policy
 type DisablePolicyResponse struct {
 	ResponseMeta
 	Status string `json:"result"`
