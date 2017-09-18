@@ -248,6 +248,19 @@ func (cli *OpsGenieClient) Team() (*OpsGenieTeamClient, error) {
 	return teamClient, nil
 }
 
+func (cli *OpsGenieClient) TeamV2() (*OpsGenieTeamV2Client, error) {
+	cli.makeHTTPTransportSettings()
+
+	teamV2Client := new(OpsGenieTeamV2Client)
+	teamV2Client.SetOpsGenieClient(*cli)
+
+	if cli.opsGenieAPIURL == "" {
+		teamV2Client.SetOpsGenieAPIUrl(endpointURL)
+	}
+
+	return teamV2Client, nil
+}
+
 // Escalation instantiates a new OpsGenieEscalationClient.
 func (cli *OpsGenieClient) Escalation() (*OpsGenieEscalationClient, error) {
 	cli.makeHTTPTransportSettings()
