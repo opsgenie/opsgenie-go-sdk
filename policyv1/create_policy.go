@@ -35,6 +35,7 @@ type CreateNotificationDeduplicationPolicyRequest struct {
 
 // CreateNotificationDelayPolicyRequest is a request for creating notification delay policy
 type CreateNotificationDelayPolicyRequest struct {
+	CreatePolicyRequest
 	DelayOption DelayOption `json:"delayOption"`
 	UntilMinute int         `json:"untilMinute"`
 	UntilHour   int         `json:"untilHour"`
@@ -43,6 +44,7 @@ type CreateNotificationDelayPolicyRequest struct {
 
 // CreateModifyPolicyRequest is a request for creating modify policy
 type CreateModifyPolicyRequest struct {
+	CreatePolicyRequest
 	Message                    string   `json:"message"`
 	Continue                   bool     `json:"continue"`
 	Alias                      string   `json:"alias"`
