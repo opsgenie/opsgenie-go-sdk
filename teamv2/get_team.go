@@ -13,9 +13,9 @@ func (r *GetTeamRequest) GetApiKey() string {
 type GetTeamResponse struct {
 	ResponseMeta
 	Team struct {
-		ID string `json:"id"`
-		Name string `json:"name"`
+		ID          string `json:"id"`
+		Name        string `json:"name"`
 		Description string `json:"description"`
-		Members []Member
-	}
+		Members     []Member
+	} `json:"data"`
 }

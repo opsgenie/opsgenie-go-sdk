@@ -14,7 +14,7 @@ func (cli *OpsGenieTeamV2Client) SetOpsGenieClient(ogCli OpsGenieClient) {
 
 func (cli *OpsGenieTeamV2Client) Create(req teamv2.CreateTeamRequest) (*teamv2.CreateTeamResponse, error) {
 	var response teamv2.CreateTeamResponse
-	err := cli.sendGetRequest(&req, &response)
+	err := cli.sendPostRequest(&req, &response)
 	if err != nil {
 		return nil, err
 	}
