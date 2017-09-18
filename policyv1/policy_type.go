@@ -9,4 +9,6 @@ const (
 	ModifyPolicyType                    PolicyType = "modify"
 )
 
+// PolicyType is a type of the policy, which should be one of "auto-restart-notifications", "auto-close",
+// "notification-suppress", "notification-deduplication", "notification-delay", "modify"
 type PolicyType string

@@ -10,7 +10,55 @@ type CreatePolicyRequest struct {
 	Enabled           bool              `json:"enabled"`
 	Filter            Filter            `json:"filter"`
 	TimeRestrictions  *TimeRestrictions `json:"timeRestrictions,omitempty"`
-	Duration          Duration          `json:"duration"`
+}
+
+// CreateAutoClosePolicyRequest is a request for creating auto close policy
+type CreateAutoClosePolicyRequest struct {
+	CreatePolicyRequest
+	Duration Duration `json:"duration,omitempty"`
+}
+
+// CreateAutoRestartPolicyRequest is a request for creating auto restart policy
+type CreateAutoRestartPolicyRequest struct {
+	CreatePolicyRequest
+	Duration       Duration `json:"duration,omitempty"`
+	MaxRepeatCount int      `json:"maxRepeatCount"`
+}
+
+// CreateNotificationDeduplicationPolicyRequest is a request for creating notification deduplication policy
+type CreateNotificationDeduplicationPolicyRequest struct {
+	CreatePolicyRequest
+	DeduplicationActionType DeduplicationActionType `json:"deduplicationActionType"`
+	Count                   int                     `json:"count"`
+	Duration                Duration                `json:"duration,omitempty"`
+}
+
+// CreateNotificationDelayPolicyRequest is a request for creating notification delay policy
+type CreateNotificationDelayPolicyRequest struct {
+	DelayOption DelayOption `json:"delayOption"`
+	UntilMinute int         `json:"untilMinute"`
+	UntilHour   int         `json:"untilHour"`
+	Duration    Duration    `json:"duration,omitempty"`
+}
+
+// CreateModifyPolicyRequest is a request for creating modify policy
+type CreateModifyPolicyRequest struct {
+	Message                    string   `json:"message"`
+	Continue                   bool     `json:"continue"`
+	Alias                      string   `json:"alias"`
+	Description                string   `json:"description"`
+	Entity                     string   `json:"entity"`
+	Source                     string   `json:"source"`
+	IgnoreOriginalAlertActions bool     `json:"ignoreOriginalAlertActions"`
+	AlertActions               string   `json:"alertActions"`
+	IgnoreOriginalDetails      bool     `json:"ignoreOriginalDetails"`
+	Details                    string   `json:"details"`
+	IgnoreOriginalRecipients   bool     `json:"ignoreOriginalRecipients"`
+	Recipients                 []string `json:"recipients"`
+	IgnoreOriginalTags         bool     `json:"ignoreOriginalTags"`
+	Tags                       []string `json:"tags"`
+	IgnoreOriginalTeams        bool     `json:"ignoreOriginalTeams"`
+	Priority                   Priority `json:"priority"`
 }
 
 // GetApiKey return api key
