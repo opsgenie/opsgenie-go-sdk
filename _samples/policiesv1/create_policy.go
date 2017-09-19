@@ -57,17 +57,18 @@ func main() {
 		TimeUnit:   policyv1.MinutesTimeUnit,
 	}
 
-	createPolicyRequest := policyv1.CreatePolicyRequest{
-		Name:              "test_policy_name",
-		PolicyDescription: "it is test policy",
-		Enabled:           true,
-		Filter:            filter,
-		TimeRestrictions:  &timeRestrictions,
-		Type:              policyv1.NotificationSuppressPolicyType,
-		Duration:          duration,
+	createPolicyRequest := policyv1.CreateNotificationSuppressPolicyRequest{
+		CreatePolicyRequest: policyv1.CreatePolicyRequest{
+			Name:              "test_policy_name",
+			PolicyDescription: "it is test policy",
+			Enabled:           true,
+			Filter:            filter,
+			TimeRestrictions:  &timeRestrictions,
+			Type:              policyv1.NotificationSuppressPolicyType,
+		},
 	}
 
-	response, err := policyCli.Create(createPolicyRequest)
+	response, err := policyCli.CreateNotificationSuppressPolicy(createPolicyRequest)
 	if err != nil {
 		panic(err)
 	}

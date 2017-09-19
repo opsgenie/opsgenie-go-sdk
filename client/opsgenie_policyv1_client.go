@@ -12,9 +12,33 @@ func (cli *OpsGeniePolicyV1Client) SetOpsGenieClient(ogCli OpsGenieClient) {
 	cli.OpsGenieClient = ogCli
 }
 
-func (cli *OpsGeniePolicyV1Client) Create(req policyv1.CreatePolicyRequest) (*policyv1.CreatePolicyResponse, error) {
+func (cli *OpsGeniePolicyV1Client) CreateAutoClosePolicy(req policyv1.CreateAutoClosePolicyRequest) (*policyv1.CreatePolicyResponse, error) {
+	return cli.create(&req)
+}
+
+func (cli *OpsGeniePolicyV1Client) CreateAutoRestartPolicy(req policyv1.CreateAutoRestartPolicyRequest) (*policyv1.CreatePolicyResponse, error) {
+	return cli.create(&req)
+}
+
+func (cli *OpsGeniePolicyV1Client) CreateNotificationSuppressPolicy(req policyv1.CreateNotificationSuppressPolicyRequest) (*policyv1.CreatePolicyResponse, error) {
+	return cli.create(&req)
+}
+
+func (cli *OpsGeniePolicyV1Client) CreateNotificationDeduplicationPolicy(req policyv1.CreateNotificationDeduplicationPolicyRequest) (*policyv1.CreatePolicyResponse, error) {
+	return cli.create(&req)
+}
+
+func (cli *OpsGeniePolicyV1Client) CreateNotificationDelayPolicy(req policyv1.CreateNotificationDelayPolicyRequest) (*policyv1.CreatePolicyResponse, error) {
+	return cli.create(&req)
+}
+
+func (cli *OpsGeniePolicyV1Client) CreateModifyPolicy(req policyv1.CreateModifyPolicyRequest) (*policyv1.CreatePolicyResponse, error) {
+	return cli.create(&req)
+}
+
+func (cli *OpsGeniePolicyV1Client) create(req Request) (*policyv1.CreatePolicyResponse, error) {
 	var response policyv1.CreatePolicyResponse
-	err := cli.sendPostRequest(&req, &response)
+	err := cli.sendPostRequest(req, &response)
 	if err != nil {
 		return nil, err
 	}
