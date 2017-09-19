@@ -289,6 +289,19 @@ func (cli *OpsGenieClient) Schedule() (*OpsGenieScheduleClient, error) {
 	return scheduleClient, nil
 }
 
+func (cli *OpsGenieClient) ScheduleV2() (*OpsGenieScheduleV2Client, error) {
+	cli.makeHTTPTransportSettings()
+
+	scheduleV2Client := new(OpsGenieScheduleV2Client)
+	scheduleV2Client.SetOpsGenieClient(*cli)
+
+	if cli.opsGenieAPIURL == "" {
+		scheduleV2Client.SetOpsGenieAPIUrl(endpointURL)
+	}
+
+	return scheduleV2Client, nil
+}
+
 // ScheduleOverride instantiates a new OpsGenieScheduleOverrideClient.
 func (cli *OpsGenieClient) ScheduleOverride() (*OpsGenieScheduleOverrideClient, error) {
 	cli.makeHTTPTransportSettings()
