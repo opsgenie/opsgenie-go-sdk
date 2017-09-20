@@ -29,3 +29,12 @@ func (cli *OpsGenieScheduleV2Client) Get(req schedulev2.GetScheduleRequest) (*sc
 	}
 	return &response, nil
 }
+
+func (cli *OpsGenieScheduleV2Client) List(req schedulev2.ListScheduleRequest) (*schedulev2.ListScheduleResponse, error) {
+	var response schedulev2.ListScheduleResponse
+	err := cli.sendGetRequest(&req, &response)
+	if err != nil {
+		return nil, err
+	}
+	return &response, nil
+}
