@@ -275,6 +275,19 @@ func (cli *OpsGenieClient) Escalation() (*OpsGenieEscalationClient, error) {
 	return escalationClient, nil
 }
 
+func (cli *OpsGenieClient) EscalationV2() (*OpsGenieEscalationV2Client, error) {
+	cli.makeHTTPTransportSettings()
+
+	escalationV2Client := new(OpsGenieEscalationV2Client)
+	escalationV2Client.SetOpsGenieClient(*cli)
+
+	if cli.opsGenieAPIURL == "" {
+		escalationV2Client.SetOpsGenieAPIUrl(endpointURL)
+	}
+
+	return escalationV2Client, nil
+}
+
 // Schedule instantiates a new OpsGenieScheduleClient.
 func (cli *OpsGenieClient) Schedule() (*OpsGenieScheduleClient, error) {
 	cli.makeHTTPTransportSettings()
