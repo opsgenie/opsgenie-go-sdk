@@ -6,25 +6,26 @@ type CreatePolicyRequest struct {
 	ApiKey            string
 	Name              string            `json:"name"`
 	Type              PolicyType        `json:"type"`
-	PolicyDescription string            `json:"policyDescription"`
+	PolicyDescription string            `json:"policyDescription,omitempty"`
 	Enabled           bool              `json:"enabled"`
-	Filter            Filter            `json:"filter"`
+	Filter            Filter            `json:"filter,omitempty"`
 	TimeRestrictions  *TimeRestrictions `json:"timeRestrictions,omitempty"`
 }
 
 // CreateAutoClosePolicyRequest is a request for creating auto close policy
 type CreateAutoClosePolicyRequest struct {
 	CreatePolicyRequest
-	Duration Duration `json:"duration,omitempty"`
+	Duration Duration `json:"duration"`
 }
 
 // CreateAutoRestartPolicyRequest is a request for creating auto restart policy
 type CreateAutoRestartPolicyRequest struct {
 	CreatePolicyRequest
-	Duration       Duration `json:"duration,omitempty"`
+	Duration       Duration `json:"duration"`
 	MaxRepeatCount int      `json:"maxRepeatCount"`
 }
 
+// CreateNotificationSuppressPolicyRequest is a request for creating notification suppress policy
 type CreateNotificationSuppressPolicyRequest struct {
 	CreatePolicyRequest
 }
@@ -50,21 +51,21 @@ type CreateNotificationDelayPolicyRequest struct {
 type CreateModifyPolicyRequest struct {
 	CreatePolicyRequest
 	Message                    string      `json:"message"`
-	Continue                   bool        `json:"continue"`
-	Alias                      string      `json:"alias"`
-	Description                string      `json:"description"`
-	Entity                     string      `json:"entity"`
-	Source                     string      `json:"source"`
-	IgnoreOriginalAlertActions bool        `json:"ignoreOriginalAlertActions"`
-	AlertActions               string      `json:"alertActions"`
-	IgnoreOriginalDetails      bool        `json:"ignoreOriginalDetails"`
-	Details                    string      `json:"details"`
-	IgnoreOriginalRecipients   bool        `json:"ignoreOriginalRecipients"`
-	Recipients                 []Recipient `json:"recipients"`
-	IgnoreOriginalTags         bool        `json:"ignoreOriginalTags"`
-	Tags                       []string    `json:"tags"`
-	IgnoreOriginalTeams        bool        `json:"ignoreOriginalTeams"`
-	Priority                   Priority    `json:"priority"`
+	Continue                   bool        `json:"continue,omitempty"`
+	Alias                      string      `json:"alias,omitempty"`
+	Description                string      `json:"description,omitempty"`
+	Entity                     string      `json:"entity,omitempty"`
+	Source                     string      `json:"source,omitempty"`
+	IgnoreOriginalAlertActions bool        `json:"ignoreOriginalAlertActions,omitempty"`
+	AlertActions               string      `json:"alertActions,omitempty"`
+	IgnoreOriginalDetails      bool        `json:"ignoreOriginalDetails,omitempty"`
+	Details                    []string    `json:"details,omitempty"`
+	IgnoreOriginalRecipients   bool        `json:"ignoreOriginalRecipients,omitempty"`
+	Recipients                 []Recipient `json:"recipients,omitempty"`
+	IgnoreOriginalTags         bool        `json:"ignoreOriginalTags,omitempty"`
+	Tags                       []string    `json:"tags,omitempty"`
+	IgnoreOriginalTeams        bool        `json:"ignoreOriginalTeams,omitempty"`
+	Priority                   Priority    `json:"priority,omitempty"`
 }
 
 // GetApiKey return api key
