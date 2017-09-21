@@ -6,19 +6,22 @@ import (
 
 const (
 	DisableAction = "disable"
-	EnableAction = "enable"
+	EnableAction  = "enable"
 )
 
 type Identifier struct {
 	ID           string `json:"-"`
-	Alias        string `json:"-"`
-	TinyID       string `json:"-"`
+	Name         string `json:"name"`
 	StatusAction string `json:"-"`
 }
 
 func (request *Identifier) GenerateUrl() (string, url.Values, error) {
 	baseUrl := "/v1/policies"
 	if request != nil {
+		if len(request.Name) != 0 {
+			baseUrl += "/" + request.Name
+		}
+
 		if len(request.ID) != 0 {
 			baseUrl += "/" + request.ID
 		}
@@ -27,7 +30,6 @@ func (request *Identifier) GenerateUrl() (string, url.Values, error) {
 			baseUrl += "/" + request.StatusAction
 		}
 	}
-
 
 	return baseUrl, nil, nil
 }
