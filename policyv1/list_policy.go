@@ -14,11 +14,11 @@ func (r *ListPolicyRequest) GetApiKey() string {
 // ListPolicyResponse is a response of loading all policies
 type ListPolicyResponse struct {
 	ResponseMeta
-	Policies []ListPolicyResult `json:"data"`
+	Policies []Policy `json:"data"`
 }
 
-// ListPolicyResult contains data of policy
-type ListPolicyResult struct {
+// Policy contains data of policy
+type Policy struct {
 	ID      string `json:"id"`
 	Name    string `json:"name"`
 	Type    string `json:"type"`

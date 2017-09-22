@@ -54,9 +54,33 @@ func (cli *OpsGeniePolicyV1Client) Get(req policyv1.GetPolicyRequest) (*policyv1
 	return &response, nil
 }
 
-func (cli *OpsGeniePolicyV1Client) Update(req policyv1.UpdatePolicyRequest) (*policyv1.UpdatePolicyResponse, error) {
+func (cli *OpsGeniePolicyV1Client) UpdateAutoClosePolicy(req policyv1.UpdateAutoClosePolicyRequest) (*policyv1.UpdatePolicyResponse, error) {
+	return cli.update(&req)
+}
+
+func (cli *OpsGeniePolicyV1Client) UpdateAutoRestartPolicy(req policyv1.UpdateAutoRestartPolicyRequest) (*policyv1.UpdatePolicyResponse, error) {
+	return cli.update(&req)
+}
+
+func (cli *OpsGeniePolicyV1Client) UpdateNotificationSuppressPolicy(req policyv1.UpdateNotificationSuppressPolicyRequest) (*policyv1.UpdatePolicyResponse, error) {
+	return cli.update(&req)
+}
+
+func (cli *OpsGeniePolicyV1Client) UpdateNotificationDeduplicationPolicy(req policyv1.UpdateNotificationDeduplicationPolicyRequest) (*policyv1.UpdatePolicyResponse, error) {
+	return cli.update(&req)
+}
+
+func (cli *OpsGeniePolicyV1Client) UpdateNotificationDelayPolicy(req policyv1.UpdateNotificationDelayPolicyRequest) (*policyv1.UpdatePolicyResponse, error) {
+	return cli.update(&req)
+}
+
+func (cli *OpsGeniePolicyV1Client) UpdateModifyPolicy(req policyv1.UpdateModifyPolicyRequest) (*policyv1.UpdatePolicyResponse, error) {
+	return cli.update(&req)
+}
+
+func (cli *OpsGeniePolicyV1Client) update(req Request) (*policyv1.UpdatePolicyResponse, error) {
 	var response policyv1.UpdatePolicyResponse
-	err := cli.sendPutRequest(&req, &response)
+	err := cli.sendPutRequest(req, &response)
 	if err != nil {
 		return nil, err
 	}

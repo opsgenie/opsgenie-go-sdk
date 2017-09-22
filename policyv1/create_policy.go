@@ -3,7 +3,7 @@ package policyv1
 // CreatePolicyRequest is a request to create new policy
 type CreatePolicyRequest struct {
 	*Identifier
-	ApiKey            string
+	ApiKey
 	Name              string            `json:"name"`
 	Type              PolicyType        `json:"type"`
 	PolicyDescription string            `json:"policyDescription,omitempty"`
@@ -66,11 +66,6 @@ type CreateModifyPolicyRequest struct {
 	Tags                       []string    `json:"tags,omitempty"`
 	IgnoreOriginalTeams        bool        `json:"ignoreOriginalTeams,omitempty"`
 	Priority                   Priority    `json:"priority,omitempty"`
-}
-
-// GetApiKey return api key
-func (r *CreatePolicyRequest) GetApiKey() string {
-	return r.ApiKey
 }
 
 // CreatePolicyResponse is a response of creating new policy
