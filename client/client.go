@@ -179,6 +179,19 @@ func (cli *OpsGenieClient) Contact() (*OpsGenieContactClient, error) {
 	return contactClient, nil
 }
 
+func (cli *OpsGenieClient) ContactV2() (*OpsGenieContactV2Client, error) {
+	cli.makeHTTPTransportSettings()
+
+	contactV2Client := new(OpsGenieContactV2Client)
+	contactV2Client.SetOpsGenieClient(*cli)
+
+	if cli.opsGenieAPIURL == "" {
+		contactV2Client.SetOpsGenieAPIUrl(endpointURL)
+	}
+
+	return contactV2Client, nil
+}
+
 // Heartbeat instantiates a new OpsGenieHeartbeatClient.
 func (cli *OpsGenieClient) Heartbeat() (*OpsGenieHeartbeatClient, error) {
 	cli.makeHTTPTransportSettings()
