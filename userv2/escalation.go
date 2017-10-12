@@ -2,10 +2,11 @@ package userv2
 
 // Escalation is a struct of escalation.
 type Escalation struct {
-	ID        string    `json:"id,omitempty"`
-	Name      string    `json:"name,omitempty"`
-	OwnerTeam OwnerTeam `json:"ownerTeam,omitempty"`
-	Rules     []Rule    `json:"rules,omitempty"`
+	ID          string    `json:"id,omitempty"`
+	Name        string    `json:"name,omitempty"`
+	Description string    `json:"description,omitempty"`
+	OwnerTeam   OwnerTeam `json:"ownerTeam,omitempty"`
+	Rules       []Rule    `json:"rules,omitempty"`
 }
 
 // OwnerTeam contains info about owner team of escalation.

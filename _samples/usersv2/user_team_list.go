@@ -15,7 +15,7 @@ func main() {
 	userCli, _ := cli.UserV2()
 
 	request := userv2.ListUserTeamsRequest{
-		Identifier: &userv2.Identifier{UserName: "0"},
+		Identifier: &userv2.Identifier{Username: "user@company.tld"},
 	}
 
 	response, err := userCli.ListTeams(request)

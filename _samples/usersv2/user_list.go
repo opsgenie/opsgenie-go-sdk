@@ -19,9 +19,6 @@ func main() {
 		Offset: 0,
 		Sort:   userv2.UsernameSortField,
 		Order:  userv2.AscSortType,
-		Query: map[string]string{
-			userv2.UsernameQueryField: "John",
-		},
 	}
 
 	response, err := userCli.List(request)

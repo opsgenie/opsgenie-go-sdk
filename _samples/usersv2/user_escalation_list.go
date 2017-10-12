@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
-	"github.com/opsgenie/opsgenie-go-sdk/_samples/constants"
 	ogcli "github.com/opsgenie/opsgenie-go-sdk/client"
 	"github.com/opsgenie/opsgenie-go-sdk/userv2"
+	"github.com/opsgenie/opsgenie-go-sdk/_samples/constants"
 )
 
 func main() {
@@ -15,7 +15,7 @@ func main() {
 	userCli, _ := cli.UserV2()
 
 	request := userv2.ListUserEscalationsRequest{
-		Identifier: &userv2.Identifier{UserName: "0"},
+		Identifier: &userv2.Identifier{Username: "user@company.com"},
 	}
 
 	response, err := userCli.ListEscalations(request)

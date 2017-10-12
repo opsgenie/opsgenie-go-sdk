@@ -15,7 +15,7 @@ func main() {
 	userCli, _ := cli.UserV2()
 
 	request := userv2.ListUserSchedulesRequest{
-		Identifier: &userv2.Identifier{UserName: "0"},
+		Identifier: &userv2.Identifier{Username: "user@company.com"},
 	}
 
 	response, err := userCli.ListSchedules(request)
@@ -23,7 +23,7 @@ func main() {
 		fmt.Println(err)
 	} else {
 		for _, schedule := range response.Schedules {
-			fmt.Println(schedule)
+			fmt.Println(schedule.Name)
 		}
 	}
 }

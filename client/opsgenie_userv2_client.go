@@ -67,7 +67,6 @@ func (cli *OpsGenieUserV2Client) Delete(req userv2.DeleteUserRequest) (*userv2.D
 // ListEscalations method returns list of user escalations.
 func (cli *OpsGenieUserV2Client) ListEscalations(req userv2.ListUserEscalationsRequest) (*userv2.ListUserEscalationsResponse, error) {
 	var response userv2.ListUserEscalationsResponse
-	req.Entity = userv2.EscalationsEntity
 	err := cli.sendGetRequest(&req, &response)
 	if err != nil {
 		return nil, err
@@ -78,7 +77,6 @@ func (cli *OpsGenieUserV2Client) ListEscalations(req userv2.ListUserEscalationsR
 // ListTeams method returns list of user teams.
 func (cli *OpsGenieUserV2Client) ListTeams(req userv2.ListUserTeamsRequest) (*userv2.ListUserTeamsResponse, error) {
 	var response userv2.ListUserTeamsResponse
-	req.Entity = userv2.TeamsEntity
 	err := cli.sendGetRequest(&req, &response)
 	if err != nil {
 		return nil, err
@@ -89,7 +87,6 @@ func (cli *OpsGenieUserV2Client) ListTeams(req userv2.ListUserTeamsRequest) (*us
 // ListForwardingRules method returns list of user forwarding rules.
 func (cli *OpsGenieUserV2Client) ListForwardingRules(req userv2.ListUserForwardingRulesRequest) (*userv2.ListUserForwardingRulesResponse, error) {
 	var response userv2.ListUserForwardingRulesResponse
-	req.Entity = userv2.ForwardingRulesEntity
 	err := cli.sendGetRequest(&req, &response)
 	if err != nil {
 		return nil, err
@@ -100,7 +97,6 @@ func (cli *OpsGenieUserV2Client) ListForwardingRules(req userv2.ListUserForwardi
 // ListSchedules method returns list of user schedules.
 func (cli *OpsGenieUserV2Client) ListSchedules(req userv2.ListUserSchedulesRequest) (*userv2.ListUserSchedulesResponse, error) {
 	var response userv2.ListUserSchedulesResponse
-	req.Entity = userv2.SchedulesEntity
 	err := cli.sendGetRequest(&req, &response)
 	if err != nil {
 		return nil, err

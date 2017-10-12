@@ -2,10 +2,10 @@ package userv2
 
 const (
 	// The list of notification methods.
-	SMSNotifyMethod    = "sms"
-	EmailNotifyMethod  = "email"
-	VoiceNotifyMethod  = "voice"
-	MobileNotifyMethod = "mobile"
+	SMSContactMethod    ContactMethod = "sms"
+	EmailContactMethod  ContactMethod = "email"
+	VoiceContactMethod  ContactMethod = "voice"
+	MobileContactMethod ContactMethod = "mobile"
 )
 
 // ContactMethod is a type of user contact method.

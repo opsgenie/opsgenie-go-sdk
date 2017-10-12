@@ -3,7 +3,7 @@ package userv2
 // ListUserSchedulesResponse is a response with list of user schedules.
 type ListUserSchedulesResponse struct {
 	Schedules []Schedule `json:"data,omitempty"`
-	*ResponseMeta
+	ResponseMeta
 }
 
 // Schedule contains data of schedule.

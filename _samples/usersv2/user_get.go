@@ -16,8 +16,7 @@ func main() {
 
 	request := userv2.GetUserRequest{
 		Identifier: &userv2.Identifier{
-			ID:     "0",
-			Expand: userv2.ContactExpandableField,
+			ID:     "example-user-id",
 		},
 	}
 

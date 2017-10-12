@@ -16,17 +16,16 @@ func main() {
 
 	request := userv2.UpdateUserRequest{
 		Identifier: &userv2.Identifier{
-			ID:     "0",
-			Expand: userv2.ContactExpandableField,
+			Username: "user@company.com",
 		},
 		FullName:      "Lex Luthor",
-		Role:          &userv2.Role{Name: userv2.AdminRole},
+		Role:          userv2.UserRole{Name: userv2.AdminRoleId},
 		SkypeUsername: "lex.luthor",
-		Tags:          &userv2.Tags{"updated"},
-		Details:       &userv2.Details{"test": []string{"updated"}},
+		Tags:          []string{"updated"},
+		Details:       map[string][]string{"test": {"updated"}},
 		Locale:        "de_CH",
 		Timezone:      "US/Arizona",
-		UserAddress: &userv2.UserAddress{
+		UserAddress: userv2.UserAddress{
 			City:  "Phoenix",
 			State: "Arizona",
 		},
@@ -36,6 +35,6 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		fmt.Println(response.Result)
+		fmt.Println(response)
 	}
 }

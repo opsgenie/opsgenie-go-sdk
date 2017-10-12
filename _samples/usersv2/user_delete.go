@@ -15,13 +15,13 @@ func main() {
 	userCli, _ := cli.UserV2()
 
 	request := userv2.DeleteUserRequest{
-		Identifier: &userv2.Identifier{UserName: "user-name@test.com"},
+		Identifier: &userv2.Identifier{Username: "user2@company.com"},
 	}
 
 	response, err := userCli.Delete(request)
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		fmt.Println(response.Result)
+		fmt.Println(response)
 	}
 }
