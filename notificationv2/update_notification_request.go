@@ -5,9 +5,9 @@ type UpdateNotificationRequest struct {
 	*Identifier
 	ApiKey           string
 	Name             string             `json:"name"`
-	Criteria         Criteria           `json:"criteria"`
+	Criteria         *Criteria          `json:"criteria,omitempty"`
 	NotificationTime []NotificationTime `json:"notificationTime"`
-	TimeRestriction  TimeRestriction    `json:"timeRestriction"`
+	TimeRestriction  *TimeRestriction   `json:"timeRestriction, omitempty"`
 	Schedules        []Schedule         `json:"schedules"`
 	Steps            []Step             `json:"steps"`
 	Repeat           Repeat             `json:"repeat"`
