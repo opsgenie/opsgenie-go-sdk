@@ -15,8 +15,8 @@ func main() {
 	notificationCli, _ := cli.NotificationV2()
 
 	identifier := &notificationv2.Identifier{
-		UserID: "0",
-		RuleID: "0",
+		Username: "user@company.com",
+		RuleID: "example-notification-id",
 	}
 
 	criteria := notificationv2.Criteria{
@@ -43,10 +43,10 @@ func main() {
 			{
 				StartDay:  notificationv2.Monday,
 				EndDay:    notificationv2.Friday,
-				StartHour: &startHour,
-				EndHour:   &endHour,
-				StartMin:  &startMin,
-				EndMin:    &endMin,
+				StartHour: startHour,
+				EndHour:   endHour,
+				StartMin:  startMin,
+				EndMin:    endMin,
 			},
 		},
 	}

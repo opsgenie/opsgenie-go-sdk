@@ -16,8 +16,8 @@ func main() {
 
 	response, err := notificationCli.Delete(notificationv2.DeleteNotificationRequest{
 		Identifier: &notificationv2.Identifier{
-			UserID: "0",
-			RuleID: "0",
+			Username:"user@company.com",
+			RuleID: "example-notificaiton-id",
 		},
 	})
 

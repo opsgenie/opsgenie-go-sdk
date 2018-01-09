@@ -15,7 +15,7 @@ func main() {
 	notificationCli, _ := cli.NotificationV2()
 
 	identifier := &notificationv2.Identifier{
-		UserID: "0",
+		 Username: "user@company.com",
 	}
 
 	criteria := notificationv2.Criteria{
@@ -42,24 +42,28 @@ func main() {
 			{
 				StartDay:  notificationv2.Monday,
 				EndDay:    notificationv2.Friday,
-				StartHour: &startHour,
-				EndHour:   &endHour,
-				StartMin:  &startMin,
-				EndMin:    &endMin,
+				StartHour: startHour,
+				EndHour:   endHour,
+				StartMin:  startMin,
+				EndMin:    endMin,
 			},
 		},
+	}
+
+	notificationTime := []notificationv2.NotificationTime{
+		notificationv2.FifteenMinutesAgoNotificationTime,
 	}
 
 	timeAmount := 1
 	steps := []notificationv2.Step{
 		{
-			SendAfter: &notificationv2.SendAfter{
-				TimeAmount: &timeAmount,
+			SendAfter: notificationv2.SendAfter{
+				TimeAmount: timeAmount,
 				TimeUnit:   notificationv2.Minutes,
 			},
 			Contact: notificationv2.Contact{
 				Method: notificationv2.EmailNotifyMethod,
-				To:     "test@test.com",
+				To:     "user@company.com",
 			},
 			Enabled: true,
 		},
@@ -71,8 +75,9 @@ func main() {
 		Identifier:      identifier,
 		Name:            "Test create-alert",
 		ActionType:      notificationv2.CreateAlertActionType,
+		NotificationTime: notificationTime,
 		Criteria:        criteria,
-		TimeRestriction: &timeRestriction,
+		TimeRestriction: timeRestriction,
 		Order:           1,
 		Steps:           steps,
 		Repeat:          repeat,

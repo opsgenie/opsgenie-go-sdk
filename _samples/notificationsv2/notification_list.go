@@ -16,14 +16,14 @@ func main() {
 
 	response, err := notificationCli.List(notificationv2.ListNotificationRequest{
 		Identifier: &notificationv2.Identifier{
-			UserID: "0",
+			Username:"user@company.com",
 		},
 	})
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
 		for i, notification := range response.Notifications {
-			fmt.Printf("%d. %s\n", i, notification.Name)
+			fmt.Printf("%d. %s %s\n", i, notification.Name, notification.ID)
 		}
 	}
 }

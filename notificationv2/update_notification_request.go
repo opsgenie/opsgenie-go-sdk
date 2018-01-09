@@ -1,5 +1,10 @@
 package notificationv2
 
+import (
+	"net/url"
+	"errors"
+)
+
 // UpdateNotificationRequest is a struct of request to update existing notification rule.
 type UpdateNotificationRequest struct {
 	*Identifier
@@ -18,4 +23,22 @@ type UpdateNotificationRequest struct {
 // GetApiKey returns api key.
 func (r *UpdateNotificationRequest) GetApiKey() string {
 	return r.ApiKey
+}
+
+// GenerateUrl generates url to API endpoint.
+func (r *UpdateNotificationRequest) GenerateUrl() (string, url.Values, error) {
+
+	baseUrl, _, err := r.Identifier.GenerateUrl()
+
+	if err != nil {
+		return "" , nil, err
+	}
+
+	if r.Identifier.RuleID == "" {
+		return "", nil, errors.New("Rule ID should be provided for update action")
+	}
+
+	baseUrl += "/" + r.Identifier.RuleID
+
+	return baseUrl, nil, nil
 }

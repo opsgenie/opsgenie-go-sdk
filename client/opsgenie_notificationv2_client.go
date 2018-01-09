@@ -89,8 +89,6 @@ func (cli *OpsGenieNotificationV2Client) Enable(req notificationv2.EnableNotific
 	*notificationv2.EnableNotificationResponse,
 	error,
 ) {
-	req.Identifier.StatusAction = notificationv2.EnableStatusAction
-
 	var response notificationv2.EnableNotificationResponse
 	err := cli.sendPostRequest(&req, &response)
 	if err != nil {
@@ -105,8 +103,6 @@ func (cli *OpsGenieNotificationV2Client) Disable(req notificationv2.DisableNotif
 	*notificationv2.DisableNotificationResponse,
 	error,
 ) {
-	req.Identifier.StatusAction = notificationv2.DisableStatusAction
-
 	var response notificationv2.DisableNotificationResponse
 	err := cli.sendPostRequest(&req, &response)
 	if err != nil {

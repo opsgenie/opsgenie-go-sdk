@@ -17,8 +17,8 @@ func main() {
 
 	response, err := notificationCli.Get(notificationv2.GetNotificationRequest{
 		Identifier: &notificationv2.Identifier{
-			UserID: "0",
-			RuleID: "0",
+			Username: "user@company.com",
+			RuleID: "example-notification-id",
 		},
 	})
 

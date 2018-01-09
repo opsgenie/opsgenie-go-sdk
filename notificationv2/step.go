@@ -4,7 +4,7 @@ package notificationv2
 type Step struct {
 	ID        string     `json:"id"`
 	Contact   Contact    `json:"contact,omitempty"`
-	SendAfter *SendAfter `json:"sendAfter,omitempty"`
+	SendAfter SendAfter `json:"sendAfter,omitempty"`
 	Enabled   bool       `json:"enabled,omitempty"`
 }
 
@@ -16,6 +16,6 @@ type Contact struct {
 
 // SendAfter defines minute time period notification will be sent after.
 type SendAfter struct {
-	TimeAmount *int   `json:"timeAmount,omitempty"`
-	TimeUnit   string `json:"timeUnit,omitempty"`
+	TimeAmount int   `json:"timeAmount,omitempty"`
+	TimeUnit   TimeUnit `json:"timeUnit,omitempty"`
 }

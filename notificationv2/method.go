@@ -2,10 +2,10 @@ package notificationv2
 
 const (
 	// The list of notification method.
-	SMSNotifyMethod    = "sms"
-	EmailNotifyMethod  = "email"
-	VoiceNotifyMethod  = "voice"
-	MobileNotifyMethod = "mobile"
+	SMSNotifyMethod     Method = "sms"
+	EmailNotifyMethod  	Method = "email"
+	VoiceNotifyMethod  	Method = "voice"
+	MobileNotifyMethod 	Method = "mobile"
 )
 
 // Method is a method of notification.

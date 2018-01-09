@@ -2,9 +2,9 @@ package notificationv2
 
 const (
 	// The list of action results.
-	EnabledResult = "Enabled"
-	DisableResult = "Disabled"
-	DeletedResult = "Deleted"
+	EnabledResult Result = "Enabled"
+	DisableResult Result = "Disabled"
+	DeletedResult Result = "Deleted"
 )
 
 // ActionResult contains result of action with notification rule.
