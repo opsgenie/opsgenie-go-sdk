@@ -329,6 +329,48 @@ func (cli *OpsGenieClient) NotificationV2() (*OpsGenieNotificationV2Client, erro
 	return notificationClient, nil
 }
 
+// ScheduleV2 instantiates a new OpsGenieScheduleV2Client
+func (cli *OpsGenieClient) ScheduleV2() (*OpsGenieScheduleV2Client, error) {
+	cli.makeHTTPTransportSettings()
+
+	scheduleClient := new(OpsGenieScheduleV2Client)
+	scheduleClient.SetOpsGenieClient(*cli)
+
+	if cli.opsGenieAPIURL == "" {
+		scheduleClient.SetOpsGenieAPIUrl(endpointURL)
+	}
+
+	return scheduleClient, nil
+}
+
+// ScheduleOverrideV2 instantiates a new OpsGenieScheduleOverrideV2Client
+func (cli *OpsGenieClient) ScheduleOverrideV2() (*OpsGenieScheduleOverrideV2Client, error) {
+	cli.makeHTTPTransportSettings()
+
+	scheduleOverrideClient := new(OpsGenieScheduleOverrideV2Client)
+	scheduleOverrideClient.SetOpsGenieClient(*cli)
+
+	if cli.opsGenieAPIURL == "" {
+		scheduleOverrideClient.SetOpsGenieAPIUrl(endpointURL)
+	}
+
+	return scheduleOverrideClient, nil
+}
+
+// ScheduleRotationV2 instantiates a new OpsGenieScheduleRotationV2Client
+func (cli *OpsGenieClient) ScheduleRotationV2() (*OpsGenieScheduleRotationV2Client, error) {
+	cli.makeHTTPTransportSettings()
+
+	scheduleRotationClient := new(OpsGenieScheduleRotationV2Client)
+	scheduleRotationClient.SetOpsGenieClient(*cli)
+
+	if cli.opsGenieAPIURL == "" {
+		scheduleRotationClient.SetOpsGenieAPIUrl(endpointURL)
+	}
+
+	return scheduleRotationClient, nil
+}
+
 // buildCommonRequestProps is an internal method to set common properties of requests that will send to OpsGenie.
 func (cli *OpsGenieClient) buildCommonRequestProps() goreq.Request {
 	if cli.httpTransportSettings == nil {
@@ -479,6 +521,13 @@ func (cli *OpsGenieClient) buildPatchRequest(uri string, request interface{}) go
 func (cli *OpsGenieClient) buildDeleteRequest(uri string, request interface{}) goreq.Request {
 	req := cli.buildGetRequest(uri, request)
 	req.Method = "DELETE"
+	return req
+}
+
+// buildPutRequest is an internal method to prepare a "DELETE" request that will send to OpsGenie.
+func (cli *OpsGenieClient) buildPutRequest(uri string, request interface{}) goreq.Request {
+	req := cli.buildPostRequest(uri, request)
+	req.Method = "PUT"
 	return req
 }
 
