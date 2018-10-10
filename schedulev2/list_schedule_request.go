@@ -6,8 +6,8 @@ import (
 
 // ListScheduleRequest is a struct of request to crate new schedule.
 type ListScheduleRequest struct {
-	ApiKey           string
-	Expand			 string
+	ApiKey string
+	Expand string
 }
 
 // GetApiKey returns api key.
@@ -19,7 +19,7 @@ func (r *ListScheduleRequest) GetApiKey() string {
 func (r *ListScheduleRequest) GenerateUrl() (string, url.Values, error) {
 	params := url.Values{}
 
-	if r.Expand != ""{
+	if r.Expand != "" {
 		params.Add("expand", r.Expand)
 	}
 

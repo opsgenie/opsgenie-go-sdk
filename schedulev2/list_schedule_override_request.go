@@ -7,7 +7,7 @@ import (
 // ListScheduleOverrideRequest is a struct of request to crate new schedule.
 type ListScheduleOverrideRequest struct {
 	*ScheduleIdentifier
-	ApiKey           string
+	ApiKey string
 }
 
 // GetApiKey returns api key.

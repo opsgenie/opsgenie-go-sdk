@@ -1,19 +1,19 @@
 package schedulev2
 
 import (
-	"net/url"
 	"errors"
+	"net/url"
 )
 
 // CreateScheduleOverrideRequest is a struct of request to crate new schedule.
 type CreateScheduleOverrideRequest struct {
 	*ScheduleIdentifier
-	ApiKey           string
-	Alias            string             `json:"alias"`
-	User			 User				`json:"user"`
-	StartDate		 string				`json:"startDate"`
-	EndDate		 	 string				`json:"endDate"`
-	Rotations		 []Rotation			`json:"rotations"`
+	ApiKey    string
+	Alias     string     `json:"alias"`
+	User      User       `json:"user"`
+	StartDate string     `json:"startDate"`
+	EndDate   string     `json:"endDate"`
+	Rotations []Rotation `json:"rotations"`
 }
 
 // GetApiKey returns api key.
@@ -33,7 +33,7 @@ func (r *CreateScheduleOverrideRequest) GenerateUrl() (string, url.Values, error
 		return "", nil, errors.New("alias should be provided for create action")
 	}
 
-	if r.User.Type == UserUserType && (r.User.ID == "" && r.User.Username == ""){
+	if r.User.Type == UserUserType && (r.User.ID == "" && r.User.Username == "") {
 		return "", nil, errors.New("alias should be provided for create action")
 	}
 

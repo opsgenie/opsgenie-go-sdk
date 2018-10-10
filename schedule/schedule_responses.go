@@ -66,9 +66,9 @@ type TimelineScheduleResponse struct {
 }
 
 type TimelineTimelineResponse struct {
-	StartTime     uint64           			`json:"startTime,omitempty"`
-	EndTime       uint64           			`json:"endTime,omitempty"`
-	FinalSchedule TimelineFinalScheduleResponse 	`json:"finalSchedule,omitempty"`
+	StartTime     uint64                        `json:"startTime,omitempty"`
+	EndTime       uint64                        `json:"endTime,omitempty"`
+	FinalSchedule TimelineFinalScheduleResponse `json:"finalSchedule,omitempty"`
 }
 
 type TimelineFinalScheduleResponse struct {
@@ -84,11 +84,11 @@ type TimelineRotation struct {
 }
 
 type Periods struct {
-	StartTime           uint64		  `json:"startTime,omitempty"`
-	EndTime             uint64 		  `json:"endTime,omitempty"`
-	Type                string                `json:"type,omitempty"`
-	FromUsers 	    []FromUsers 	  `json:"fromUsers,omitempty"`
-	Recipients          []Recipients          `json:"recipients,omitempty"`
+	StartTime  uint64       `json:"startTime,omitempty"`
+	EndTime    uint64       `json:"endTime,omitempty"`
+	Type       string       `json:"type,omitempty"`
+	FromUsers  []FromUsers  `json:"fromUsers,omitempty"`
+	Recipients []Recipients `json:"recipients,omitempty"`
 }
 
 type FromUsers struct {
@@ -107,19 +107,19 @@ type Recipients struct {
 
 // WhoIsOnCallParticipant
 type WhoIsOnCallParticipant struct {
-	Name string `json:"name"`
-	Type string `json:"type"`
-	Forwarded bool `json:"forwarded,omitempty"`
+	Name         string                    `json:"name"`
+	Type         string                    `json:"type"`
+	Forwarded    bool                      `json:"forwarded,omitempty"`
 	Participants []*WhoIsOnCallParticipant `json:"participants,omitempty"`
-	NotifyType string `json:"notifyType,omitempty"`
+	NotifyType   string                    `json:"notifyType,omitempty"`
 }
 
 // WhoIsOnCall response structure
 type WhoIsOnCallResponse struct {
-	Id string `json:"id"`
-	Name string `json:"name"`
-	Type string `json:"type"`
+	Id           string                   `json:"id"`
+	Name         string                   `json:"name"`
+	Type         string                   `json:"type"`
 	Participants []WhoIsOnCallParticipant `json:"participants,omitempty"`
-	Recipients []string `json:"recipients,omitempty"`
-	IsEnabled bool `json:"isEnabled,omitempty"`
+	Recipients   []string                 `json:"recipients,omitempty"`
+	IsEnabled    bool                     `json:"isEnabled,omitempty"`
 }

@@ -1,9 +1,9 @@
 package client
 
 import (
+	"errors"
 	"github.com/franela/goreq"
 	"github.com/opsgenie/opsgenie-go-sdk/logging"
-	"errors"
 	"net/url"
 	"strconv"
 )
@@ -138,7 +138,6 @@ func (cli *RestClient) sendDeleteRequest(req Request, response Response) error {
 	}
 
 	path = cli.generateFullPathWithParams(path, params)
-
 
 	httpRequest := cli.buildDeleteRequest(path, nil)
 	cli.setApiKey(&httpRequest, req.GetApiKey())

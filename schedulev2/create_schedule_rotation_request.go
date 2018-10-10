@@ -1,21 +1,21 @@
 package schedulev2
 
 import (
-	"net/url"
 	"errors"
+	"net/url"
 )
 
 // CreateScheduleRotationRequest is a struct of request to crate new schedule.
 type CreateScheduleRotationRequest struct {
 	*ScheduleIdentifier
-	ApiKey           string
-	Name             string             `json:"name"`
-	StartDate		 string				`json:"startDate"`
-	EndDate		 	 string				`json:"endDate"`
-	Type		 	 Type    			`json:"type"`
-	Length		 	 int				`json:"length"`
-	Participants     []Participant		`json:"participants"`
-	TimeRestriction  TimeRestriction    `json:"timeRestriction"`
+	ApiKey          string
+	Name            string          `json:"name"`
+	StartDate       string          `json:"startDate"`
+	EndDate         string          `json:"endDate"`
+	Type            Type            `json:"type"`
+	Length          int             `json:"length"`
+	Participants    []Participant   `json:"participants"`
+	TimeRestriction TimeRestriction `json:"timeRestriction"`
 }
 
 // GetApiKey returns api key.

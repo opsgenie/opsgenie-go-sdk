@@ -5,4 +5,3 @@ type GetScheduleResponse struct {
 	ResponseMeta
 	Schedule Schedule `json:"data"`
 }
-

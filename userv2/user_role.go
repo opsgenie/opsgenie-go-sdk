@@ -11,7 +11,6 @@ const (
 	StakeHolderRoleId = "Stakeholder"
 	// ObserverRoleId is the text value of standard role "user"
 	ObserverRoleId = "Observer"
-
 )
 
 // UserRole contains data of role.

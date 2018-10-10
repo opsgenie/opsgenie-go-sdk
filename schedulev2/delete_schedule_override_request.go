@@ -1,15 +1,15 @@
 package schedulev2
 
 import (
-	"net/url"
 	"errors"
+	"net/url"
 )
 
 // DeleteScheduleOverrideRequest is a struct of request to delete schedule.
 type DeleteScheduleOverrideRequest struct {
 	*ScheduleIdentifier
-	Alias		     string
-	ApiKey           string
+	Alias  string
+	ApiKey string
 }
 
 // GetApiKey returns api key.

@@ -1,10 +1,10 @@
 package client
 
 import (
-	"github.com/opsgenie/opsgenie-go-sdk/alertsv2"
-	"github.com/opsgenie/opsgenie-go-sdk/alertsv2/savedsearches"
 	"errors"
 	"github.com/franela/goreq"
+	"github.com/opsgenie/opsgenie-go-sdk/alertsv2"
+	"github.com/opsgenie/opsgenie-go-sdk/alertsv2/savedsearches"
 )
 
 // OpsGenieAlertClient is the data type to make Alert API requests.
@@ -152,7 +152,7 @@ func (cli *OpsGenieAlertV2Client) AddDetails(req alertsv2.AddDetailsRequest) (*A
 }
 
 // Removes the details from the alert
-func (cli *OpsGenieAlertV2Client) RemoveDetails(req alertsv2.RemoveDetailsRequest) (*AsyncRequestResponse, error)  {
+func (cli *OpsGenieAlertV2Client) RemoveDetails(req alertsv2.RemoveDetailsRequest) (*AsyncRequestResponse, error) {
 	var response AsyncRequestResponse
 	err := cli.sendDeleteRequest(&req, &response)
 	if err != nil {
@@ -233,7 +233,7 @@ func (cli *OpsGenieAlertV2Client) AttachFile(req alertsv2.AddAlertAttachmentRequ
 		return nil, errors.New("File path or content must be provided.")
 	}
 
-	if req.AttachmentFilePath == "" && req.AttachmentFileContent != nil && req.AttachmentFileName == ""{
+	if req.AttachmentFilePath == "" && req.AttachmentFileContent != nil && req.AttachmentFileName == "" {
 		return nil, errors.New("File name must be provided if only file content is given.")
 	}
 

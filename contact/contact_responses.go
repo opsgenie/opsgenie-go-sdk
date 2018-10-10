@@ -35,6 +35,6 @@ type GetContactResponse struct {
 	Id             string `json:"id,omitempty"`
 	Method         string `json:"method,omitempty"`
 	To             string `json:"to,omitempty"`
-	DisabledReason string `json:"disabledReason, omitempty"`
-	Enabled        bool   `json:"enabled, omitempty"`
+	DisabledReason string `json:"disabledReason,omitempty"`
+	Enabled        bool   `json:"enabled,omitempty"`
 }

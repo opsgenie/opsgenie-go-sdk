@@ -8,8 +8,8 @@ import (
 )
 
 const (
-	listHeartbeatURL    = "/v1/json/heartbeat"
-	sendHeartbeatURL    = "/v1/json/heartbeat/send"
+	listHeartbeatURL = "/v1/json/heartbeat"
+	sendHeartbeatURL = "/v1/json/heartbeat/send"
 )
 
 // OpsGenieHeartbeatClient is the data type to make Heartbeat API requests.
@@ -29,7 +29,7 @@ func (cli *OpsGenieHeartbeatClient) Add(req heartbeat.AddHeartbeatRequest) (*hea
 	err := cli.sendPostRequest(&req, &response)
 
 	if err != nil {
-		return nil, err;
+		return nil, err
 	}
 	result := convertAddResponseToV1Response(&response)
 	result.Code = 201

@@ -7,7 +7,7 @@ import (
 // DeleteScheduleRequest is a struct of request to delete schedule.
 type DeleteScheduleRequest struct {
 	*Identifier
-	ApiKey           string
+	ApiKey string
 }
 
 // GetApiKey returns api key.

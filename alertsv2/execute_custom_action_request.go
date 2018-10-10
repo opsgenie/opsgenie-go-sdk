@@ -1,8 +1,8 @@
 package alertsv2
 
 import (
-	"net/url"
 	"errors"
+	"net/url"
 )
 
 type ExecuteCustomActionRequest struct {
@@ -19,7 +19,7 @@ func (r *ExecuteCustomActionRequest) GenerateUrl() (string, url.Values, error) {
 	if r.ActionName == "" {
 		return "", nil, errors.New("ActionName should be provided")
 	}
-	return path + "/actions/" + r.ActionName, params, err;
+	return path + "/actions/" + r.ActionName, params, err
 }
 
 func (r *ExecuteCustomActionRequest) GetApiKey() string {

@@ -1,8 +1,8 @@
 package notificationv2
 
 import (
-	"net/url"
 	"errors"
+	"net/url"
 )
 
 // GetNotificationRequest is a struct of request to get notification rule.
@@ -21,7 +21,7 @@ func (r *GetNotificationRequest) GenerateUrl() (string, url.Values, error) {
 	baseUrl, _, err := r.Identifier.GenerateUrl()
 
 	if err != nil {
-		return "" , nil, err
+		return "", nil, err
 	}
 
 	if r.Identifier.RuleID == "" {

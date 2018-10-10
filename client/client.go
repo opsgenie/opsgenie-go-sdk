@@ -33,20 +33,20 @@ license that can be found in the LICENSE file.
 package client
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
+	"mime/multipart"
+	"os"
 	"runtime"
 	"time"
-	"os"
-	"mime/multipart"
-	"bytes"
-	"io"
 
 	"github.com/franela/goreq"
 	goquery "github.com/google/go-querystring/query"
-	"github.com/opsgenie/opsgenie-go-sdk/logging"
 	"github.com/opsgenie/opsgenie-go-sdk/alertsv2"
+	"github.com/opsgenie/opsgenie-go-sdk/logging"
 	"path/filepath"
 )
 
@@ -58,9 +58,9 @@ const (
 	defaultRequestTimeout    time.Duration = 60 * time.Second
 	defaultMaxRetryAttempts  int           = 5
 	timeSleepBetweenRequests time.Duration = 500 * time.Millisecond
-	fileParamName string = "file"
-	userParamName string = "user"
-	indexFileParamName string = "indexFile"
+	fileParamName            string        = "file"
+	userParamName            string        = "user"
+	indexFileParamName       string        = "indexFile"
 )
 
 // RequestHeaderUserAgent contains User-Agent values tool/version (OS;GO_Version;language).

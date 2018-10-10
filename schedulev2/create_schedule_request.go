@@ -1,19 +1,19 @@
 package schedulev2
 
 import (
-	"net/url"
 	"errors"
+	"net/url"
 )
 
 // CreateScheduleRequest is a struct of request to crate new schedule.
 type CreateScheduleRequest struct {
-	ApiKey           string
-	Name             string             `json:"name"`
-	Description		 string            	`json:"description"`
-	Timezone		 string				`json:"timezone"`
-	Enabled          bool               `json:"enabled"`
-	OwnerTeam		 OwnerTeam			`json:"ownerTeam"`
-	Rotations		 []Rotation			`json:"rotations"`
+	ApiKey      string
+	Name        string     `json:"name"`
+	Description string     `json:"description"`
+	Timezone    string     `json:"timezone"`
+	Enabled     bool       `json:"enabled"`
+	OwnerTeam   OwnerTeam  `json:"ownerTeam"`
+	Rotations   []Rotation `json:"rotations"`
 }
 
 // GetApiKey returns api key.
