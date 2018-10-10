@@ -42,6 +42,20 @@ func (cli *OpsGenieScheduleV2Client) Get(req schedulev2.GetScheduleRequest) (
 	return &response, nil
 }
 
+// GetTimeline returns the timeline of a schedule.
+func (cli *OpsGenieScheduleV2Client) GetTimeline(req schedulev2.GetScheduleTimelineRequest) (
+	*schedulev2.GetScheduleTimelineResponse,
+	error,
+) {
+	var response schedulev2.GetScheduleTimelineResponse
+	err := cli.sendGetRequest(&req, &response)
+	if err != nil {
+		return nil, err
+	}
+
+	return &response, nil
+}
+
 // Update method updates specified schedule rule.
 func (cli *OpsGenieScheduleV2Client) Update(req schedulev2.UpdateScheduleRequest) (
 	*schedulev2.UpdateScheduleResponse,
