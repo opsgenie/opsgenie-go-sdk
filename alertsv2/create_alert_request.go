@@ -3,20 +3,20 @@ package alertsv2
 import "net/url"
 
 type CreateAlertRequest struct {
-	Message     string `json:"message,omitempty"`
-	Alias       string `json:"alias,omitempty"`
-	Description string `json:"description,omitempty"`
-	Teams       []TeamRecipient `json:"teams,omitempty"`
-	VisibleTo   []Recipient `json:"visibleTo,omitempty"`
-	Actions     []string `json:"actions,omitempty"`
-	Tags        []string `json:"tags,omitempty"`
+	Message     string            `json:"message,omitempty"`
+	Alias       string            `json:"alias,omitempty"`
+	Description string            `json:"description,omitempty"`
+	Responders  []Recipient       `json:"responders,omitempty"`
+	VisibleTo   []Recipient       `json:"visibleTo,omitempty"`
+	Actions     []string          `json:"actions,omitempty"`
+	Tags        []string          `json:"tags,omitempty"`
 	Details     map[string]string `json:"details,omitempty"`
-	Entity      string `json:"entity,omitempty"`
-	Source      string `json:"source,omitempty"`
-	Priority    Priority `json:"priority,omitempty"`
-	User        string `json:"user,omitempty"`
-	Note        string `json:"note,omitempty"`
-	ApiKey      string `json:"-"`
+	Entity      string            `json:"entity,omitempty"`
+	Source      string            `json:"source,omitempty"`
+	Priority    Priority          `json:"priority,omitempty"`
+	User        string            `json:"user,omitempty"`
+	Note        string            `json:"note,omitempty"`
+	ApiKey      string            `json:"-"`
 }
 
 func (r *CreateAlertRequest) GenerateUrl() (string, url.Values, error) {
@@ -28,18 +28,54 @@ func (r *CreateAlertRequest) GetApiKey() string {
 }
 
 func (r *CreateAlertRequest) Init() {
-	if r.Teams != nil {
-		var convertedTeams []TeamRecipient
-		for _, t := range r.Teams {
-			recipient := &RecipientDTO{
-				Id:   t.getID(),
-				Name: t.getName(),
-				Type: "team",
-			}
+	if r.Responders != nil {
+		var convertedResponder []Recipient
+		for _, r := range r.Responders {
+			switch r.(type) {
+			case *Team:
+				{
+					team := r.(*Team)
+					recipient := &RecipientDTO{
+						Id:   team.ID,
+						Name: team.Name,
+						Type: "team",
+					}
+					convertedResponder = append(convertedResponder, recipient)
+				}
+			case *User:
+				{
+					user := r.(*User)
+					recipient := &RecipientDTO{
+						Id:       user.ID,
+						Username: user.Username,
+						Type:     "user",
+					}
+					convertedResponder = append(convertedResponder, recipient)
+				}
+			case *Escalation:
+				{
+					escalation := r.(*Escalation)
+					recipient := &RecipientDTO{
+						Id:   escalation.ID,
+						Name: escalation.Name,
+						Type: "escalation",
+					}
+					convertedResponder = append(convertedResponder, recipient)
+				}
+			case *Schedule:
+				{
+					schedule := r.(*Schedule)
+					recipient := &RecipientDTO{
+						Id:   schedule.ID,
+						Name: schedule.Name,
+						Type: "schedule",
+					}
+					convertedResponder = append(convertedResponder, recipient)
+				}
 
-			convertedTeams = append(convertedTeams, recipient)
+			}
 		}
-		r.Teams = convertedTeams
+		r.Responders = convertedResponder
 	}
 
 	if r.VisibleTo != nil {
@@ -70,4 +106,5 @@ func (r *CreateAlertRequest) Init() {
 		}
 		r.VisibleTo = convertedVisibleTo
 	}
+
 }
