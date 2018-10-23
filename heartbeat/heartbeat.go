@@ -8,8 +8,8 @@ license that can be found in the LICENSE file.
 package heartbeat
 
 import (
-	"net/url"
 	"errors"
+	"net/url"
 )
 
 // AddHeartbeatRequest provides necessary parameter structure to Create an Heartbeat at OpsGenie.
@@ -27,7 +27,7 @@ func (r *AddHeartbeatRequest) GetApiKey() string {
 }
 
 func (r *AddHeartbeatRequest) GenerateUrl() (string, url.Values, error) {
-	return "/v2/heartbeats", nil, nil;
+	return "/v2/heartbeats", nil, nil
 }
 
 // UpdateHeartbeatRequest provides necessary parameter structure to Update an existing Heartbeat at OpsGenie.
@@ -48,7 +48,7 @@ func (r *UpdateHeartbeatRequest) GenerateUrl() (string, url.Values, error) {
 	if r.Name == "" {
 		return "", nil, errors.New("Name should be provided")
 	}
-	return "/v2/heartbeats/" + r.Name, nil, nil;
+	return "/v2/heartbeats/" + r.Name, nil, nil
 }
 
 // EnableHeartbeatRequest provides necessary parameter structure to Enable an Heartbeat at OpsGenie.
@@ -65,7 +65,7 @@ func (r *EnableHeartbeatRequest) GenerateUrl() (string, url.Values, error) {
 	if r.Name == "" {
 		return "", nil, errors.New("Name should be provided")
 	}
-	return "/v2/heartbeats/" + r.Name + "/enable", nil, nil;
+	return "/v2/heartbeats/" + r.Name + "/enable", nil, nil
 }
 
 // DisableHeartbeatRequest provides necessary parameter structure to Disable an Heartbeat at OpsGenie.
@@ -82,7 +82,7 @@ func (r *DisableHeartbeatRequest) GenerateUrl() (string, url.Values, error) {
 	if r.Name == "" {
 		return "", nil, errors.New("Name should be provided")
 	}
-	return "/v2/heartbeats/" + r.Name + "/disable", nil, nil;
+	return "/v2/heartbeats/" + r.Name + "/disable", nil, nil
 }
 
 // DeleteHeartbeatRequest provides necessary parameter structure to Delete an Heartbeat from OpsGenie.
@@ -99,7 +99,7 @@ func (r *DeleteHeartbeatRequest) GenerateUrl() (string, url.Values, error) {
 	if r.Name == "" {
 		return "", nil, errors.New("Name should be provided")
 	}
-	return "/v2/heartbeats/" + r.Name, nil, nil;
+	return "/v2/heartbeats/" + r.Name, nil, nil
 }
 
 // GetHeartbeatRequest provides necessary parameter structure to Retrieve an Heartbeat with details from OpsGenie.
@@ -107,7 +107,6 @@ type GetHeartbeatRequest struct {
 	APIKey string `url:"-"`
 	Name   string `url:"name,omitempty"`
 }
-
 
 func (r *GetHeartbeatRequest) GetApiKey() string {
 	return r.APIKey
@@ -117,12 +116,20 @@ func (r *GetHeartbeatRequest) GenerateUrl() (string, url.Values, error) {
 	if r.Name == "" {
 		return "", nil, errors.New("Name should be provided")
 	}
-	return "/v2/heartbeats/" + r.Name, nil, nil;
+	return "/v2/heartbeats/" + r.Name, nil, nil
 }
 
 // ListHeartbeatsRequest provides necessary parameter structure to Retrieve Heartbeats from OpsGenie.
 type ListHeartbeatsRequest struct {
 	APIKey string `url:"apiKey"`
+}
+
+func (r *ListHeartbeatsRequest) GenerateUrl() (string, url.Values, error) {
+	return "/v2/heartbeats", nil, nil
+}
+
+func (r *ListHeartbeatsRequest) GetApiKey() string {
+	return r.APIKey
 }
 
 // SendHeartbeatRequest provides necessary parameter structure to Send an Heartbeat Signal to OpsGenie.
