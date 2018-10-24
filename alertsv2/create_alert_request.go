@@ -7,6 +7,7 @@ type CreateAlertRequest struct {
 	Alias       string `json:"alias,omitempty"`
 	Description string `json:"description,omitempty"`
 	Teams       []TeamRecipient `json:"teams,omitempty"`
+	Responders  []Recipient `json:"responders,omitempty"`
 	VisibleTo   []Recipient `json:"visibleTo,omitempty"`
 	Actions     []string `json:"actions,omitempty"`
 	Tags        []string `json:"tags,omitempty"`
@@ -69,5 +70,44 @@ func (r *CreateAlertRequest) Init() {
 			}
 		}
 		r.VisibleTo = convertedVisibleTo
+	}
+
+	if r.Responders != nil {
+		var convertedResponders []Recipient
+		for _, r := range r.Responders {
+			switch r.(type) {
+			case *Team:
+				{
+					team := r.(*Team)
+					recipient := &RecipientDTO{
+						Id:   team.ID,
+						Name: team.Name,
+						Type: "team",
+					}
+					convertedResponders = append(convertedResponders, recipient)
+				}
+			case *User:
+				{
+					user := r.(*User)
+					recipient := &RecipientDTO{
+						Id:       user.ID,
+						Username: user.Username,
+						Type:     "user",
+					}
+					convertedResponders = append(convertedResponders, recipient)
+				}
+			case *Escalation:
+				{
+					escalation := r.(*Escalation)
+					recipient := &RecipientDTO{
+						Id:   escalation.ID,
+						Name: escalation.Name,
+						Type: "escalation",
+					}
+					convertedResponders = append(convertedResponders, recipient)
+				}
+			}
+		}
+		r.Responders = convertedResponders
 	}
 }
