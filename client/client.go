@@ -40,6 +40,7 @@ import (
 	"io"
 	"mime/multipart"
 	"os"
+	"path/filepath"
 	"runtime"
 	"time"
 
@@ -47,7 +48,6 @@ import (
 	goquery "github.com/google/go-querystring/query"
 	"github.com/opsgenie/opsgenie-go-sdk/alertsv2"
 	"github.com/opsgenie/opsgenie-go-sdk/logging"
-	"path/filepath"
 )
 
 // endpointURL is the base URL of OpsGenie Web API.
@@ -58,9 +58,9 @@ const (
 	defaultRequestTimeout    time.Duration = 60 * time.Second
 	defaultMaxRetryAttempts  int           = 5
 	timeSleepBetweenRequests time.Duration = 500 * time.Millisecond
-	fileParamName string = "file"
-	userParamName string = "user"
-	indexFileParamName string = "indexFile"
+	fileParamName            string        = "file"
+	userParamName            string        = "user"
+	indexFileParamName       string        = "indexFile"
 )
 
 // RequestHeaderUserAgent contains User-Agent values tool/version (OS;GO_Version;language).
@@ -235,6 +235,20 @@ func (cli *OpsGenieClient) Team() (*OpsGenieTeamClient, error) {
 	cli.makeHTTPTransportSettings()
 
 	teamClient := new(OpsGenieTeamClient)
+	teamClient.SetOpsGenieClient(*cli)
+
+	if cli.opsGenieAPIURL == "" {
+		teamClient.SetOpsGenieAPIUrl(endpointURL)
+	}
+
+	return teamClient, nil
+}
+
+// Team instantiates a new OpsGenieTeamClient.
+func (cli *OpsGenieClient) TeamV2() (*OpsGenieTeamV2Client, error) {
+	cli.makeHTTPTransportSettings()
+
+	teamClient := new(OpsGenieTeamV2Client)
 	teamClient.SetOpsGenieClient(*cli)
 
 	if cli.opsGenieAPIURL == "" {
