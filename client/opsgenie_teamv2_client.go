@@ -43,3 +43,23 @@ func (cli *OpsGenieTeamV2Client) Get(req teamv2.GetTeamRequest) (*teamv2.GetTeam
 	}
 	return &response, nil
 }
+
+// Update method updates data of team
+func (cli *OpsGenieTeamV2Client) Update(req teamv2.UpdateTeamRequest) (*teamv2.UpdateTeamResponse, error) {
+	var response teamv2.UpdateTeamResponse
+	err := cli.sendPatchRequest(&req, &response)
+	if err != nil {
+		return nil, err
+	}
+	return &response, nil
+}
+
+// Delete method deletes team.
+func (cli *OpsGenieTeamV2Client) Delete(req teamv2.DeleteTeamRequest) (*teamv2.DeleteTeamResponse, error) {
+	var response teamv2.DeleteTeamResponse
+	err := cli.sendDeleteRequest(&req, &response)
+	if err != nil {
+		return nil, err
+	}
+	return &response, nil
+}
