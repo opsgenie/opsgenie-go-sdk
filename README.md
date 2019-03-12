@@ -1,4 +1,9 @@
 # opsgenie-go-sdk
+
+<aside class="notice">
+This SDK is not actively maintained. Please consider generating a client from the [OpenAPI Spec](https://github.com/opsgenie/opsgenie-oas)
+</aside>
+
 ## Aim and Scope
 OpsGenie GO SDK aims to access OpsGenie Web API through HTTP calls
 from a client application purely written in Go language.
