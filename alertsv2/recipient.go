@@ -50,6 +50,19 @@ type Escalation struct {
 	Name string `json:"name,omitempty"`
 }
 
+func (e *Escalation) SetID(id string) {
+	e.ID = id
+}
+
+type Schedule struct {
+	ID   string `json:"id,omitempty"`
+	Name string `json:"name,omitempty"`
+}
+
+func (s *Schedule) SetID(id string) {
+	s.ID = id
+}
+
 type RecipientDTO struct {
 	Id       string `json:"id,omitempty"`
 	Username string `json:"username,omitempty"`
