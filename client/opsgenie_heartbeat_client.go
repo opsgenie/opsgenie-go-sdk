@@ -8,8 +8,8 @@ import (
 )
 
 const (
-	listHeartbeatURL    = "/v1/json/heartbeat"
-	sendHeartbeatURL    = "/v1/json/heartbeat/send"
+	listHeartbeatURL = "/v1/json/heartbeat"
+	sendHeartbeatURL = "/v1/json/heartbeat/send"
 )
 
 // OpsGenieHeartbeatClient is the data type to make Heartbeat API requests.
@@ -29,7 +29,7 @@ func (cli *OpsGenieHeartbeatClient) Add(req heartbeat.AddHeartbeatRequest) (*hea
 	err := cli.sendPostRequest(&req, &response)
 
 	if err != nil {
-		return nil, err;
+		return nil, err
 	}
 	result := convertAddResponseToV1Response(&response)
 	result.Code = 201
@@ -126,6 +126,17 @@ func (cli *OpsGenieHeartbeatClient) List(req heartbeat.ListHeartbeatsRequest) (*
 	}
 
 	return &listHeartbeatsResp, nil
+}
+
+func (cli *OpsGenieHeartbeatClient) ListV2(req heartbeat.ListHeartbeatsRequest) (*heartbeat.HeartbeatListResponseV2, error) {
+	var response heartbeat.HeartbeatListResponseV2
+	req.APIKey = cli.apiKey
+
+	if err := cli.sendGetRequest(&req, &response); err != nil {
+		return nil, err
+	}
+
+	return &response, nil
 }
 
 // Deprecated: Send method sends an Heartbeat Signal to OpsGenie.
