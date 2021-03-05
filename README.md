@@ -1,4 +1,7 @@
 # opsgenie-go-sdk
+
+> ### opsgenie-go-sdk is deprecated and has no support, please use [opsgenie-go-sdk-v2](https://github.com/opsgenie/opsgenie-go-sdk-v2)
+
 ## Aim and Scope
 OpsGenie GO SDK aims to access OpsGenie Web API through HTTP calls
 from a client application purely written in Go language.
