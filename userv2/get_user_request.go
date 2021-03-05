@@ -7,7 +7,7 @@ import (
 // GetUserRequest is a request for getting user.
 type GetUserRequest struct {
 	*Identifier
-	ApiKey string
+	ApiKey        string
 	ExpandContact bool
 }
 

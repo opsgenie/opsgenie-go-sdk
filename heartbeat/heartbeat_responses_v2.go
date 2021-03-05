@@ -4,8 +4,8 @@ import "time"
 
 type HeartbeatResponseV2 struct {
 	Data      HeartbeatData `json:"data"`
-	Took      float32 `json:"took"`
-	RequestId string   `json:"requestId"`
+	Took      float32       `json:"took"`
+	RequestId string        `json:"requestId"`
 }
 
 func (rm *HeartbeatResponseV2) SetRequestID(requestID string) {
@@ -20,20 +20,20 @@ func (rm *HeartbeatResponseV2) SetRateLimitState(state string) {
 }
 
 type HeartbeatData struct {
-	Name          string `json:"name"`
-	Description   string `json:"description"`
+	Name          string    `json:"name"`
+	Description   string    `json:"description"`
 	LastHeartbeat time.Time `json:"lastPingTime,omitempty"`
-	Enabled       bool   `json:"enabled"`
-	Interval      int    `json:"interval"`
-	IntervalUnit  string `json:"intervalUnit"`
-	Expired       bool   `json:"expired"`
+	Enabled       bool      `json:"enabled"`
+	Interval      int       `json:"interval"`
+	IntervalUnit  string    `json:"intervalUnit"`
+	Expired       bool      `json:"expired"`
 }
 
 type HeartbeatMetaResponseV2 struct {
-	Code      int `json:"code"`
+	Code      int               `json:"code"`
 	Data      HeartbeatMetaData `json:"data"`
-	Took      float32 `json:"took"`
-	RequestId string   `json:"requestId"`
+	Took      float32           `json:"took"`
+	RequestId string            `json:"requestId"`
 }
 
 func (rm *HeartbeatMetaResponseV2) SetRequestID(requestID string) {
@@ -54,7 +54,7 @@ type HeartbeatMetaData struct {
 }
 
 type PingHeartbeatResponse struct {
-	Result    string `json:"result"`
+	Result    string  `json:"result"`
 	Took      float32 `json:"took"`
-	RequestId string   `json:"requestId"`
+	RequestId string  `json:"requestId"`
 }

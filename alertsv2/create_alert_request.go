@@ -3,20 +3,20 @@ package alertsv2
 import "net/url"
 
 type CreateAlertRequest struct {
-	Message     string `json:"message,omitempty"`
-	Alias       string `json:"alias,omitempty"`
-	Description string `json:"description,omitempty"`
-	Teams       []TeamRecipient `json:"teams,omitempty"`
-	VisibleTo   []Recipient `json:"visibleTo,omitempty"`
-	Actions     []string `json:"actions,omitempty"`
-	Tags        []string `json:"tags,omitempty"`
+	Message     string            `json:"message,omitempty"`
+	Alias       string            `json:"alias,omitempty"`
+	Description string            `json:"description,omitempty"`
+	Teams       []TeamRecipient   `json:"teams,omitempty"`
+	VisibleTo   []Recipient       `json:"visibleTo,omitempty"`
+	Actions     []string          `json:"actions,omitempty"`
+	Tags        []string          `json:"tags,omitempty"`
 	Details     map[string]string `json:"details,omitempty"`
-	Entity      string `json:"entity,omitempty"`
-	Source      string `json:"source,omitempty"`
-	Priority    Priority `json:"priority,omitempty"`
-	User        string `json:"user,omitempty"`
-	Note        string `json:"note,omitempty"`
-	ApiKey      string `json:"-"`
+	Entity      string            `json:"entity,omitempty"`
+	Source      string            `json:"source,omitempty"`
+	Priority    Priority          `json:"priority,omitempty"`
+	User        string            `json:"user,omitempty"`
+	Note        string            `json:"note,omitempty"`
+	ApiKey      string            `json:"-"`
 }
 
 func (r *CreateAlertRequest) GenerateUrl() (string, url.Values, error) {

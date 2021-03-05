@@ -1,16 +1,16 @@
 package schedulev2
 
 import (
-	"net/url"
 	"errors"
+	"net/url"
 )
 
 type ScheduleIdentifier struct {
-	ID	 	string
-	Name 	string
+	ID   string
+	Name string
 }
 
-func (request *ScheduleIdentifier)  GenerateUrl() (string, url.Values, error) {
+func (request *ScheduleIdentifier) GenerateUrl() (string, url.Values, error) {
 	baseUrl := "/v2/schedules/"
 	params := url.Values{}
 

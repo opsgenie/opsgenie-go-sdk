@@ -20,5 +20,5 @@ func (r *ListUserSchedulesRequest) GenerateUrl() (string, url.Values, error) {
 	if err != nil {
 		return "", nil, err
 	}
-	return baseUrl + "/schedules", params, err;
+	return baseUrl + "/schedules", params, err
 }

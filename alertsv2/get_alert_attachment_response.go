@@ -1,8 +1,8 @@
 package alertsv2
 
 type AttachmentResponse struct {
-	Name     string `json:"name,omitempty"`
-	DownloadLink      string `json:"url,omitempty"`
+	Name         string `json:"name,omitempty"`
+	DownloadLink string `json:"url,omitempty"`
 }
 
 type GetAlertAttachmentResponse struct {

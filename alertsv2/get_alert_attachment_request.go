@@ -6,8 +6,8 @@ import (
 
 type GetAlertAttachmentRequest struct {
 	*AttachmentAlertIdentifier
-	AttachmentId   string
-	ApiKey string
+	AttachmentId string
+	ApiKey       string
 }
 
 func (r *GetAlertAttachmentRequest) GetApiKey() string {

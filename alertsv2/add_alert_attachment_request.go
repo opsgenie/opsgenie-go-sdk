@@ -14,7 +14,7 @@ type AddAlertAttachmentRequest struct {
 
 func (r *AddAlertAttachmentRequest) GenerateUrl() (string, url.Values, error) {
 	path, params, err := r.AttachmentAlertIdentifier.GenerateUrl()
-	return path + "/attachments", params, err;
+	return path + "/attachments", params, err
 }
 
 func (r *AddAlertAttachmentRequest) GetApiKey() string {

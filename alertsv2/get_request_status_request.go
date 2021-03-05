@@ -1,8 +1,8 @@
 package alertsv2
 
 import (
-	"net/url"
 	"errors"
+	"net/url"
 )
 
 type GetAsyncRequestStatusRequest struct {

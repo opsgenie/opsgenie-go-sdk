@@ -21,7 +21,7 @@ type AcknowledgeRequest AlertActionRequest
 
 func (r *AcknowledgeRequest) GenerateUrl() (string, url.Values, error) {
 	path, params, err := r.Identifier.GenerateUrl()
-	return path + "/acknowledge", params, err;
+	return path + "/acknowledge", params, err
 }
 
 func (r *AcknowledgeRequest) GetApiKey() string {
@@ -32,7 +32,7 @@ type CloseRequest AlertActionRequest
 
 func (r *CloseRequest) GenerateUrl() (string, url.Values, error) {
 	path, params, err := r.Identifier.GenerateUrl()
-	return path + "/close", params, err;
+	return path + "/close", params, err
 }
 
 func (r *CloseRequest) GetApiKey() string {
@@ -43,7 +43,7 @@ type UnacknowledgeRequest AlertActionRequest
 
 func (r *UnacknowledgeRequest) GenerateUrl() (string, url.Values, error) {
 	path, params, err := r.Identifier.GenerateUrl()
-	return path + "/unacknowledge", params, err;
+	return path + "/unacknowledge", params, err
 }
 
 func (r *UnacknowledgeRequest) GetApiKey() string {
@@ -57,13 +57,12 @@ type SnoozeRequest struct {
 
 func (r *SnoozeRequest) GenerateUrl() (string, url.Values, error) {
 	path, params, err := r.Identifier.GenerateUrl()
-	return path + "/snooze", params, err;
+	return path + "/snooze", params, err
 }
 
 func (r *SnoozeRequest) GetApiKey() string {
 	return r.ApiKey
 }
-
 
 type AddNoteRequest AlertActionRequest
 
@@ -75,4 +74,3 @@ func (r *AddNoteRequest) GenerateUrl() (string, url.Values, error) {
 func (r *AddNoteRequest) GetApiKey() string {
 	return r.ApiKey
 }
-

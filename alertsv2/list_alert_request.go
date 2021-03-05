@@ -17,7 +17,7 @@ type ListAlertRequest struct {
 }
 
 func (r *ListAlertRequest) GetApiKey() string {
-	return r.ApiKey;
+	return r.ApiKey
 }
 
 func (request *ListAlertRequest) GenerateUrl() (string, url.Values, error) {

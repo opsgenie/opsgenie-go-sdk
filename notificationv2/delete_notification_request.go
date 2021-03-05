@@ -1,8 +1,8 @@
 package notificationv2
 
 import (
-	"net/url"
 	"errors"
+	"net/url"
 )
 
 // DeleteNotificationRequest is a struct of request to delete existing notification rule.
@@ -22,7 +22,7 @@ func (r *DeleteNotificationRequest) GenerateUrl() (string, url.Values, error) {
 	baseUrl, _, err := r.Identifier.GenerateUrl()
 
 	if err != nil {
-		return "" , nil, err
+		return "", nil, err
 	}
 
 	if r.Identifier.RuleID == "" {

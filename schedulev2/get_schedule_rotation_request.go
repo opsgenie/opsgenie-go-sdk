@@ -1,15 +1,15 @@
 package schedulev2
 
 import (
-	"net/url"
 	"errors"
+	"net/url"
 )
 
 // GetScheduleRotationRequest is a struct of request to crate new schedule.
 type GetScheduleRotationRequest struct {
 	*ScheduleIdentifier
-	ApiKey           string
-	ID				 string
+	ApiKey string
+	ID     string
 }
 
 // GetApiKey returns api key.

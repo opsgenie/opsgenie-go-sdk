@@ -1,19 +1,19 @@
 package schedulev2
 
 import (
-	"net/url"
 	"errors"
+	"net/url"
 )
 
 // UpdateScheduleOverrideRequest is a struct of request to update existing schedule.
 type UpdateScheduleOverrideRequest struct {
 	*ScheduleIdentifier
-	ApiKey           string
-	Alias            string
-	User			 User				`json:"user"`
-	StartDate		 string				`json:"startDate"`
-	EndDate		 	 string				`json:"endDate"`
-	Rotations		 []Rotation			`json:"rotations"`
+	ApiKey    string
+	Alias     string
+	User      User       `json:"user"`
+	StartDate string     `json:"startDate"`
+	EndDate   string     `json:"endDate"`
+	Rotations []Rotation `json:"rotations"`
 }
 
 // GetApiKey returns api key.
@@ -41,5 +41,5 @@ func (r *UpdateScheduleOverrideRequest) GenerateUrl() (string, url.Values, error
 	}
 
 	baseUrl += "/overrides"
-	return  baseUrl + "/" + r.Alias , params, nil
+	return baseUrl + "/" + r.Alias, params, nil
 }

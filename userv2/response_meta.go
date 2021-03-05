@@ -1,8 +1,7 @@
 package userv2
 
 // ResponseMeta is a struct of meta data.
-type
-ResponseMeta struct {
+type ResponseMeta struct {
 	RequestID      string
 	ResponseTime   float32
 	RateLimitState string

@@ -58,9 +58,9 @@ const (
 	defaultRequestTimeout    time.Duration = 60 * time.Second
 	defaultMaxRetryAttempts  int           = 5
 	timeSleepBetweenRequests time.Duration = 500 * time.Millisecond
-	fileParamName string = "file"
-	userParamName string = "user"
-	indexFileParamName string = "indexFile"
+	fileParamName            string        = "file"
+	userParamName            string        = "user"
+	indexFileParamName       string        = "indexFile"
 )
 
 // RequestHeaderUserAgent contains User-Agent values tool/version (OS;GO_Version;language).

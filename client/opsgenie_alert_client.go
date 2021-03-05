@@ -39,12 +39,12 @@ const (
 	executeActionAlertURL   = "/v1/json/alert/executeAction"
 	attachFileAlertURL      = "/v1/json/alert/attach"
 	countAlertURL           = "/v1/json/alert/count"
-	unacknowledgeAlertURL    = "/v1/json/alert/unacknowledge"
-	snoozeAlertURL 		= "/v1/json/alert/snooze"
-	removeTagsAlertURL	= "/v1/json/alert/tags"
-	addDetailsAlertURL	= "/v1/json/alert/details"
-	removeDetailsAlertURL	= "/v1/json/alert/details"
-	escalateToNextAlertURL	= "/v1/json/alert/escalateToNext"
+	unacknowledgeAlertURL   = "/v1/json/alert/unacknowledge"
+	snoozeAlertURL          = "/v1/json/alert/snooze"
+	removeTagsAlertURL      = "/v1/json/alert/tags"
+	addDetailsAlertURL      = "/v1/json/alert/details"
+	removeDetailsAlertURL   = "/v1/json/alert/details"
+	escalateToNextAlertURL  = "/v1/json/alert/escalateToNext"
 )
 
 // Deprecated: Please use OpsGenieAlertV2Client
@@ -96,7 +96,6 @@ func (cli *OpsGenieAlertClient) Count(req alerts.CountAlertRequest) (*alerts.Cou
 	}
 	return &countAlertResp, nil
 }
-
 
 // Deprecated: Close method closes an alert at OpsGenie.
 func (cli *OpsGenieAlertClient) Close(req alerts.CloseAlertRequest) (*alerts.CloseAlertResponse, error) {
@@ -667,7 +666,7 @@ func (cli *OpsGenieAlertClient) AttachFile(req alerts.AttachFileAlertRequest) (*
 		if err == nil {
 			return nil, errorMessage(httpStatusCode, string(body[:]))
 		}
-		message := fmt.Sprint("Couldn't read the response, %s", err.Error())
+		message := fmt.Sprintf("Couldn't read the response, %s", err.Error())
 		logging.Logger().Warn(message)
 		return nil, errors.New(message)
 	}

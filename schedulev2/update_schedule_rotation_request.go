@@ -1,22 +1,22 @@
 package schedulev2
 
 import (
-	"net/url"
 	"errors"
+	"net/url"
 )
 
 // UpdateScheduleRotationRequest is a struct of request to update existing schedule.
 type UpdateScheduleRotationRequest struct {
 	*ScheduleIdentifier
-	ApiKey           string
-	ID				 string
-	Name             string             `json:"name"`
-	StartDate		 string				`json:"startDate"`
-	EndDate		 	 string				`json:"endDate"`
-	Type		 	 Type    			`json:"type"`
-	Length		 	 int				`json:"length"`
-	Participants     []Participant		`json:"participants"`
-	TimeRestriction  TimeRestriction    `json:"timeRestriction"`
+	ApiKey          string
+	ID              string
+	Name            string          `json:"name"`
+	StartDate       string          `json:"startDate"`
+	EndDate         string          `json:"endDate"`
+	Type            Type            `json:"type"`
+	Length          int             `json:"length"`
+	Participants    []Participant   `json:"participants"`
+	TimeRestriction TimeRestriction `json:"timeRestriction"`
 }
 
 // GetApiKey returns api key.
@@ -36,5 +36,5 @@ func (r *UpdateScheduleRotationRequest) GenerateUrl() (string, url.Values, error
 	}
 
 	baseUrl += "/rotations"
-	return  baseUrl + "/" + r.ID , params, nil
+	return baseUrl + "/" + r.ID, params, nil
 }

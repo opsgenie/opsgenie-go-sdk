@@ -1,8 +1,8 @@
 package userv2
 
 import (
-	"net/url"
 	"errors"
+	"net/url"
 )
 
 // CreateUserRequest is a request for creating new user.

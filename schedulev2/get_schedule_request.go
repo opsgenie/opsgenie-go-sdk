@@ -7,7 +7,7 @@ import (
 // GetScheduleRequest is a struct of request to crate new schedule.
 type GetScheduleRequest struct {
 	*Identifier
-	ApiKey           string
+	ApiKey string
 }
 
 // GetApiKey returns api key.

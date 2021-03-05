@@ -1,13 +1,13 @@
 package schedulev2
 
 import (
-	"net/url"
 	"errors"
+	"net/url"
 )
 
 type Identifier struct {
-	ID	 	string
-	Name 	string
+	ID   string
+	Name string
 }
 
 func (request *Identifier) GenerateUrl() (string, url.Values, error) {
@@ -26,4 +26,3 @@ func (request *Identifier) GenerateUrl() (string, url.Values, error) {
 
 	return baseUrl, params, nil
 }
-

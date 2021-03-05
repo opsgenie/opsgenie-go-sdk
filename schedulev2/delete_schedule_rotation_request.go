@@ -1,15 +1,15 @@
 package schedulev2
 
 import (
-	"net/url"
 	"errors"
+	"net/url"
 )
 
 // DeleteScheduleRotationRequest is a struct of request to delete schedule.
 type DeleteScheduleRotationRequest struct {
 	*ScheduleIdentifier
-	ID				 string
-	ApiKey           string
+	ID     string
+	ApiKey string
 }
 
 // GetApiKey returns api key.

@@ -1,15 +1,15 @@
 package schedulev2
 
 import (
-	"net/url"
 	"errors"
+	"net/url"
 )
 
 // GetScheduleOverrideRequest is a struct of request to crate new schedule.
 type GetScheduleOverrideRequest struct {
 	*ScheduleIdentifier
-	ApiKey           string
-	Alias		     string
+	ApiKey string
+	Alias  string
 }
 
 // GetApiKey returns api key.

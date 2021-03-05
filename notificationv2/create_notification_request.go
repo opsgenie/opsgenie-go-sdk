@@ -1,8 +1,8 @@
 package notificationv2
 
 import (
-	"net/url"
 	"errors"
+	"net/url"
 )
 
 // CreateNotificationRequest is a struct of request to crate new notification rule.
